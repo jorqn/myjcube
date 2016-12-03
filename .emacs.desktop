@@ -1,0 +1,95 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Mon Feb  9 08:34:11 2015
+;; Desktop file format version 206
+;; Emacs version 24.3.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("parse" "light" "endCommandCB" "playCommand" "fre" "rotate" "norm" "rotateTo" "rotate"))
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("/home/jo/projects/my-j-cube/src/cube/Interpreter.js" "/home/jo/projects/my-j-cube/index.js" "/home/jo/projects/my-j-cube/src/cube/Interpreter.js" "/home/jo/projects/my-j-cube/index.js" "/home/jo/projects/my-j-cube/src/scene/Scene.js" "/home/jo/projects/my-j-cube/src/cube/Tile3D.js" "/home/jo/projects/my-j-cube/src/cube/Tile.js" "~/projects/my-j-cube/" "/home/jo/projects/my-j-cube/src/cube/Cube3D.js" "/home/jo/projects/my-j-cube/src/cube/Cube.js"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/index.js"
+  "index.js"
+  'js-mode
+  nil
+  1599
+  '(795 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/scene/Scene.js"
+  "Scene.js"
+  'js-mode
+  nil
+  903
+  '(1910 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/cube/Interpreter.js"
+  "Interpreter.js"
+  'js-mode
+  nil
+  399
+  '(115 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/cube/Cube3D.js"
+  "Cube3D.js"
+  'js-mode
+  nil
+  5679
+  '(4838 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/cube/Cube.js"
+  "Cube.js"
+  'js-mode
+  nil
+  3815
+  '(1 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/cube/Tile3D.js"
+  "Tile3D.js"
+  'js-mode
+  nil
+  2887
+  '(2693 nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/jo/projects/my-j-cube/src/cube/Tile.js"
+  "Tile.js"
+  'js-mode
+  nil
+  1
+  '(nil nil)
+  nil
+  nil
+  '((buffer-file-coding-system . undecided-unix)))
+

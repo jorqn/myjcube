@@ -1,0 +1,32 @@
+<html>
+<script src='libs/require.js'></script>
+<script src='src/my-j-cube.js'></script>
+<title>OLL Trainer</title>
+<style type="text/css">
+  a.button:hover {
+    color: green;
+    cursor: hand;
+  }
+</style>
+<script>
+(function() {   
+    "use strict";
+    require.config({
+	paths: {
+            "cube": "src/cube",
+            "scene": "src/scene",
+            "oll": "src/oll",
+            "utils": "src/utils"
+	}
+    });
+    window.startMyJPage = function(name) {
+        require([name], function (func) {
+            func();
+        });
+    };
+})();
+
+</script>
+<body onload='javascript: startMyJPage("oll/OLLTrainerSetup");'>
+</body>
+</html>

@@ -1,0 +1,5 @@
+#/bin/sh
+
+rm my-j-cube.js
+find . -name "*.js" -print0 | xargs -0 -I file cat file > my-j-cube.bak
+mv my-j-cube.bak my-j-cube.js
