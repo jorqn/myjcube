@@ -507,7 +507,7 @@ define('oll/OLLConfigs', [], function() {
 
     function addSolution(type, index, solution) {
 	var offset = (type === "PLL" ? 1000 : 0);
-	solutions[offset + index] = solution;
+	solutions[offset + index] = solution.replace(/2'/g,"2");
     }
 
     addSolution("OLL", 49, "RU2'R2'U'R2U'R2'U2R");
