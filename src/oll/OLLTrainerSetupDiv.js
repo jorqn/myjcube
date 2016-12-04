@@ -1,33 +1,10 @@
 define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString) {
-    var OLLTrainerSetupDiv = function(ollConfigDisplay) {
+    var OLLTrainerSetupDiv = function(ollConfigDisplay, trainerPage, layout, cookieSuffix) {
 	this.ollConfigDisplay = ollConfigDisplay;
 	this.selects = [];
-	var layout = [[49, 50, null, 1, 2],
-		      [51, 52, null, 3, 4],
-		      [55, 56, null, 5, 6],
-		      [57, null, null, 7, 30],
-		      [],
-		      [47,48, null,45, 46],
-		      [],
-		      [20,21, null, 22, 23],
-		      [null, null, null, 24,25],
-		      [8, 9, null, 43,44],
-		      [10,11],
-		      [],
-		      [35,36, null, 12, 13],
-		      [37,38, null, 14, 15],
-		      [null, null, null, 16,17],
-		      [18,19],
-		      [31,32, null, 33, 34],
-		      [],
-		      [26,27, null, 39, 40],
-		      [28,29, null, 41, 42],
-		      [],
-		      [53,54],
-		      [],
-		      [58, 59],
-		      [60, 61]
-		     ];
+	this.trainerPage = trainerPage;
+	this.layout = layout;
+	this.cookieSuffix = cookieSuffix || "";
 	// var layout = [[49, 50],
 	// 	      [51, 52],
 	// 	      [55, 56],
@@ -76,7 +53,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}
 	this.div = document.createElement('div');
 	this.openTrainingButton = this.createButton("<b>Start training</b>", function() {
-	    _this.openPage("OLLTrainer.html");
+	    _this.openPage(_this.trainerPage);
 	});
 	this.sequenceLength = document.createElement('input');
 	
@@ -245,7 +222,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = "expires="+d.toUTCString();
-	document.cookie = "trainerQuery" + "="+ args.replace(/=/g, "@") + "; " + expires ;
+	document.cookie = "trainerQuery" + this.cookieSuffix + "="+ args.replace(/=/g, "@") + "; " + expires ;
         window.location.href = pageURL + "?"+args;
 //	window.open("OLLTrainer.html"+args);
     }

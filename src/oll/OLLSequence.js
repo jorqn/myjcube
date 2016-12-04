@@ -9,9 +9,16 @@ define('oll/OLLSequence', ['oll/OLLConfigs'], function(OLLConfigs) {
 	this.hardCases = this.hardCases.concat(this.newCases);
 	this.middleCases = [];
 	var i = 0;
-	for(i = 0; i < OLLConfigs.nbConfigs; i++) {
+	for(i = 0; i < OLLConfigs.nbOLLConfigs; i++) {
 	    if(this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && this.excludeCases.indexOf(i+1) < 0) {
 		this.middleCases.push(i+1);
+	    }
+	}
+	if(params.pll) {
+	    for(i = 1000; i < 1000+OLLConfigs.nbPLLConfigs; i++) {
+		if(this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && this.excludeCases.indexOf(i+1) < 0) {
+		    this.middleCases.push(i+1);
+		}
 	    }
 	}
     };
