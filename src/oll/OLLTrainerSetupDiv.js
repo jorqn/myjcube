@@ -23,7 +23,10 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 		      [26,27, null, 39, 40],
 		      [28,29, null, 41, 42],
 		      [],
-		      [53,54]
+		      [53,54],
+		      [],
+		      [58, 59],
+		      [60, 61]
 		     ];
 	// var layout = [[49, 50],
 	// 	      [51, 52],

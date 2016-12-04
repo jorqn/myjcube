@@ -8,6 +8,72 @@ define('oll/OLLConfigDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
 	this.outlineColor = params.outlineColor || "black";
     };
     OLLConfigDisplay.prototype.createCanvas = function(configId) {
+	function drawArrow(fromx, fromy, tox, toy, doubleArrow){
+                //variables to be used when creating the arrow
+                var ctx = context;
+                var headlen = 4;
+
+                var angle = Math.atan2(toy-fromy,tox-fromx);
+	    var color = "black";
+                //starting path of the arrow from the start square to the end square and drawing the stroke
+                ctx.beginPath();
+                ctx.moveTo(fromx, fromy);
+                ctx.lineTo(tox, toy);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                //starting a new path from the head of the arrow to one of the sides of the point
+                ctx.beginPath();
+                ctx.moveTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //path from the side point of the arrow, to the other side point
+                ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),toy-headlen*Math.sin(angle+Math.PI/7));
+
+                //path from the side point back to the tip of the arrow, and then again to the opposite side point
+                ctx.lineTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //draws the paths created above
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = color;
+                ctx.fill();
+
+	    if(doubleArrow) {
+		var t;
+		t = tox;
+		tox = fromx;
+		fromx = t;
+		t = toy;
+		toy = fromy;
+		fromy = t;
+		angle = Math.atan2(toy-fromy,tox-fromx);
+
+                //starting a new path from the head of the arrow to one of the sides of the point
+                ctx.beginPath();
+                ctx.moveTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //path from the side point of the arrow, to the other side point
+                ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7),toy-headlen*Math.sin(angle+Math.PI/7));
+
+                //path from the side point back to the tip of the arrow, and then again to the opposite side point
+                ctx.lineTo(tox, toy);
+                ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7),toy-headlen*Math.sin(angle-Math.PI/7));
+
+                //draws the paths created above
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillStyle = color;
+                ctx.fill();
+
+	    }
+
+            }
 	var canvas = document.createElement('canvas');
 	canvas.width = this.size;
 	canvas.height = this.size;
@@ -49,6 +115,15 @@ define('oll/OLLConfigDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
 	    }
 	    if(config.isFilledAtPoint(4, y)) {
 		drawRect(4*step, y*step, thinStep - margin, step - margin);
+	    }
+	}
+	var arrows = config.getArrows();
+	if(arrows) {
+	    var i, arrow;
+	    for(i = 0; i < arrows.length; i++) {
+		arrow = arrows[i];
+		drawArrow(arrow[0][0]*step+step/2-1, arrow[0][1]*step+step/2-1,
+			  arrow[2][0]*step+step/2-1, arrow[2][1]*step+step/2-1, arrow[1] === '<->');
 	    }
 	}
 	return canvas;

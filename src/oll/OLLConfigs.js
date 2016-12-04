@@ -287,7 +287,6 @@ define('oll/OLLConfigs', [], function() {
 		    " xxx ",
 		    "     "];
 
-
     var trainingTable = ["",
 	         "F'U'L'ULF2RUR'U'F'",
 		 "RUR'URU2UR'URU2R'",
@@ -348,6 +347,40 @@ define('oll/OLLConfigs', [], function() {
 		 "l'U'LURU'r'U'L'ULF",
 		 "RUR'URU2R'F'U'L'ULF"
 		];
+
+
+    var arrows_ = [];
+    var arrows = [];
+    var ni = 58;
+    function addArrows(index, tab) {
+	arrows_[index] = {reverseIndex: ni, tab: tab};
+	arrows[ni] = tab;
+	ni++;
+    }
+    addArrows(1, [[[1, 2], '->', [3,2]],
+		  [[3,2], '->', [2,3]],
+		  [[2,3], '->', [1,2]]]);
+
+    addArrows(2, [[[1, 2], '->', [3,2]],
+		  [[3,2], '->', [2,1]],
+		  [[2,1], '->', [1,2]]]);
+
+    addArrows(5, [[[2, 1], '<->', [3,2]],
+                  [[1,2], '<->', [2,3]]]);
+
+    addArrows(17, [[[1,2], '<->', [3,2]],
+		   [[2,1], '<->', [2,3]]]);
+
+    var nbPLL = arrows.length - 57;
+    var i;
+    for(i = 0; i < nbPLL; i++) {
+	configs[58+i] = [ "     ",
+			  " xxx ",
+			  " xxx ",
+			  " xxx ",
+			  "     "];
+    }
+
 
     var configToTrainingTable = [];
     configToTrainingTable[49] = 1;
@@ -419,12 +452,14 @@ define('oll/OLLConfigs', [], function() {
     OLLConfig.prototype.getTrainingSequence = function() {
 	return trainingTable[configToTrainingTable[this.index]];
     };
-
+    OLLConfig.prototype.getArrows = function () {
+	return arrows[this.index];
+    }
     var OLLConfigs = {
 	getConfig: function(configId) {
 	    return new OLLConfig(configId);
 	},
-	nbConfigs: 57
+	nbConfigs: 58
     };
     return OLLConfigs;
 });
