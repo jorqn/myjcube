@@ -1,4 +1,4 @@
-define('oll/CubeLessTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay'],
+define('oll/CubelessTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay'],
 function(OLLTrainerSetupDiv, OLLConfigDisplay) {
     "use strict";
     return function CubeLessTrainerSetup() {
@@ -34,7 +34,7 @@ function(OLLTrainerSetupDiv, OLLConfigDisplay) {
 		      [],
 		      [53,54],
 		     ];
-	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "CubeLessTrainer.html", layout, "");
+	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "CubeLessTrainer.html", layout, "Cubeless");
 	document.body.appendChild(trainerSetup.div);
     };
 });

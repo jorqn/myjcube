@@ -503,6 +503,93 @@ define('oll/OLLConfigs', [], function() {
     configToTrainingTable[53] = 51;
     configToTrainingTable[54] = 38;
 
+    var solutions = [];
+
+    function addSolution(type, index, solution) {
+	var offset = (type === "PLL" ? 1000 : 0);
+	solutions[offset + index] = solution;
+    }
+
+    addSolution("OLL", 49, "RU2'R2'U'R2U'R2'U2R");
+    addSolution("OLL", 50, "RUR'URU'R'URU2'R'");
+    addSolution("OLL", 51, "RUR'URU2'R'");
+    addSolution("OLL", 52, "RU2R'U'RU'R'");
+    addSolution("OLL", 55, "R2'DR'U2RD'R'U2R'");
+    addSolution("OLL", 56, "l'U'LURU'r'F");
+    addSolution("OLL", 57, "l'U'L'URU'LUx'");
+    addSolution("OLL", 1, "RUx'U'RUl'R'U'l'UlF'");
+    addSolution("OLL", 2, "FRUR'U'F'fRUR'U'f'");
+    addSolution("OLL", 3, "r'R2UR'UrU2r'UR'r");
+    addSolution("OLL", 4, "r'RU'rU2r'U'RU'R2'r");
+    addSolution("OLL", 5, "r'RURUR'U'rR2'FRF'");
+    addSolution("OLL", 6, "FRUR'Uy'R'U2R'FRF'");
+    addSolution("OLL", 7, "RUR'UR'FRF'U2R'FRF'");
+    addSolution("OLL", 30, "r'RURUR'U'r2R2'URU'r'");
+    addSolution("OLL", 47, "FRUR'U'F'");
+    addSolution("OLL", 48, "RUR'U'R'FRF'");
+    addSolution("OLL", 45, "R'U'l'UlF'UR");
+    addSolution("OLL", 46, "RUR'U'xD'R'URU'");
+    addSolution("OLL", 20, "rU2R'U'RU'r'");
+    addSolution("OLL", 21, "l'U2LUL'Ul");
+    addSolution("OLL", 22, "rUR'URU2r'");
+    addSolution("OLL", 23, "l'U'LU'L'U2'l");
+    addSolution("OLL", 24, "rR2'U'RU'R'U2RU'Rr'");
+    addSolution("OLL", 25, "rR2UR'URU2R'UR'r");
+    addSolution("OLL", 43, "R'FRUR'U'F'UR");
+    addSolution("OLL", 44, "LFL'U'LUFU'L'");
+    addSolution("OLL", 8, "R'U2R2UR'URU2x'U'R'Ux");
+    addSolution("OLL", 9, "R'U'RU'R'dR'URB");
+    addSolution("OLL", 10, "fRUR'U'RUR'U'f'");
+    addSolution("OLL", 11, "r'U'rU'R'URU'R'URr'Ur");
+    addSolution("OLL", 35, "RUB'U'R'UlUl'");
+    addSolution("OLL", 36, "R'U'FURU'R'F'R");
+    addSolution("OLL", 37, "FURU'R'F'");
+    addSolution("OLL", 38, "F'U'L'ULF");
+    addSolution("OLL", 12, "FRUR'U'RUR'U'F'");
+    addSolution("OLL", 13, "F'L'U'LUL'U'LUF");
+    addSolution("OLL", 14, "l'UR'U'RlU2x'U'RUl'");
+    addSolution("OLL", 15, "R'FR2B'R2'F'R2BR'");
+    addSolution("OLL", 16, "r'U'RU'R'URU'R'U2r");
+    addSolution("OLL", 17, "rUR'URU'R'URU2'r'");
+    addSolution("OLL", 33, "RUR'URU'R'U'R'FRF'");
+    addSolution("OLL", 34, "R'U'RU'R'URUlU'R'Ux");
+    addSolution("OLL", 18, "R'U'Ry'x'RU'R'FRUl'");
+    addSolution("OLL", 19, "RUR'xz'R'URB'R'U'l");
+    addSolution("OLL", 31, "R'U2lRU'R'Ul'U2'R");
+    addSolution("OLL", 32, "FRU'R'U'RUR'F'");
+    addSolution("OLL", 26, "R'FRUl'U'ly'RU'R'");
+    addSolution("OLL", 27, "x'RU'R'F'RUR'xyR'UR");
+    addSolution("OLL", 28, "LFL'RUR'U'LF'L'");
+    addSolution("OLL", 29, "L'B'LR'U'RUL'BL");
+    addSolution("OLL", 39, "B'RB'R2'URUR'U'RB2");
+    addSolution("OLL", 40, "R2'UR'B'RU'R2'UlUl'");
+    addSolution("OLL", 41, "RUR'URU2'R'FRUR'U'F'");
+    addSolution("OLL", 42, "R'U'RU'R'U2RFRUR'U'F'");
+    addSolution("OLL", 53, "RUR'U'rR'URU'r'");
+    addSolution("OLL", 54, "rR'URr'U2rR'URr'");
+
+    addSolution("PLL", 1, "R2'URUR'U'R'U'R'UR'");
+    addSolution("PLL", 2, "R2U'R'U'RURURU'R");
+    addSolution("PLL", 5, "R'U'RU'RURU'R'URUR2U'R'U2");
+    addSolution("PLL", 17, "r2R2'Ur2R2'U2r2R2'Ur2R2'");
+    addSolution("PLL", 3, "xR'UR'D2RU'R'D2l2x");
+    addSolution("PLL", 4, "xR2D2RUR'D2RU'l");
+    addSolution("PLL", 16, "l'U'L'URU'LUR'U'LURU'L'Ux'");
+    addSolution("PLL", 8, "RU2'R'U2RB'R'U'RUlUR2'Fx");
+    addSolution("PLL", 9, "R'U2RU2'R'FRUR'U'R'F'R2U'");
+    addSolution("PLL", 10, "RUR'F'RUR'U'R'FR2U'R'U'");
+    addSolution("PLL", 11, "F2'L'U'rU2'l'UR'U'R2x2");
+    addSolution("PLL", 12, "RU'LU2'R'UL'RU'LU2'R'UL'");
+    addSolution("PLL", 13, "L'UR'U2'LU'L'RUR'U2'LU'R");
+    addSolution("PLL", 18, "R2'uR'UR'U'Ru'R2y'R'UR");
+    addSolution("PLL", 19, "R2u'RU'RUR'uR2'yRU'R'");
+    addSolution("PLL", 20, "RUR'y'R2u'RU'R'UR'uR2");
+    addSolution("PLL", 21, "L'U'Ly'R2'uR'URU'Ru'R2");
+    addSolution("PLL", 6, "R'URU'R2F'U'FUxRUR'U'R2B'x'");
+    addSolution("PLL", 7, "RUR'U'R'FR2U'R'U'RUR'F'");
+    addSolution("PLL", 14, "R'UR'U'x2y'R'UR'U'lRU'R'URUx'");
+    addSolution("PLL", 15, "FRU'R'U'RUR'F'RUR'U'l'URU'x'");
+
     var OLLConfig = function(index) {
 	this.index = index;
     };
@@ -516,6 +603,9 @@ define('oll/OLLConfigs', [], function() {
     };
     OLLConfig.prototype.getArrows = function () {
 	return arrows[this.index];
+    }
+    OLLConfig.prototype.getSolution = function () {
+	return solutions[this.index];
     }
     var OLLConfigs = {
 	getConfig: function(configId) {
