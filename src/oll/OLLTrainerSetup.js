@@ -29,7 +29,7 @@ function(OLLTrainerSetupDiv, OLLConfigDisplay) {
 		      // [1001, 1002],
 		      // [1005, 1017]
 		     ];
-	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "OLLTrainer.html", layout, "");
+	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "OLLTrainer.html", layout, "", "OLLTrainerSetup.html");
 	document.body.appendChild(trainerSetup.div);
     };
 });

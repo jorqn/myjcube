@@ -34,7 +34,7 @@ function(OLLTrainerSetupDiv, OLLConfigDisplay) {
 		      [],
 		      [53,54],
 		     ];
-	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "CubeLessTrainer.html", layout, "Cubeless");
+	var trainerSetup = new OLLTrainerSetupDiv(configDisplay, "CubeLessTrainer.html", layout, "Cubeless", "CubelessTrainerSetup.html");
 	document.body.appendChild(trainerSetup.div);
     };
 });

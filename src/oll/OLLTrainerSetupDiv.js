@@ -1,8 +1,9 @@
 define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString) {
-    var OLLTrainerSetupDiv = function(ollConfigDisplay, trainerPage, layout, cookieSuffix) {
+    var OLLTrainerSetupDiv = function(ollConfigDisplay, trainerPage, layout, cookieSuffix, setupPage) {
 	this.ollConfigDisplay = ollConfigDisplay;
 	this.selects = [];
 	this.trainerPage = trainerPage;
+	this.setupPage = setupPage;
 	this.layout = layout;
 	this.cookieSuffix = cookieSuffix || "";
 	// var layout = [[49, 50],
@@ -49,7 +50,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	// 	      [53,54]
 	// 	     ];
 	if(!MyQueryString.getValue('write')) {
-	    MyQueryString.addFromCookie('trainerQuery');
+	    MyQueryString.addFromCookie('trainerQuery'+this.cookieSuffix);
 	}
 	this.div = document.createElement('div');
 	this.openTrainingButton = this.createButton("<b>Start training</b>", function() {
@@ -71,7 +72,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 
 	var _this = this;
 	this.div.appendChild(this.createButton("Save settings", function() {
-	    _this.openPage("OLLTrainerSetup.html");	    
+	    _this.openPage(_this.setupPage);	    
 	}));
 	this.div.appendChild(document.createTextNode(" - "));
 	this.div.appendChild(this.openTrainingButton);
