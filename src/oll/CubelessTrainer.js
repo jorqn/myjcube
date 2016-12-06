@@ -1,7 +1,7 @@
 define('oll/CubelessTrainer', ['oll/OLLSequence', 'utils/MyQueryString', 'oll/OLLConfigDisplay', 'oll/OLLConfigs'],
 function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     "use strict";
-
+    // added comment
     var currentSequence;
     var currentIndex;
     var currentConfig;
