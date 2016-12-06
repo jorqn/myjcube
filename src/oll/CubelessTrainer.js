@@ -7,12 +7,18 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var currentConfig;
     var sequence;
     var canvasContainer;
+    var sequenceDisplay;
+    var sequenceDisplayDiv;
+    var undoStack = [];
+    var redoStack = [];
 
     function startSequence(index) {
+	undoStack = [];
+	redoStack = [];
 	var ollConfigDisplay = new OLLConfigDisplay();
 	var canvas = ollConfigDisplay.createCanvas(sequence.sequence[index]);
 	currentConfig = OLLConfigs.getConfig(sequence.sequence[index]);
-	currentSequence = "";
+	onRestart();
 	if(canvasContainer.firstChild) {
 	    canvasContainer.removeChild(canvasContainer.firstChild);
 	}
@@ -20,8 +26,35 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	currentIndex = index;
     }
 
-    function onAction(action) {
+    function updateDisplay() {
+	sequenceDisplayDiv.innerHTML = sequenceDisplay || "Type the right sequence...";
+    }
+
+    function onUndo() {
+	if(undoStack.length) {
+	    var item = undoStack.pop();
+	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	    currentSequence = item.currentSequence;
+	    sequenceDisplay = item.sequenceDisplay;
+	    updateDisplay();
+	}
+    }
+
+    function onRedo() {
+	if(undoStack.length) {
+	    var item = redoStack.pop();
+	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	    currentSequence = item.currentSequence;
+	    sequenceDisplay = item.sequenceDisplay;
+	    updateDisplay();
+	}
+    }
+
+    function onAction(action, display) {
+	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
 	currentSequence += action;
+	sequenceDisplay += display;
+	updateDisplay();
 	if(currentSequence === currentConfig.getSolution()) {
 	    if(currentIndex+1 === sequence.sequence.length) {
 		alert('You win');
@@ -30,8 +63,13 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    }
 	}
     }
+    function onSkip() {
+	startSequence(currentIndex+1);
+    }
     function onRestart() {
 	currentSequence = "";
+	sequenceDisplay = "";
+	updateDisplay();
     }
 
     return function OLLTrainer() {
@@ -77,11 +115,53 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 
 
 	document.body.appendChild(rerollButton);
+
+	essai = document.createElement("a");
+	essai.innerHTML = "&nbsp;";
+	document.body.appendChild(essai);
+
+	var skipButton = document.createElement("input");
+	skipButton.type = "button";
+	skipButton.value = "Skip";
+	skipButton.onclick=function() {
+//	    window.location.reload();;
+	    onSkip();
+	};
+	document.body.appendChild(skipButton);
+
+	essai = document.createElement("a");
+	essai.innerHTML = "&nbsp;";
+	document.body.appendChild(essai);
+//	document.body.appendChild(document.createElement("br"));
+	var btn = document.createElement("input");
+	btn.type = "button";
+	btn.value = "Undo";
+	btn.onclick=function() {
+	    onUndo();
+	};
+	document.body.appendChild(btn);
+	essai = document.createElement("a");
+	essai.innerHTML = "&nbsp;";
+	document.body.appendChild(essai);
+	btn = document.createElement("input");
+	btn.type = "button";
+	btn.value = "Redo";
+	btn.onclick=function() {
+	    onRedo();
+	};
+	document.body.appendChild(btn);
+
+
 	var br = document.createElement("br");
 	document.body.appendChild(br);
 
 	canvasContainer = document.createElement('div');
 	document.body.appendChild(canvasContainer);
+
+	sequenceDisplayDiv = document.createElement('div');
+	document.body.appendChild(sequenceDisplayDiv);
+	var br = document.createElement("br");
+	document.body.appendChild(br);
 	startSequence(0);
 
 	document.body.appendChild(buildButtonsMatrix());
@@ -105,8 +185,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 		lang: 'T'
 	    },
 	    {
-		classic: 'B',
-		lang: 'B'
+		classic: 'D',
+		lang: 'D'
 	    },
 	    {
 		classic: 'L',
@@ -141,8 +221,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 		lang: 'TE'
 	    },
 	    {
-		classic: 'b',
-		lang: 'BE'
+		classic: 'd',
+		lang: 'DE'
 	    },
 	    {
 		classic: 'l',
@@ -200,7 +280,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    button.style.width = 70;
 	    button.style.height = 30;
 	    button.addEventListener('click', function () {
-		onAction(action);
+		onAction(action, text);
 	    });
 	    return button;
 	}
