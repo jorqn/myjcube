@@ -41,7 +41,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     }
 
     function onRedo() {
-	if(undoStack.length) {
+	if(redoStack.length) {
 	    var item = redoStack.pop();
 	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
 	    currentSequence = item.currentSequence;
@@ -52,6 +52,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 
     function onAction(action, display) {
 	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	redoStack = [];
 	currentSequence += action;
 	sequenceDisplay += display;
 	updateDisplay();
@@ -67,8 +68,11 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	startSequence(currentIndex+1);
     }
     function onRestart() {
+	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	redoStack = [];
 	currentSequence = "";
 	sequenceDisplay = "";
+
 	updateDisplay();
     }
 
