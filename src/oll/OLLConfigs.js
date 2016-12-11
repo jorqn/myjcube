@@ -580,7 +580,8 @@ define('oll/OLLConfigs', [], function() {
     addSolution("PLL", 10, "RUR'F'RUR'U'R'FR2U'R'U'");
     addSolution("PLL", 11, "F2'L'U'rU2'l'UR'U'R2x2");
     addSolution("PLL", 12, "RU'LU2'R'UL'RU'LU2'R'UL'");
-    addSolution("PLL", 13, "L'UR'U2'LU'L'RUR'U2'LU'R");
+    addSolution("PLL", 13, "L'UR'U2LU'RL'UR'U2LU'R");
+        //"L'UR'U2'LU'L'RUR'U2'LU'R");
     addSolution("PLL", 18, "R2'uR'UR'U'Ru'R2y'R'UR");
     addSolution("PLL", 19, "R2u'RU'RUR'uR2'yRU'R'");
     addSolution("PLL", 20, "RUR'y'R2u'RU'R'UR'uR2");
