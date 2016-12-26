@@ -34,8 +34,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	if(undoStack.length) {
 	    var item = undoStack.pop();
 	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
-	    currentSequence = item.currentSequence;
-	    sequenceDisplay = item.sequenceDisplay;
+	    currentSequence = item.currentSequence || "";
+	    sequenceDisplay = item.sequenceDisplay || "";
 	    updateDisplay();
 	}
     }
@@ -44,8 +44,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	if(redoStack.length) {
 	    var item = redoStack.pop();
 	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
-	    currentSequence = item.currentSequence;
-	    sequenceDisplay = item.sequenceDisplay;
+	    currentSequence = item.currentSequence || "";
+	    sequenceDisplay = item.sequenceDisplay || "";
 	    updateDisplay();
 	}
     }
@@ -76,10 +76,19 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	updateDisplay();
     }
 
+    var buttonWidth = 70;//Math.floor(window.innerWidth / 3);
+    var buttonHeight = 30;//Math.floor(3*buttonWidth/7);
+
     return function OLLTrainer() {
 	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQueryCubeless');
 	}
+	if(MyQueryString.getValue('zoom') === "true") {
+	    document.body.style.zoom = "150%";
+	} else {
+	    document.body.style.zoom = "100%";
+	}
+
 	sequence = new OLLSequence({
 	    excludeCases: MyQueryString.getIntArrayValue('exclude'),
 	    easyCases: MyQueryString.getIntArrayValue('easy'),
@@ -133,39 +142,35 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	};
 	document.body.appendChild(skipButton);
 
-	essai = document.createElement("a");
-	essai.innerHTML = "&nbsp;";
-	document.body.appendChild(essai);
-//	document.body.appendChild(document.createElement("br"));
-	var btn = document.createElement("input");
-	btn.type = "button";
-	btn.value = "Undo";
-	btn.onclick=function() {
-	    onUndo();
-	};
-	document.body.appendChild(btn);
-	essai = document.createElement("a");
-	essai.innerHTML = "&nbsp;";
-	document.body.appendChild(essai);
-	btn = document.createElement("input");
-	btn.type = "button";
-	btn.value = "Redo";
-	btn.onclick=function() {
-	    onRedo();
-	};
-	document.body.appendChild(btn);
-
-
-	var br = document.createElement("br");
-	document.body.appendChild(br);
+	// var br = document.createElement("br");
+	// document.body.appendChild(br);
 
 	canvasContainer = document.createElement('div');
 	document.body.appendChild(canvasContainer);
 
+	var undoRedoDiv = document.createElement('div');
+	undoRedoDiv.style.position= 'absolute';
+	undoRedoDiv.style.top = '60';
+	undoRedoDiv.style.left='150px';
+	document.body.appendChild(undoRedoDiv);
+	var undoButton = createRepeatableButton('Undo', onUndo);
+
+	undoRedoDiv.appendChild(undoButton);
+	essai = document.createElement("br");
+//	essai.innerHTML = "&nbsp;";
+	undoRedoDiv.appendChild(essai);
+	var redoButton = createRepeatableButton('Redo', onRedo);
+	undoRedoDiv.appendChild(redoButton);
+	
 	sequenceDisplayDiv = document.createElement('div');
 	document.body.appendChild(sequenceDisplayDiv);
-	var br = document.createElement("br");
-	document.body.appendChild(br);
+	// essai = document.createElement("br");
+	// document.body.appendChild(essai);
+	//	document.body.appendChild(document.createElement("br"));
+
+
+	// var br = document.createElement("br");
+	// document.body.appendChild(br);
 	startSequence(0);
 
 	document.body.appendChild(buildButtonsMatrix());
@@ -281,14 +286,17 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    var button = document.createElement('input');
 	    button.type = 'button';
 	    button.value = text;
-	    button.style.width = 70;
-	    button.style.height = 30;
+	    button.style.width = buttonWidth;
+	    button.style.height = buttonHeight;
 	    button.addEventListener('click', function () {
 		onAction(action, text);
 	    });
 	    return button;
 	}
 	var div = document.createElement('div');
+	div.style.position = 'absolute';
+	div.style.top = '180px';
+	div.style.left = '10px';
 	var i, j, button;
 	for(i = 0; i < axes.length; i++) {
 	    for(j = 0; j < modifiers.length; j++) {
@@ -306,5 +314,39 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	}
 	return div;
     }
-
+    function createRepeatableButton(text, onClickCB) {
+	var btn = document.createElement("input");
+	btn.style.width = buttonWidth;
+	btn.style.height = buttonHeight;
+	btn.type = "button";
+	btn.value = text;
+	var disableOnMouseUp = false;
+	var timeoutID = null;
+	btn.addEventListener('mouseup', function() {
+	    if(!disableOnMouseUp) {
+		onClickCB();
+	    }
+	    if(timeoutID !== null) {
+		clearTimeout(timeoutID);
+		timeoutID = null;
+	    }
+	});
+	btn.addEventListener('mouseleave', function() {
+	    if(timeoutID !== null) {
+		disableOnMouseUp = true;
+		clearTimeout(timeoutID);
+		timeoutID = null;
+	    }
+	});
+	btn.addEventListener('mousedown', function() {
+	    function timeoutAgain() {
+		onClickCB();
+		disableOnMouseUp = true;
+		timeoutID = setTimeout(timeoutAgain, 250);
+	    }
+	    disableOnMouseUp = false;
+	    timeoutID = setTimeout(timeoutAgain, 500);
+	});
+	return btn;
+    }
 });

@@ -49,7 +49,9 @@ define('utils/MyQueryString', [], function () {
 		var cookieObject = createObject(cookie.replace(/@/g,'='));
 		var key;
 		for(key in cookieObject) {
-		    QueryString[key] = cookieObject[key];
+		    if(!QueryString.hasOwnProperty(key)) {
+			QueryString[key] = cookieObject[key];
+		    }
 		}
 	    }
 	},
