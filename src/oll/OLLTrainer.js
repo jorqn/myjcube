@@ -2,27 +2,37 @@ define('oll/OLLTrainer', ['oll/OLLSequence', 'oll/OLLSequenceHTMLDisplay', 'util
 function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
     "use strict";
     return function OLLTrainer() {
-	if(!MyQueryString.getValue('write')) {
+//	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQuery');
-	}
-	var sequence = new OLLSequence({
-	    excludeCases: MyQueryString.getIntArrayValue('exclude'),
-	    easyCases: MyQueryString.getIntArrayValue('easy'),
-	    hardCases: MyQueryString.getIntArrayValue('hard'),
-	    newCases: MyQueryString.getIntArrayValue('new')
+//	}
+        var only = MyQueryString.getIntValue('only');
+	var sequence;
+        var length;
+        if(only === null) {
+            sequence = new OLLSequence({
+	        excludeCases: MyQueryString.getIntArrayValue('exclude'),
+	        easyCases: MyQueryString.getIntArrayValue('easy'),
+	        hardCases: MyQueryString.getIntArrayValue('hard'),
+	        newCases: MyQueryString.getIntArrayValue('new')
 
-	});
-	var length = MyQueryString.getIntValue('length') || 25;
-	sequence.buildSequence(length);
-	MyQueryString.setValue("write", true);
-	MyQueryString.saveToCookie("trainerQuery", 60);
+	    });
+	    length = MyQueryString.getIntValue('length') || 25;
+	    sequence.buildSequence(length);
+        } else {
+            length = 1;
+            sequence = { sequence: [only]};
+        }
+//	MyQueryString.setValue("write", true);
+        // if(MyQueryString.getBoolValue("write") && only === null) {
+	//     MyQueryString.saveToCookie("trainerQuery", 60);
+        // }
 
 	var configDisplay = new OLLConfigDisplay();
 	var setupTrainingButton = document.createElement("input");
 	setupTrainingButton.type = "button";
 	setupTrainingButton.value = "Setup";
 	setupTrainingButton.onclick=function() {
-	    window.location.href = "OLLTrainerSetup.html?" + MyQueryString.toQueryString();
+	    window.location.href = "OLLTrainerSetup.html";//?" + MyQueryString.toQueryString();
 	};
 
 	document.body.appendChild(setupTrainingButton);

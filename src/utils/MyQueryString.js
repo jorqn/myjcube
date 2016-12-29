@@ -61,6 +61,9 @@ define('utils/MyQueryString', [], function () {
 	    var expires = "expires="+d.toUTCString();
 	    document.cookie = name + "="+ MyQueryString.toQueryString().replace(/=/g, "@") + "; " + expires ;
 	},
+        getBoolValue: function(name) {
+            return this.getValue(name) === "true";
+        },
 	getValue: function(name) {
 	    return QueryString[name];
 	},

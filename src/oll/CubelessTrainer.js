@@ -80,34 +80,44 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var buttonHeight = 30;//Math.floor(3*buttonWidth/7);
 
     return function OLLTrainer() {
-	if(!MyQueryString.getValue('write')) {
+//	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQueryCubeless');
-	}
+//	}
 	if(MyQueryString.getValue('zoom') === "true") {
 	    document.body.style.zoom = "150%";
 	} else {
 	    document.body.style.zoom = "100%";
 	}
 
-	sequence = new OLLSequence({
-	    excludeCases: MyQueryString.getIntArrayValue('exclude'),
-	    easyCases: MyQueryString.getIntArrayValue('easy'),
-	    hardCases: MyQueryString.getIntArrayValue('hard'),
-	    newCases: MyQueryString.getIntArrayValue('new'),
-	    pll: true
+        var only = MyQueryString.getIntValue('only');
+        var length;
+        if(only === null) {
+            sequence = new OLLSequence({
+	        excludeCases: MyQueryString.getIntArrayValue('exclude'),
+	        easyCases: MyQueryString.getIntArrayValue('easy'),
+	        hardCases: MyQueryString.getIntArrayValue('hard'),
+	        newCases: MyQueryString.getIntArrayValue('new'),
+                pll: true
+	    });
+	    length = MyQueryString.getIntValue('length') || 25;
+	    sequence.buildSequence(length);
+        } else {
+            length = 1;
+            sequence = { sequence: [only]};
+        }
 
-	});
-	var length = MyQueryString.getIntValue('length') || 25;
-	sequence.buildSequence(length);
-	MyQueryString.setValue("write", true);
-	MyQueryString.saveToCookie("trainerQueryCubeless", 60);
+        // if(MyQueryString.getBoolValue("write") && only === null) {
+	//     MyQueryString.saveToCookie("trainerQuery", 60);
+        // }
+	// MyQueryString.setValue("write", true);
+	// MyQueryString.saveToCookie("trainerQueryCubeless", 60);
 
 	var configDisplay = new OLLConfigDisplay();
 	var setupTrainingButton = document.createElement("input");
 	setupTrainingButton.type = "button";
 	setupTrainingButton.value = "Setup";
 	setupTrainingButton.onclick=function() {
-	    window.location.href = "CubelessTrainerSetup.html?" + MyQueryString.toQueryString();
+	    window.location.href = "CubelessTrainerSetup.html";//?" + MyQueryString.toQueryString();
 	};
 
 	document.body.appendChild(setupTrainingButton);
