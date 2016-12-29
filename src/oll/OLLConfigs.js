@@ -593,6 +593,13 @@ define('oll/OLLConfigs', [], function() {
 
     var OLLConfig = function(index) {
 	this.index = index;
+	if(index < 1000) {
+	    this.type = "OLL";
+	    this.indexInType = index;
+	} else {
+	    this.type = "PLL";
+	    this.indexInType = index - 1000;
+	}
     };
     OLLConfig.prototype.isFilledAtPoint = function(x, y) {
 	var str = configs[this.index][y];
@@ -604,10 +611,13 @@ define('oll/OLLConfigs', [], function() {
     };
     OLLConfig.prototype.getArrows = function () {
 	return arrows[this.index];
-    }
+    };
     OLLConfig.prototype.getSolution = function () {
 	return solutions[this.index];
-    }
+    };
+    OLLConfig.prototype.getNiceName = function () {
+	return this.type + "#" + this.indexInType;
+    };
     var OLLConfigs = {
 	getConfig: function(configId) {
 	    return new OLLConfig(configId);

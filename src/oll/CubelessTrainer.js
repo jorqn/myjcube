@@ -9,6 +9,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var canvasContainer;
     var sequenceDisplay;
     var sequenceDisplayDiv;
+    var statusText;
     var undoStack = [];
     var redoStack = [];
 
@@ -18,6 +19,10 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	var ollConfigDisplay = new OLLConfigDisplay();
 	var canvas = ollConfigDisplay.createCanvas(sequence.sequence[index]);
 	currentConfig = OLLConfigs.getConfig(sequence.sequence[index]);
+//	document.title = "Cubeless Trainer - " + currentConfig.getNiceName() + " (" + (index+1)
+//	    + "/" + sequence.sequence.length + ")";
+	statusText.textContent = currentConfig.getNiceName() + " (" + (index+1)
+	    + "/" + sequence.sequence.length + ")";
 	onRestart();
 	if(canvasContainer.firstChild) {
 	    canvasContainer.removeChild(canvasContainer.firstChild);
@@ -130,10 +135,9 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 
 	var rerollButton = document.createElement("input");
 	rerollButton.type = "button";
-	rerollButton.value = "Restart";
+	rerollButton.value = "Reroll";
 	rerollButton.onclick=function() {
-//	    window.location.reload();;
-	    onRestart();
+	    window.location.reload();;
 	};
 
 
@@ -147,31 +151,48 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	skipButton.type = "button";
 	skipButton.value = "Skip";
 	skipButton.onclick=function() {
-//	    window.location.reload();;
 	    onSkip();
 	};
 	document.body.appendChild(skipButton);
 
 	// var br = document.createElement("br");
 	// document.body.appendChild(br);
+	
+	document.body.appendChild(document.createElement('br'));
+	document.body.appendChild(document.createElement('br'));
+	statusText = document.createTextNode("");
+	document.body.appendChild(statusText);
 
 	canvasContainer = document.createElement('div');
 	document.body.appendChild(canvasContainer);
 
 	var undoRedoDiv = document.createElement('div');
 	undoRedoDiv.style.position= 'absolute';
-	undoRedoDiv.style.top = '60';
+	undoRedoDiv.style.top = '80';
 	undoRedoDiv.style.left='150px';
 	document.body.appendChild(undoRedoDiv);
+
+	var resetButton = document.createElement('input');
+	resetButton.type = "button";
+	resetButton.value = "Reset";
+	resetButton.addEventListener("click", function() {
+	    onRestart();
+	});
+	resetButton.style.width = buttonWidth;
+	resetButton.style.height = buttonHeight;
+	undoRedoDiv.appendChild(resetButton);
+	undoRedoDiv.appendChild(document.createElement('br'));
+	
+//	essai.innerHTML = "&nbsp;";
+	var redoButton = createRepeatableButton('Redo', onRedo);
+	undoRedoDiv.appendChild(redoButton);
+	essai = document.createElement("br");
+	undoRedoDiv.appendChild(essai);
+
 	var undoButton = createRepeatableButton('Undo', onUndo);
 
 	undoRedoDiv.appendChild(undoButton);
-	essai = document.createElement("br");
-//	essai.innerHTML = "&nbsp;";
-	undoRedoDiv.appendChild(essai);
-	var redoButton = createRepeatableButton('Redo', onRedo);
-	undoRedoDiv.appendChild(redoButton);
-	
+
 	sequenceDisplayDiv = document.createElement('div');
 	document.body.appendChild(sequenceDisplayDiv);
 	// essai = document.createElement("br");
@@ -305,7 +326,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	}
 	var div = document.createElement('div');
 	div.style.position = 'absolute';
-	div.style.top = '180px';
+	div.style.top = '210px';
 	div.style.left = '10px';
 	var i, j, button;
 	for(i = 0; i < axes.length; i++) {
