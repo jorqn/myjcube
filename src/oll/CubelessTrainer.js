@@ -58,7 +58,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
 	redoStack = [];
 	currentSequence += action;
-	if(true || doZoom) {
+	if(doZoom) {
 	    splashText(display, event);
 	}
 	sequenceDisplay += display;
@@ -87,31 +87,40 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     function splashText(text, event) {
 	var splashDiv = document.createElement('div');
 	splashDiv.style.position = 'absolute';
-	splashDiv.style.font = "bold 64px arial, sans-serif";
+	var width = 200, height = 200;
+	splashDiv.style.width = width + 'px';
+	splashDiv.style.height = height + 'px';
+	splashDiv.style.font = "bold " + 64 + "px arial, sans-serif";
 	splashDiv.style.color = "red";
-	splashDiv.style.opacity = 0;
+//	splashDiv.style.backgroundColor = "black";
+	splashDiv.style.margin = "0px";
+	splashDiv.style.display = "table";
+	var textElement = document.createElement('div');
+	textElement.style.textAlign = "center";
+	textElement.style.verticalAlign = "middle";
+	textElement.innerHTML = text;
+	textElement.style.display = "table-cell";
+	splashDiv.appendChild(textElement);
+//	splashDiv.style.opacity = 0;
 	splashDiv.style.pointerEvents = "none";
-	splashDiv.innerHTML = text;
-	setTimeout(function() {
-	    var width = splashDiv.offsetWidth, height = splashDiv.offsetHeight;
-	    splashDiv.style.opacity = 1;
-	    var x = Math.floor(event.pageX/ document.body.style.zoom - width/2);
-	    var y = Math.floor(event.pageY/ document.body.style.zoom - height/2);
-	    splashDiv.style.top = y + 'px';//nextSplashIndex * 48;
-	    splashDiv.style.left = x + 'px';//nextSplashIndex * 48;
-	    var interval = setInterval(function () {
-		var index;
-		splashDiv.style.opacity *= 0.9;
-		if(splashDiv.style.opacity < 0.1) {
-		    document.body.removeChild(splashDiv);
-		    index = splashDivs.indexOf(splashDiv);
-		    splashDivs.splice(index, 1);
-		    if(splashDivs.length === 0) {
-			nextSplashIndex = 0;
-		    }
-		    clearInterval(interval);
+	splashDiv.style.opacity = 1;
+	var x = Math.floor(event.pageX/ document.body.style.zoom - width/2);
+	var y = Math.floor(event.pageY/ document.body.style.zoom - height/2);
+	splashDiv.style.top = y + 'px';//nextSplashIndex * 48;
+	splashDiv.style.left = x + 'px';//nextSplashIndex * 48;
+	var interval = setInterval(function () {
+//	    return;
+	    var index;
+	    splashDiv.style.opacity *= 0.9;
+	    if(splashDiv.style.opacity < 0.1) {
+		document.body.removeChild(splashDiv);
+		index = splashDivs.indexOf(splashDiv);
+		splashDivs.splice(index, 1);
+		if(splashDivs.length === 0) {
+		    nextSplashIndex = 0;
 		}
-	    }, 50);
+		clearInterval(interval);
+	    }
 	}, 50);
 	document.body.appendChild(splashDiv);
 	splashDivs.push(splashDiv);
@@ -260,20 +269,44 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     function buildButtonsMatrix() {
 	var axes = [
 	    {
-		classic: 'U',
-		lang: 'T'
+		classic: 'b',
+		lang: 'BE'
+	    },
+	    {
+		classic: 'f',
+		lang: 'FE'
+	    },
+	    {
+		classic: 'd',
+		lang: 'DE'
+	    },
+	    {
+		classic: 'u',
+		lang: 'TE'
+	    },
+	    {
+		classic: 'l',
+		lang: 'LE'
+	    },
+	    {
+		classic: 'r',
+		lang: 'RE'
 	    },
 	    {
 		classic: 'D',
 		lang: 'D'
 	    },
 	    {
-		classic: 'L',
-		lang: 'L'
+		classic: 'U',
+		lang: 'T'
 	    },
 	    {
 		classic: 'R',
 		lang: 'R'
+	    },
+	    {
+		classic: 'L',
+		lang: 'L'
 	    },
 	    {
 		classic: 'F',
@@ -283,6 +316,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 		classic: 'B',
 		lang: 'B'
 	    },
+	];
+	var axes2 = [
 	    {
 		classic: 'x',
 		lang: 'M'
@@ -294,32 +329,70 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    {
 		classic: 'z',
 		lang: 'P'
-	    },
-	    {
-		classic: 'u',
-		lang: 'TE'
-	    },
-	    {
-		classic: 'd',
-		lang: 'DE'
-	    },
-	    {
-		classic: 'l',
-		lang: 'LE'
-	    },
-	    {
-		classic: 'r',
-		lang: 'RE'
-	    },
-	    {
-		classic: 'f',
-		lang: 'FE'
-	    },
-	    {
-		classic: 'b',
-		lang: 'BE'
 	    }
 	];
+	// var axes = [
+	//     {
+	// 	classic: 'U',
+	// 	lang: 'T'
+	//     },
+	//     {
+	// 	classic: 'D',
+	// 	lang: 'D'
+	//     },
+	//     {
+	// 	classic: 'L',
+	// 	lang: 'L'
+	//     },
+	//     {
+	// 	classic: 'R',
+	// 	lang: 'R'
+	//     },
+	//     {
+	// 	classic: 'F',
+	// 	lang: 'F'
+	//     },
+	//     {
+	// 	classic: 'B',
+	// 	lang: 'B'
+	//     },
+	//     {
+	// 	classic: 'x',
+	// 	lang: 'M'
+	//     },
+	//     {
+	// 	classic: 'y',
+	// 	lang: 'N'
+	//     },
+	//     {
+	// 	classic: 'z',
+	// 	lang: 'P'
+	//     },
+	//     {
+	// 	classic: 'u',
+	// 	lang: 'TE'
+	//     },
+	//     {
+	// 	classic: 'd',
+	// 	lang: 'DE'
+	//     },
+	//     {
+	// 	classic: 'l',
+	// 	lang: 'LE'
+	//     },
+	//     {
+	// 	classic: 'r',
+	// 	lang: 'RE'
+	//     },
+	//     {
+	// 	classic: 'f',
+	// 	lang: 'FE'
+	//     },
+	//     {
+	// 	classic: 'b',
+	// 	lang: 'BE'
+	//     }
+	// ];
 	var modifiers = [
 	    {
 		classic: '',
@@ -381,6 +454,14 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    if(i % 3 == 2) {
 		div.appendChild(document.createElement('br'));
 	    }
+	}
+	div.appendChild(document.createElement('br'));
+	for(i = 0; i < axes2.length; i++) {
+	    for(j = 0; j < modifiers.length; j++) {
+		button = createButton(axes2[i].lang + modifiers[j].lang, axes2[i].classic + modifiers[j].classic);
+		div.appendChild(button);
+	    }
+	    div.appendChild(document.createElement('br'));
 	}
 	return div;
     }
