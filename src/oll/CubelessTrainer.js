@@ -54,11 +54,13 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    updateDisplay();
 	}
     }
-
-    function onAction(action, display) {
+    function onAction(action, display, event) {
 	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
 	redoStack = [];
 	currentSequence += action;
+	if(true || doZoom) {
+	    splashText(display, event);
+	}
 	sequenceDisplay += display;
 	updateDisplay();
 	if(currentSequence === currentConfig.getSolution()) {
@@ -80,18 +82,55 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 
 	updateDisplay();
     }
+    var nextSplashIndex = 0;
+    var splashDivs = [];
+    function splashText(text, event) {
+	var splashDiv = document.createElement('div');
+	splashDiv.style.position = 'absolute';
+	splashDiv.style.font = "bold 64px arial, sans-serif";
+	splashDiv.style.color = "red";
+	splashDiv.style.opacity = 0;
+	splashDiv.style.pointerEvents = "none";
+	splashDiv.innerHTML = text;
+	setTimeout(function() {
+	    var width = splashDiv.offsetWidth, height = splashDiv.offsetHeight;
+	    splashDiv.style.opacity = 1;
+	    var x = Math.floor(event.pageX/ document.body.style.zoom - width/2);
+	    var y = Math.floor(event.pageY/ document.body.style.zoom - height/2);
+	    splashDiv.style.top = y + 'px';//nextSplashIndex * 48;
+	    splashDiv.style.left = x + 'px';//nextSplashIndex * 48;
+	    var interval = setInterval(function () {
+		var index;
+		splashDiv.style.opacity *= 0.9;
+		if(splashDiv.style.opacity < 0.1) {
+		    document.body.removeChild(splashDiv);
+		    index = splashDivs.indexOf(splashDiv);
+		    splashDivs.splice(index, 1);
+		    if(splashDivs.length === 0) {
+			nextSplashIndex = 0;
+		    }
+		    clearInterval(interval);
+		}
+	    }, 50);
+	}, 50);
+	document.body.appendChild(splashDiv);
+	splashDivs.push(splashDiv);
+	nextSplashIndex++;
+    }
 
     var buttonWidth = 70;//Math.floor(window.innerWidth / 3);
     var buttonHeight = 30;//Math.floor(3*buttonWidth/7);
+    var doZoom;
 
     return function OLLTrainer() {
 //	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQueryCubeless');
-//	}
-	if(MyQueryString.getValue('zoom') === "true") {
-	    document.body.style.zoom = "150%";
+	//	}
+	doZoom = MyQueryString.getValue('zoom') === "true";
+	if(doZoom) {
+	    document.body.style.zoom = 1.5;
 	} else {
-	    document.body.style.zoom = "100%";
+	    document.body.style.zoom = 1;
 	}
 
         var only = MyQueryString.getIntValue('only');
@@ -319,8 +358,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    button.value = text;
 	    button.style.width = buttonWidth;
 	    button.style.height = buttonHeight;
-	    button.addEventListener('click', function () {
-		onAction(action, text);
+	    button.addEventListener('click', function (event) {
+		onAction(action, text, event);
 	    });
 	    return button;
 	}
