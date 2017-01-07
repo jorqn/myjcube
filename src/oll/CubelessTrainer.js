@@ -144,15 +144,29 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var buttonHeight = 30;//Math.floor(3*buttonWidth/7);
     var doZoom;
 
+    function isMobile() {
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	    return true;
+	}
+	return false;
+    }
+
     return function OLLTrainer() {
 //	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQueryCubeless');
 	//	}
-	doZoom = MyQueryString.getValue('zoom') === "true";
+	// doZoom = MyQueryString.getValue('zoom') === "true";
+	// if(doZoom) {
+	//     document.body.style.zoom = 1.5;
+	// } else {
+	//     document.body.style.zoom = 1;
+	// }
+
+	doZoom = isMobile();
 	if(doZoom) {
-	    document.body.style.zoom = 1.5;
-	} else {
-	    document.body.style.zoom = 1;
+	    document.body.style.margin = 0;
+	    var zoomFactor = window.innerWidth / (3*(buttonWidth));
+	    document.body.style.zoom = zoomFactor;
 	}
 
         var only = MyQueryString.getIntValue('only');
@@ -229,8 +243,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 
 	var undoRedoDiv = document.createElement('div');
 	undoRedoDiv.style.position= 'absolute';
-	undoRedoDiv.style.top = '80';
-	undoRedoDiv.style.left='150px';
+	undoRedoDiv.style.top = '80px';
+	undoRedoDiv.style.left='140px';
 	document.body.appendChild(undoRedoDiv);
 
 	var resetButton = document.createElement('input');
@@ -463,8 +477,8 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	}
 	var div = document.createElement('div');
 	div.style.position = 'absolute';
-	div.style.top = '210px';
-	div.style.left = '10px';
+	div.style.top = '215px';
+	div.style.left = '0px';
 	var i, j, button;
 	for(i = 0; i < axes.length; i++) {
 	    for(j = 0; j < modifiers.length; j++) {

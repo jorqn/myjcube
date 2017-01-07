@@ -71,16 +71,16 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	//     window.location.href = "OLLTrainerSetup.html?write=true";
 	// }
 
-        this.zoomCheckbox = document.createElement('input');
-        this.zoomCheckbox.type = 'checkbox';
-        this.zoomCheckbox.id = 'zoomCheckbox';
-        this.zoomCheckbox.checked = MyQueryString.getBoolValue('zoom') ? true : false;
-        this.zoomCheckbox.addEventListener('change', function (event) {
-            MyQueryString.setValue('zoom', event.target.checked);
-        });
-        var label = document.createElement('label');
-        label.for = 'zoomCheckbox';
-        label.innerHTML = 'Enable zoom';
+        // this.zoomCheckbox = document.createElement('input');
+        // this.zoomCheckbox.type = 'checkbox';
+        // this.zoomCheckbox.id = 'zoomCheckbox';
+        // this.zoomCheckbox.checked = MyQueryString.getBoolValue('zoom') ? true : false;
+        // this.zoomCheckbox.addEventListener('change', function (event) {
+        //     MyQueryString.setValue('zoom', event.target.checked);
+        // });
+        // var label = document.createElement('label');
+        // label.for = 'zoomCheckbox';
+        // label.innerHTML = 'Enable zoom';
 
 	var _this = this;
 	this.div.appendChild(this.createButton("Save settings", function() {
@@ -113,9 +113,9 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.div.appendChild(document.createElement('br'));
 	this.div.appendChild(document.createTextNode("Sequence length: "));
 	this.div.appendChild(this.sequenceLength);
-        this.div.appendChild(document.createTextNode(' '));
-        this.div.appendChild(this.zoomCheckbox);
-        this.div.appendChild(label);
+        // this.div.appendChild(document.createTextNode(' '));
+        // this.div.appendChild(this.zoomCheckbox);
+        // this.div.appendChild(label);
 
 //	this.div.appendChild(this.resetButton);
 	this.initLists = {
