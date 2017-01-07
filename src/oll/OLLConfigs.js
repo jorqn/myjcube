@@ -528,7 +528,7 @@ define('oll/OLLConfigs', [], function() {
     addSolution("OLL", 47, "FRUR'U'F'");
     addSolution("OLL", 48, "RUR'U'R'FRF'");
     addSolution("OLL", 45, "R'U'l'UlF'UR");
-    addSolution("OLL", 46, "RUR'U'xD'R'URU'");
+    addSolution("OLL", 46, "RUR'U'xD'R'URU'Dx'");
     addSolution("OLL", 20, "rU2R'U'RU'r'");
     addSolution("OLL", 21, "l'U2LUL'Ul");
     addSolution("OLL", 22, "rUR'URU2r'");
