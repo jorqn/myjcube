@@ -12,6 +12,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var statusText;
     var undoStack = [];
     var redoStack = [];
+    var lastPushedButton = null;
 
     function startSequence(index) {
 	undoStack = [];
@@ -34,8 +35,14 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     function updateDisplay() {
 	sequenceDisplayDiv.innerHTML = sequenceDisplay || "Type the right sequence...";
     }
-
+    function resetLastPushedButton() {
+        if(lastPushedButton) {
+            lastPushedButton.style.color = "";
+            lastPushedButton = null;
+        }
+    }
     function onUndo() {
+        resetLastPushedButton();
 	if(undoStack.length) {
 	    var item = undoStack.pop();
 	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
@@ -58,24 +65,27 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
 	redoStack = [];
 	currentSequence += action;
-	if(doZoom) {
-	    splashText(display, event);
-	}
 	sequenceDisplay += display;
 	updateDisplay();
+        var win = false;
 	if(currentSequence === currentConfig.getSolution()) {
+            win = true;
 	    if(currentIndex+1 === sequence.sequence.length) {
 		alert('You win');
 	    } else {
 		startSequence(currentIndex+1);
 	    }
 	}
+	if(doZoom || win) {
+	    splashText(display, event, win);
+	}
     }
     function onSkip() {
 	startSequence(currentIndex+1);
     }
     function onRestart() {
-	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+        //	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+        undoStack = [];
 	redoStack = [];
 	currentSequence = "";
 	sequenceDisplay = "";
@@ -84,14 +94,16 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     }
     var nextSplashIndex = 0;
     var splashDivs = [];
-    function splashText(text, event) {
+    function splashText(text, event, win) {
+        var color = text ? (win ? "DarkGreen" : "red") : "black";
+        text = text || "X";
 	var splashDiv = document.createElement('div');
 	splashDiv.style.position = 'absolute';
 	var width = 200, height = 200;
 	splashDiv.style.width = width + 'px';
 	splashDiv.style.height = height + 'px';
 	splashDiv.style.font = "bold " + 64 + "px arial, sans-serif";
-	splashDiv.style.color = "red";
+	splashDiv.style.color = color;
 //	splashDiv.style.backgroundColor = "black";
 	splashDiv.style.margin = "0px";
 	splashDiv.style.display = "table";
@@ -382,7 +394,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	//     },
 	//     {
 	// 	classic: 'r',
-	// 	lang: 'RE'
+	// 	lang: 'RppE'
 	//     },
 	//     {
 	// 	classic: 'f',
@@ -432,7 +444,19 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    button.style.width = buttonWidth;
 	    button.style.height = buttonHeight;
 	    button.addEventListener('click', function (event) {
-		onAction(action, text, event);
+                if(lastPushedButton === button) {
+                    if(doZoom) {
+                        splashText(null, event);
+                    }
+                    onUndo();
+                } else {
+		    onAction(action, text, event);
+                    if(lastPushedButton) {
+                        lastPushedButton.style.color = "";
+                    }
+                    lastPushedButton = button;
+                    button.style.color = 'red';
+                }
 	    });
 	    return button;
 	}
