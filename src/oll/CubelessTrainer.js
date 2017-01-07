@@ -85,6 +85,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     }
     function onRestart() {
         //	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+        resetLastPushedButton();
         undoStack = [];
 	redoStack = [];
 	currentSequence = "";
@@ -450,12 +451,12 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
                     }
                     onUndo();
                 } else {
-		    onAction(action, text, event);
                     if(lastPushedButton) {
                         lastPushedButton.style.color = "";
                     }
                     lastPushedButton = button;
                     button.style.color = 'red';
+		    onAction(action, text, event);
                 }
 	    });
 	    return button;
