@@ -4,7 +4,7 @@ function(OLLTrainerSetupDiv, OLLConfigDisplay) {
     return function CubeLessTrainerSetup() {
 	var configDisplay = new OLLConfigDisplay();
 	var layout;
-	if(false &&  !window.mobileMode) {
+	if(!window.mobileMode) {
 	    layout = [[1001, 1002, null, 1003, 1004],
 		      [1005, 1017, null, 1016],
 		      [],
