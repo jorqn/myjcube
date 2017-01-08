@@ -1,5 +1,19 @@
 define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString) {
+    var doZoom;
+
+    function updateZoom() {
+	if(doZoom) {
+//	    document.body.style.margin = 0;
+	    var zoomFactor = window.innerWidth / 300;
+	    document.body.style.zoom = zoomFactor;
+	}
+    }
+    
     var OLLTrainerSetupDiv = function(ollConfigDisplay, trainerPage, layout, cookieSuffix, setupPage) {
+	doZoom = window.mobileMode;
+	updateZoom();
+	window.addEventListener('resize', updateZoom);
+	
 	this.ollConfigDisplay = ollConfigDisplay;
 	this.selects = [];
 	this.trainerPage = trainerPage;
@@ -104,11 +118,19 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	addAllToButton('exclude');
 	_this.div.appendChild(document.createTextNode(" - "));
 	addAllToButton('easy');
-	_this.div.appendChild(document.createTextNode(" - "));
+	if(window.mobileMode) {
+	    _this.div.appendChild(document.createElement("br"));
+	} else {
+	    _this.div.appendChild(document.createTextNode(" - "));
+	}
 	addAllToButton('normal');
 	_this.div.appendChild(document.createTextNode(" - "));
 	addAllToButton('hard');
-	_this.div.appendChild(document.createTextNode(" - "));
+	if(window.mobileMode) {
+	    _this.div.appendChild(document.createElement("br"));
+	} else {
+	    _this.div.appendChild(document.createTextNode(" - "));
+	}
 	addAllToButton('new');
 	this.div.appendChild(document.createElement('br'));
 	this.div.appendChild(document.createTextNode("Sequence length: "));
@@ -125,14 +147,23 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	    new: MyQueryString.getIntArrayValue('new')
 	};
 
+	this.casesDiv = document.createElement('div');
+	this.casesDiv.style.position = 'relative';
+	this.div.appendChild(this.casesDiv);
+	var y = 0;
 	var i = 0, id;
 	for(i = 0; i < layout.length; i++) {
 	    var j = 0;
 	    for(j = 0; j < layout[i].length; j++) {
 		id = layout[i][j];
 		if(id !== null) {
-		    this.div.appendChild(this.createDivCase(id, j, i));
+		    this.casesDiv.appendChild(this.createDivCase(id, 120*j, y));
 		}
+	    }
+	    if(layout[i].length) {
+		y += 120;
+	    } else {
+		y += 40;
 	    }
 //	    this.div.appendChild(document.createElement('br'));
 	}
@@ -183,8 +214,8 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.selects.push(select);
 	div.appendChild(select);
 	div.style.position = 'absolute';
-	div.style.left = (120*x) + 'px';
-	div.style.top = 100 + (120*y) + 'px';
+	div.style.left = x + 'px';
+	div.style.top = /*100 +*/ y + 'px';
 //	div.style.backgroundColor = 'red';
 	div.style.opacity = 1;
 	onChange();
