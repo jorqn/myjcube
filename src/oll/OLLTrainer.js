@@ -1,12 +1,6 @@
 define('oll/OLLTrainer', ['oll/OLLSequence', 'oll/OLLSequenceHTMLDisplay', 'utils/MyQueryString', 'oll/OLLConfigDisplay'],
 function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
     "use strict";
-    function isMobile() {
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	    return true;
-	}
-	return false;
-    }
     var doZoom;
     function updateZoom() {
 	if(doZoom) {
@@ -17,7 +11,7 @@ function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
 //	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQuery');
 //	}
-	doZoom = isMobile();
+	doZoom = window.mobileMode;
 	updateZoom();
 	window.addEventListener('resize', updateZoom);
         var only = MyQueryString.getIntValue('only');

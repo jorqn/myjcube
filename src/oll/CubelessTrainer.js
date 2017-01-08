@@ -144,13 +144,6 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var buttonHeight = 30;//Math.floor(3*buttonWidth/7);
     var doZoom;
 
-    function isMobile() {
-	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-	    return true;
-	}
-	return false;
-    }
-
     function updateZoom() {
 	if(doZoom) {
 	    document.body.style.margin = 0;
@@ -170,7 +163,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	//     document.body.style.zoom = 1;
 	// }
 
-	doZoom = isMobile();
+	doZoom = window.mobileMode;
 	updateZoom();
 	window.addEventListener('resize', updateZoom);
 
