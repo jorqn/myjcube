@@ -7,14 +7,19 @@ function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
 	}
 	return false;
     }
+    var doZoom;
+    function updateZoom() {
+	if(doZoom) {
+	    document.body.style.zoom = window.innerWidth / 350;
+	}
+    }
     return function OLLTrainer() {
 //	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQuery');
 //	}
-	var doZoom = isMobile();
-	if(doZoom) {
-	    document.body.style.zoom = window.innerWidth / 350;
-	}
+	doZoom = isMobile();
+	updateZoom();
+	window.addEventListener('resize', updateZoom);
         var only = MyQueryString.getIntValue('only');
 	var sequence;
         var length;

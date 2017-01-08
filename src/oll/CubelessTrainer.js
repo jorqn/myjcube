@@ -151,6 +151,14 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	return false;
     }
 
+    function updateZoom() {
+	if(doZoom) {
+	    document.body.style.margin = 0;
+	    var zoomFactor = window.innerWidth / (3*(buttonWidth));
+	    document.body.style.zoom = zoomFactor;
+	}
+    }
+
     return function OLLTrainer() {
 //	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQueryCubeless');
@@ -163,11 +171,9 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	// }
 
 	doZoom = isMobile();
-	if(doZoom) {
-	    document.body.style.margin = 0;
-	    var zoomFactor = window.innerWidth / (3*(buttonWidth));
-	    document.body.style.zoom = zoomFactor;
-	}
+	updateZoom();
+	window.addEventListener('resize', updateZoom);
+
 
         var only = MyQueryString.getIntValue('only');
         var length;
