@@ -260,7 +260,6 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}
 	console.log(lists);
 	var args = "write=true&length="+this.sequenceLength.value, key;
-        args += "&zoom="+(this.zoomCheckbox.checked ? "true" : "false");
 	for(key in lists) {
 	    if(key != 'normal') {
 		args += "&";

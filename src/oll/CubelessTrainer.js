@@ -117,8 +117,9 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 //	splashDiv.style.opacity = 0;
 	splashDiv.style.pointerEvents = "none";
 	splashDiv.style.opacity = 1;
-	var x = Math.floor(event.pageX/ document.body.style.zoom - width/2);
-	var y = Math.floor(event.pageY/ document.body.style.zoom - height/2);
+	var zoom = window.mobileMode ? document.body.style.zoom : 1;
+	var x = Math.floor(event.pageX/ zoom - width/2);
+	var y = Math.floor(event.pageY/ zoom - height/2);
 	splashDiv.style.top = y + 'px';//nextSplashIndex * 48;
 	splashDiv.style.left = x + 'px';//nextSplashIndex * 48;
 	var interval = setInterval(function () {
