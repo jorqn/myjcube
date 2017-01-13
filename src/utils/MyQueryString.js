@@ -44,13 +44,15 @@ define('utils/MyQueryString', [], function () {
 
     var MyQueryString = {
 	addFromCookie: function(name) {
-	    var cookie = readCookie(name);
-	    if(cookie) {
-		var cookieObject = createObject(cookie.replace(/@/g,'='));
-		var key;
-		for(key in cookieObject) {
-		    if(!QueryString.hasOwnProperty(key)) {
-			QueryString[key] = cookieObject[key];
+	    if(!this.getBoolValue('urlargs')) {
+		var cookie = readCookie(name);
+		if(cookie) {
+		    var cookieObject = createObject(cookie.replace(/@/g,'='));
+		    var key;
+		    for(key in cookieObject) {
+			if(!QueryString.hasOwnProperty(key)) {
+			    QueryString[key] = cookieObject[key];
+			}
 		    }
 		}
 	    }

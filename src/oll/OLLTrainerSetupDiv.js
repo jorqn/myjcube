@@ -72,6 +72,10 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
             _this.saveSettings();
             window.location.href = _this.trainerPage;
 	});
+	this.openTrainingWithoutSavingButton = this.createButton("Start without saving", function() {
+	    var args = _this.getSaveArgs();
+	    window.open(_this.trainerPage + "?urlargs=true&" + args);
+	});
 	this.sequenceLength = document.createElement('input');
 	
 	this.sequenceLength.value = MyQueryString.getIntValue('length') || 25;
@@ -102,6 +106,8 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}));
 	this.div.appendChild(document.createTextNode(" - "));
 	this.div.appendChild(this.openTrainingButton);
+	this.div.appendChild(document.createElement('br'));
+	this.div.appendChild(this.openTrainingWithoutSavingButton);
 	this.div.appendChild(document.createElement('br'));
 	this.div.appendChild(document.createElement('br'));
 
@@ -173,7 +179,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	var canvas = this.ollConfigDisplay.createCanvas(id);
         var _this = this;
         if(this.enableOnly) {
-            canvas.addEventListener('click', function() {
+            canvas.addEventListener('dblclick', function() {
                 window.open(_this.trainerPage + "?only=" + id);
             });
             canvas.style.cursor = 'hand';
@@ -248,32 +254,36 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 
 	return select;
     };
+       OLLTrainerSetupDiv.prototype.getSaveArgs = function() {
+	   var lists = {};
+	   var i, value;
+	   for(i = 0; i < this.selects.length; i++) {
+	       value = this.selects[i].value;
+	       if(!lists[value]) {
+		   lists[value] = [];
+	       }
+	       lists[value].push(this.selects[i].configId);
+	   }
+	   console.log(lists);
+	   var args = "length="+this.sequenceLength.value, key;
+	   for(key in lists) {
+	       if(key != 'normal') {
+		   args += "&";
+		   args += key + "=";
+		   for(i = 0; i < lists[key].length;i++) {
+		       if(i > 0) {
+			   args+=",";
+		       }
+		       args+=lists[key][i];
+		   }
+	       }
+	   }
+	   return args;
+       };
     OLLTrainerSetupDiv.prototype.saveSettings = function() {
-	var lists = {};
-	var i, value;
-	for(i = 0; i < this.selects.length; i++) {
-	    value = this.selects[i].value;
-	    if(!lists[value]) {
-		lists[value] = [];
-	    }
-	    lists[value].push(this.selects[i].configId);
-	}
-	console.log(lists);
-	var args = "write=true&length="+this.sequenceLength.value, key;
-	for(key in lists) {
-	    if(key != 'normal') {
-		args += "&";
-		args += key + "=";
-		for(i = 0; i < lists[key].length;i++) {
-		    if(i > 0) {
-			args+=",";
-		    }
-		    args+=lists[key][i];
-		}
-	    }
-	}
 	var exdays = 60;
 	var d = new Date();
+	var args = this.getSaveArgs();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = "expires="+d.toUTCString();
 	document.cookie = "trainerQuery" + this.cookieSuffix + "="+ args.replace(/=/g, "@") + "; " + expires ;
