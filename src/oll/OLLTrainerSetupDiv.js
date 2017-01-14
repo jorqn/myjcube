@@ -69,6 +69,9 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}
 	this.div = document.createElement('div');
 	this.openTrainingButton = this.createButton("<b>Start training</b>", function() {
+	    if(window.mobileMode && !confirm('Save settings and start training ?')) {
+		return;
+	    }
             _this.saveSettings();
             window.location.href = _this.trainerPage;
 	});
@@ -102,6 +105,9 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 
 	var _this = this;
 	this.div.appendChild(this.createButton("Save settings", function() {
+	    if(window.mobileMode && !confirm('Save settings ?')) {
+		return;
+	    }
             _this.saveSettings();
 	}));
 	this.div.appendChild(document.createTextNode(" - "));
