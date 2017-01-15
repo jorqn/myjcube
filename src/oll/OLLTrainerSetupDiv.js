@@ -107,7 +107,8 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.div.appendChild(this.createButton("Save settings", function() {
 	    if(window.mobileMode && !confirm('Save settings ?')) {
 		return;
-	    } else {
+	    }
+	    if(!window.mobileMode) {
 		alert('Settings saved');
 	    }
             _this.saveSettings();
