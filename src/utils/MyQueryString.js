@@ -57,11 +57,11 @@ define('utils/MyQueryString', [], function () {
 		}
 	    }
 	},
-	saveToCookie: function(name, exdays) {
+	saveToCookie: function(name, exdays, keys) {
 	    var d = new Date();
 	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	    var expires = "expires="+d.toUTCString();
-	    document.cookie = name + "="+ MyQueryString.toQueryString().replace(/=/g, "@") + "; " + expires ;
+	    document.cookie = name + "="+ MyQueryString.toQueryString(keys).replace(/=/g, "@") + "; " + expires ;
 	},
         getBoolValue: function(name) {
             return this.getValue(name) === "true";
@@ -71,6 +71,9 @@ define('utils/MyQueryString', [], function () {
 	},
 	setValue: function(name, value) {
 	    QueryString[name] = value;
+	},
+	setArrayValue: function(name, value) {
+	    QueryString[name] = this.arrayToQueryStringValue(value);
 	},
 	getIntValue: function(name) {
 	    return QueryString[name] !== undefined ? parseInt(QueryString[name]) : null;
@@ -101,11 +104,11 @@ define('utils/MyQueryString', [], function () {
 	    }
 	    return value;
 	},
-	toQueryString: function() {
+	toQueryString: function(keys) {
 	    var key;
 	    var rval = "";
 	    for(key in QueryString) {
-		if(key !== "") {
+		if(key !== "" && (!keys || keys.indexOf(key) >= 0)) {
 		     if(rval !== "") {
 			 rval += "&";
 		     }

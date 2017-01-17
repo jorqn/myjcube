@@ -23,6 +23,9 @@ define('oll/OLLSequence', ['oll/OLLConfigs'], function(OLLConfigs) {
 	}
     };
 
+    OLLCleverSequence.prototype.onSuccess = function(index) {
+    };
+    
     OLLSequence.prototype.buildMelange = function () {
 	this.melange = [];
 	this.melange = this.melange.concat(this.easyCases);

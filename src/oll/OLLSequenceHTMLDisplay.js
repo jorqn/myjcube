@@ -3,6 +3,7 @@ define('oll/OLLSequenceHTMLDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
     var OLLSequenceHTMLDisplay = function(ollSequence, ollConfigDisplay) {
 	this.ollConfigDisplay = ollConfigDisplay;
 	this.div = document.createElement('div');
+	this.ollSequence = ollSequence;
 	var i;
 	for(i = 0; i < ollSequence.sequence.length; i++) {
 	    this.div.appendChild(this.createElement(i+1, ollSequence.sequence[i]));
@@ -19,12 +20,13 @@ define('oll/OLLSequenceHTMLDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
 	var a = document.createElement('a');
 	a.className = "sequence";
 	a.innerHTML = idx + ": " + config.getTrainingSequence();
-
+	var _this = this;
 	function updateDisplay() {
 	    if(!checkBox.checked) {
 		a.style.opacity = 1;
 	    } else {
 		a.style.opacity = 0.2;
+		_this.ollSequence.onSuccess(idx-1);
 	    }
 	}
 	a.onclick = function() {

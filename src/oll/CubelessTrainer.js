@@ -1,5 +1,5 @@
-define('oll/CubelessTrainer', ['oll/OLLSequence', 'utils/MyQueryString', 'oll/OLLConfigDisplay', 'oll/OLLConfigs'],
-function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
+define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', 'oll/OLLConfigDisplay', 'oll/OLLConfigs'],
+function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     "use strict";
     // added comment
     var currentSequence;
@@ -69,6 +69,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	updateDisplay();
         var win = false;
 	if(currentSequence === currentConfig.getSolution()) {
+	    sequence.onSuccess(currentIndex);
             win = true;
 	    if(currentIndex+1 === sequence.sequence.length) {
 		alert('You win');
@@ -172,7 +173,7 @@ function(OLLSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
         var only = MyQueryString.getIntValue('only');
         var length;
         if(only === null) {
-            sequence = new OLLSequence({
+            sequence = new OLLCleverSequence({
 	        excludeCases: MyQueryString.getIntArrayValue('exclude'),
 	        easyCases: MyQueryString.getIntArrayValue('easy'),
 	        hardCases: MyQueryString.getIntArrayValue('hard'),

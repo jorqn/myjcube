@@ -1,5 +1,5 @@
-define('oll/OLLTrainer', ['oll/OLLSequence', 'oll/OLLSequenceHTMLDisplay', 'utils/MyQueryString', 'oll/OLLConfigDisplay'],
-function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
+define('oll/OLLTrainer', ['oll/OLLCleverSequence', 'oll/OLLSequenceHTMLDisplay', 'utils/MyQueryString', 'oll/OLLConfigDisplay'],
+function(OLLCleverSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
     "use strict";
     var doZoom;
     function updateZoom() {
@@ -18,7 +18,7 @@ function(OLLSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisplay) {
 	var sequence;
         var length;
         if(only === null) {
-            sequence = new OLLSequence({
+            sequence = new OLLCleverSequence({
 	        excludeCases: MyQueryString.getIntArrayValue('exclude'),
 	        easyCases: MyQueryString.getIntArrayValue('easy'),
 	        hardCases: MyQueryString.getIntArrayValue('hard'),
