@@ -35,6 +35,13 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     function updateDisplay() {
 	sequenceDisplayDiv.innerHTML = sequenceDisplay || "Type the right sequence...";
     }
+    function setLastPushedButton(button) {
+	resetLastPushedButton();
+	lastPushedButton = button;
+	if(lastPushedButton) {
+            lastPushedButton.style.color = "red";
+	}
+    }
     function resetLastPushedButton() {
         if(lastPushedButton) {
             lastPushedButton.style.color = "";
@@ -42,43 +49,53 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
         }
     }
     function onUndo() {
-        resetLastPushedButton();
+//        resetLastPushedButton();
 	if(undoStack.length) {
 	    var item = undoStack.pop();
-	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
 	    currentSequence = item.currentSequence || "";
 	    sequenceDisplay = item.sequenceDisplay || "";
+	    setLastPushedButton(item.button);
 	    updateDisplay();
+	} else {
+	    resetLastPushedButton();
 	}
     }
 
     function onRedo() {
 	if(redoStack.length) {
 	    var item = redoStack.pop();
-	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
+	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
 	    currentSequence = item.currentSequence || "";
 	    sequenceDisplay = item.sequenceDisplay || "";
+	    setLastPushedButton(item.button);
 	    updateDisplay();
 	}
     }
-    function onAction(action, display, event) {
-	undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay});
-	redoStack = [];
-	currentSequence += action;
-	sequenceDisplay += display;
-	updateDisplay();
-        var win = false;
-	if(currentSequence === currentConfig.getSolution()) {
-	    sequence.onSuccess(currentIndex);
-            win = true;
-	    if(currentIndex+1 === sequence.sequence.length) {
-		alert('You win');
-	    } else {
-		startSequence(currentIndex+1);
+    function onAction(action, display, event, button) {
+        if(lastPushedButton === button) {
+            splashText(null, event);
+            onUndo();
+        } else {
+	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
+	    setLastPushedButton(button);
+	    redoStack = [];
+	    currentSequence += action;
+	    sequenceDisplay += display;
+	    updateDisplay();
+            var win = false;
+	    if(currentSequence === currentConfig.getSolution()) {
+		sequence.onSuccess(currentIndex);
+		win = true;
+		if(currentIndex+1 === sequence.sequence.length) {
+		    alert('You win');
+		} else {
+		    startSequence(currentIndex+1);
+		}
 	    }
-	}
-	if(doZoom || win) {
-	    splashText(display, event, win);
+	    if(doZoom || win) {
+		splashText(display, event, win);
+	    }
 	}
     }
     function onSkip() {
@@ -460,19 +477,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    button.style.width = buttonWidth;
 	    button.style.height = buttonHeight;
 	    button.addEventListener('click', function (event) {
-                if(lastPushedButton === button) {
-                    if(doZoom) {
-                        splashText(null, event);
-                    }
-                    onUndo();
-                } else {
-                    if(lastPushedButton) {
-                        lastPushedButton.style.color = "";
-                    }
-                    lastPushedButton = button;
-                    button.style.color = 'red';
-		    onAction(action, text, event);
-                }
+		onAction(action, text, event, button);
 	    });
 	    return button;
 	}
