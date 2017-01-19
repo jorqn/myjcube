@@ -201,7 +201,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    sequence.buildSequence(length);
         } else {
             length = 1;
-            sequence = { sequence: [only]};
+            sequence = { sequence: [only], onSuccess: function () {} };
         }
 
         // if(MyQueryString.getBoolValue("write") && only === null) {

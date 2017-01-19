@@ -29,7 +29,7 @@ function(OLLCleverSequence, OLLSequenceHTMLDisplay, MyQueryString, OLLConfigDisp
 	    sequence.buildSequence(length);
         } else {
             length = 1;
-            sequence = { sequence: [only]};
+            sequence = { sequence: [only], onSuccess: function () {} };
         }
 //	MyQueryString.setValue("write", true);
         // if(MyQueryString.getBoolValue("write") && only === null) {
