@@ -77,7 +77,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}
 
 	addAllToButton('exclude');
-	_this.div.appendChild(document.createTextNode(" - "));
+//	_this.div.appendChild(document.createTextNode(" - "));
 //	addAllToButton('easy');
 	if(window.mobileMode) {
 	    _this.div.appendChild(document.createElement("br"));
@@ -85,7 +85,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	    _this.div.appendChild(document.createTextNode(" - "));
 	}
 	addAllToButton('normal');
-	_this.div.appendChild(document.createTextNode(" - "));
+//	_this.div.appendChild(document.createTextNode(" - "));
 //	addAllToButton('hard');
 	if(window.mobileMode) {
 	    _this.div.appendChild(document.createElement("br"));
