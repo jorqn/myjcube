@@ -22,49 +22,6 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.layout = layout;
 	this.cookieSuffix = cookieSuffix || "";
 	this.somethingHasChanged = false;
-	// var layout = [[49, 50],
-	// 	      [51, 52],
-	// 	      [55, 56],
-	// 	      [57],
-	// 	      [],
-	// 	      [1,2],
-	// 	      [3,4],
-	// 	      [5,6],
-	// 	      [7,30],
-	// 	      [],
-	// 	      [47,48],
-	// 	      [],
-	// 	      [45,46],
-	// 	      [],
-	// 	      [20,21],
-	// 	      [],
-	// 	      [22,23],
-	// 	      [24,25],
-	// 	      [43,44],
-	// 	      [],
-	// 	      [8,9],
-	// 	      [10,11],
-	// 	      [],
-	// 	      [35,36],
-	// 	      [37,38],
-	// 	      [],
-	// 	      [12,13],
-	// 	      [14,15],
-	// 	      [16,17],
-	// 	      [],
-	// 	      [33,34],
-	// 	      [],
-	// 	      [18,19],
-	// 	      [31,32],
-	// 	      [],
-	// 	      [26,27],
-	// 	      [28,29],
-	// 	      [],
-	// 	      [39,40],
-	// 	      [41,42],
-	// 	      [],
-	// 	      [53,54]
-	// 	     ];
 	if(!MyQueryString.getValue('write')) {
 	    MyQueryString.addFromCookie('trainerQuery'+this.cookieSuffix);
 	}
@@ -90,24 +47,6 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.sequenceLength.addEventListener('input', function() {
 	    _this.notifyChange();
 	});
-
-	// this.resetButton = document.createElement("input");
-	// this.resetButton.type = "button";
-	// this.resetButton.value = "Reset";
-	// this.resetButton.onclick = function() {
-	//     window.location.href = "OLLTrainerSetup.html?write=true";
-	// }
-
-        // this.zoomCheckbox = document.createElement('input');
-        // this.zoomCheckbox.type = 'checkbox';
-        // this.zoomCheckbox.id = 'zoomCheckbox';
-        // this.zoomCheckbox.checked = MyQueryString.getBoolValue('zoom') ? true : false;
-        // this.zoomCheckbox.addEventListener('change', function (event) {
-        //     MyQueryString.setValue('zoom', event.target.checked);
-        // });
-        // var label = document.createElement('label');
-        // label.for = 'zoomCheckbox';
-        // label.innerHTML = 'Enable zoom';
 
 	var _this = this;
 	this.saveButton = this.createButton("Save settings", function() {
@@ -139,7 +78,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 
 	addAllToButton('exclude');
 	_this.div.appendChild(document.createTextNode(" - "));
-	addAllToButton('easy');
+//	addAllToButton('easy');
 	if(window.mobileMode) {
 	    _this.div.appendChild(document.createElement("br"));
 	} else {
@@ -147,7 +86,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	}
 	addAllToButton('normal');
 	_this.div.appendChild(document.createTextNode(" - "));
-	addAllToButton('hard');
+//	addAllToButton('hard');
 	if(window.mobileMode) {
 	    _this.div.appendChild(document.createElement("br"));
 	} else {
@@ -157,15 +96,11 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	this.div.appendChild(document.createElement('br'));
 	this.div.appendChild(document.createTextNode("Sequence length: "));
 	this.div.appendChild(this.sequenceLength);
-        // this.div.appendChild(document.createTextNode(' '));
-        // this.div.appendChild(this.zoomCheckbox);
-        // this.div.appendChild(label);
 
-//	this.div.appendChild(this.resetButton);
 	this.initLists = {
 	    exclude: MyQueryString.getIntArrayValue('exclude'),
-	    easy: MyQueryString.getIntArrayValue('easy'),
-	    hard: MyQueryString.getIntArrayValue('hard'),
+//	    easy: MyQueryString.getIntArrayValue('easy'),
+//	    hard: MyQueryString.getIntArrayValue('hard'),
 	    new: MyQueryString.getIntArrayValue('new')
 	};
 
@@ -187,7 +122,6 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	    } else {
 		y += 40;
 	    }
-//	    this.div.appendChild(document.createElement('br'));
 	}
     };
     OLLTrainerSetupDiv.prototype.notifyChange = function() {
@@ -210,18 +144,18 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 		canvas.style.opacity = 1;
 		canvas.style.backgroundColor = "gray";
 		break;
-	    case 'hard':
-		canvas.style.opacity = 1;
-		canvas.style.backgroundColor = "orange";
-		break;
+	    // case 'hard':
+	    // 	canvas.style.opacity = 1;
+	    // 	canvas.style.backgroundColor = "orange";
+	    // 	break;
 	    case 'new':
 		canvas.style.opacity = 1;
 		canvas.style.backgroundColor = "red";
 		break;
-	    case 'easy':
-		canvas.style.opacity = 1;
-		canvas.style.backgroundColor = "lightGreen";
-		break;
+	    // case 'easy':
+	    // 	canvas.style.opacity = 1;
+	    // 	canvas.style.backgroundColor = "lightGreen";
+	    // 	break;
 	    default:
 		canvas.style.opacity = 1;
 		canvas.style.backgroundColor = "transparent";
@@ -253,9 +187,9 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	var select = document.createElement('select');
 	var options = [
 	    {text: 'Exclude', value: 'exclude'},
-	    {text: 'Easy', value: 'easy'},
+//	    {text: 'Easy', value: 'easy'},
 	    {text: 'Normal', value: 'normal'},
-	    {text: 'Hard', value: 'hard'},
+//	    {text: 'Hard', value: 'hard'},
 	    {text: 'New', value: 'new'}
 	];
 	var i, option;
@@ -277,12 +211,12 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	return select;
     };
        OLLTrainerSetupDiv.prototype.getSaveArgs = function() {
-	   var lists = {};
+	   var lists = { exclude: [], new: [], normal: []};
 	   var i, value;
 	   for(i = 0; i < this.selects.length; i++) {
 	       value = this.selects[i].value;
 	       if(!lists[value]) {
-		   lists[value] = [];
+		   alert('Unknown list');
 	       }
 	       lists[value].push(this.selects[i].configId);
 	   }
@@ -292,11 +226,15 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	       if(key != 'normal') {
 		   args += "&";
 		   args += key + "=";
-		   for(i = 0; i < lists[key].length;i++) {
-		       if(i > 0) {
-			   args+=",";
+		   if(lists[key].length) {
+		       for(i = 0; i < lists[key].length;i++) {
+			   if(i > 0) {
+			       args+=",";
+			   }
+			   args+=lists[key][i];
 		       }
-		       args+=lists[key][i];
+		   } else {
+		       args += "empty";
 		   }
 	       }
 	   }
@@ -309,16 +247,8 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = "expires="+d.toUTCString();
 	document.cookie = "trainerQuery" + this.cookieSuffix + "="+ args.replace(/=/g, "@") + "; " + expires ;
-//        window.location.href = pageURL + (save ? "?"+args : "");
-//	window.open("OLLTrainer.html"+args);
     }
     OLLTrainerSetupDiv.prototype.createButton = function(text, onclick) {
-	// var button;
-	// button = document.createElement("input");
-	// button.type = "button";
-	// button.value = text;
-	// button.onclick = onclick;
-	// return button;
 	var button;
 	button = document.createElement("a");
 	button.className = 'button';

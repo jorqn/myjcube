@@ -13,18 +13,18 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
 	}
 
 	this.excludeCases = params.excludeCases || [];
-	this.easyCases = params.easyCases || [];
+//	this.easyCases = params.easyCases || [];
 	this.newCases = params.newCases || [];
-	this.hardCases = params.hardCases || [];
+//	this.hardCases = params.hardCases || [];
 	this.middleCases = [];
 	for(i = 0; i < OLLConfigs.nbOLLConfigs; i++) {
-	    if(this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && this.excludeCases.indexOf(i+1) < 0 && this.newCases.indexOf(i+1) < 0) {
+	    if(/*this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && */this.excludeCases.indexOf(i+1) < 0 && this.newCases.indexOf(i+1) < 0) {
 		this.middleCases.push(i+1);
 	    }
 	}
 	if(params.pll) {
 	    for(i = 1000; i < 1000+OLLConfigs.nbPLLConfigs; i++) {
-		if(this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && this.excludeCases.indexOf(i+1) < 0 && this.newCases.indexOf(i+1) < 0) {
+		if(/*this.easyCases.indexOf(i+1) < 0 && this.hardCases.indexOf(i+1) < 0 && */this.excludeCases.indexOf(i+1) < 0 && this.newCases.indexOf(i+1) < 0) {
 		    this.middleCases.push(i+1);
 		}
 	    }
@@ -69,15 +69,15 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
     
 
 	var lists = {
-	    easyCases: buildCaseList(this.easyCases.concat([])),
+//	    easyCases: buildCaseList(this.easyCases.concat([])),
 	    middleCases: buildCaseList(this.middleCases.concat([])),
-	    hardCases: buildCaseList(this.hardCases.concat([])),
+//	    hardCases: buildCaseList(this.hardCases.concat([])),
 	    newCases: buildCaseList(this.newCases.concat([])),
 	};
 
-	var listHat = [ 'easyCases',
+	var listHat = [ //'easyCases',
 			'middleCases', 'middleCases',
-			'hardCases', 'hardCases', 'hardCases', 'hardCases',
+			//'hardCases', 'hardCases', 'hardCases', 'hardCases',
 			'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases'];
 	function removeEmptyLists() {
 	    var i;

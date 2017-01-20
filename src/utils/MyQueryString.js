@@ -81,6 +81,9 @@ define('utils/MyQueryString', [], function () {
 	getIntArrayValue: function(name,separator) {
 	    var sep = separator || ',';
 	    var value = this.getValue(name);
+	    if(value === 'empty') {
+		return [];
+	    }
 	    if(value) {
 		var valueSplit = value.split(sep);
 		var rval = [];
