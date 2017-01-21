@@ -127,6 +127,18 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
     OLLTrainerSetupDiv.prototype.notifyChange = function() {
 	this.somethingHasChanged = true;
     };
+    function formattedDate(date) {
+	if(!date) return "never"
+	var d = new Date(date || Date.now()),
+            day = '' + d.getDate(),
+            month = '' + (d.getMonth() + 1),
+            year = d.getFullYear();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return [day, month, year].join('/');
+    }
     OLLTrainerSetupDiv.prototype.createDivCase = function(id, x, y) {
 	var div = document.createElement('span');
 	var canvas = this.ollConfigDisplay.createCanvas(id);
@@ -135,6 +147,21 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
             canvas.addEventListener('dblclick', function() {
                 window.open(_this.trainerPage + "?only=" + id);
             });
+	    var timeout;
+	    canvas.addEventListener('mousedown', function() {
+		timeout = setTimeout(function() {
+		    var timeMap =  MyQueryString.getIntMapValue('timeStamps');
+		    var counterMap = MyQueryString.getIntMapValue('counter');
+		    var date = formattedDate(timeMap[id]);
+		    alert('Training count: ' + (counterMap[id] || 0) + '\n' + 'Last date: ' + date);
+		}, 1000);
+	    });
+	    canvas.addEventListener('mouseup', function() {
+		clearTimeout(timeout);
+	    });
+	    canvas.addEventListener('mouseout', function() {
+		clearTimeout(timeout);
+	    });
             canvas.style.cursor = 'hand';
         }
 	div.appendChild(canvas);

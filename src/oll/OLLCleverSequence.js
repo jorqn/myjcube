@@ -3,14 +3,21 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
     var OLLCleverSequence = function(params) {
 	params = params || {};
 
-	this.timeMap = {};
 	this.cookieName = params.pll ? "PLLHistory" : "OLLHistory";
 	MyQueryString.addFromCookie(this.cookieName);
-	var timeValues = MyQueryString.getIntArrayValue("timeStamps") || [];
-	var i = 0;
-	for(i = 0; i < timeValues.length; i+= 2) {
-	    this.timeMap[timeValues[i]] = timeValues[i+1];
-	}
+	this.timeMap = MyQueryString.getIntMapValue("timeStamps");
+	this.counterMap = MyQueryString.getIntMapValue("counter");
+	var i;
+	// var timeValues = MyQueryString.getIntArrayValue("timeStamps") || [];
+	// var i = 0;
+	// for(i = 0; i < timeValues.length; i+= 2) {
+	//     this.timeMap[timeValues[i]] = timeValues[i+1];
+	// }
+	// var counterMap = {};
+	// var counterValues = MyQueryString.getIntArrayValue("counter");
+	// for(i = 0; i < counterValues.length; i+= 2) {
+	//     this.counterMap[counterValues[i]] = counterValues[i+1];
+	// }
 
 	this.excludeCases = params.excludeCases || [];
 //	this.easyCases = params.easyCases || [];
@@ -33,14 +40,24 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
 
     OLLCleverSequence.prototype.onSuccess = function(index) {
 	var time = (new Date()).getTime();
-	this.timeMap[this.sequence[index]] = time;
-	var timeValues = [];
-	var key;
-	for(key in this.timeMap) {
-	    timeValues.push(key, this.timeMap[key]);
-	}
-	MyQueryString.setArrayValue("timeStamps", timeValues);
-	MyQueryString.saveToCookie(this.cookieName, 60, ["timeStamps"]);
+	var id = this.sequence[index];
+	this.timeMap[id] = time;
+	var oldCounter = this.counterMap[id] || 0;
+	this.counterMap[id] = oldCounter+1;
+	// var timeValues = [];
+	// var key;
+	// for(key in this.timeMap) {
+	//     timeValues.push(key, this.timeMap[key]);
+	// }
+	// MyQueryString.setArrayValue("timeStamps", timeValues);
+	// var counterValues = [];
+	// for(key in this.counterMap) {
+	//     counterValues.push(key, this.counterMap[key]);
+	// }
+	// MyQueryString.setArrayValue("counter", counterValues);
+	MyQueryString.setMapValue("timeStamps", this.timeMap);
+	MyQueryString.setMapValue("counter", this.counterMap);
+	MyQueryString.saveToCookie(this.cookieName, 60, ["timeStamps", "counter"]);
     };
 
     OLLCleverSequence.prototype.buildSequence = function(length) {

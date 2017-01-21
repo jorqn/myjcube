@@ -1,7 +1,8 @@
-define('oll/CubelessTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay'],
-function(OLLTrainerSetupDiv, OLLConfigDisplay) {
+define('oll/CubelessTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay', 'utils/MyQueryString'],
+function(OLLTrainerSetupDiv, OLLConfigDisplay, MyQueryString) {
     "use strict";
     return function CubeLessTrainerSetup() {
+	MyQueryString.addFromCookie("PLLHistory");
 	var configDisplay = new OLLConfigDisplay();
 	var layout;
 	if(!window.mobileMode) {

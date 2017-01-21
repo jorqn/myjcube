@@ -1,7 +1,8 @@
-define('oll/OLLTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay'],
-function(OLLTrainerSetupDiv, OLLConfigDisplay) {
+define('oll/OLLTrainerSetup', ['oll/OLLTrainerSetupDiv', 'oll/OLLConfigDisplay', 'utils/MyQueryString'],
+function(OLLTrainerSetupDiv, OLLConfigDisplay, MyQueryString) {
     "use strict";
     return function OLLTrainerSetup() {
+	MyQueryString.addFromCookie("OLLHistory");
 	var configDisplay = new OLLConfigDisplay();
 	var layout;
 	if(!window.mobileMode) {

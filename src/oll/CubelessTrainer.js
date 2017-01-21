@@ -13,6 +13,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var undoStack = [];
     var redoStack = [];
     var lastPushedButton = null;
+    var only;
 
     function startSequence(index) {
 	undoStack = [];
@@ -30,6 +31,30 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	}
 	canvasContainer.appendChild(canvas);
 	currentIndex = index;
+	if(index > 0 && window.mobileMode) {
+	    splashConfig(sequence.sequence[index]);
+	}
+    }
+
+    function splashConfig(index) {
+	var ollConfigDisplay = new OLLConfigDisplay();
+	var canvas = ollConfigDisplay.createCanvas(index);
+	canvas.style.position = "absolute";
+	canvas.style.pointerEvents = 'none';
+	var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+	var zoom = document.body.style.zoom;
+	canvas.style.top = (scrollTop/zoom+((window.innerHeight/zoom - canvas.height) / 2)) + "px";
+	canvas.style.left = ((window.innerWidth/zoom - canvas.width) / 2) + "px";
+	canvas.style.opacity = 1;
+	document.body.appendChild(canvas);
+	var interval = setInterval(function() {
+	    var opacity = 0.95 * canvas.style.opacity;
+	    canvas.style.opacity = opacity;
+	    if(opacity < 0.5) {
+		clearInterval(interval);
+		document.body.removeChild(canvas);
+	    }
+	}, 50)
     }
 
     function updateDisplay() {
@@ -88,12 +113,17 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 		sequence.onSuccess(currentIndex);
 		win = true;
 		if(currentIndex+1 === sequence.sequence.length) {
-		    alert('You win');
+		    if(!only) {
+			alert('You win');
+		    } else {
+			onRestart();
+		    }
 		} else {
 		    startSequence(currentIndex+1);
 		}
 	    }
-	    if(doZoom || win) {
+	    if((doZoom && !win)
+	       || (!doZoom && win)) {
 		splashText(display, event, win);
 	    }
 	}
@@ -187,7 +217,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	window.addEventListener('resize', updateZoom);
 
 
-        var only = MyQueryString.getIntValue('only');
+        only = MyQueryString.getIntValue('only');
         var length;
         if(only === null) {
             sequence = new OLLCleverSequence({

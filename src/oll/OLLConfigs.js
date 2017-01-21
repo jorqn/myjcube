@@ -622,6 +622,19 @@ define('oll/OLLConfigs', [], function() {
 	getConfig: function(configId) {
 	    return new OLLConfig(configId);
 	},
+	getAllConfigs: function(pll) {
+	    var result = [];
+	    var i;
+	    for(i = 0; i < this.nbOLLConfigs; i++) {
+		result.push(new OLLConfig(i+1));
+	    }
+	    if(pll) {
+		for(i = 0; i < this.nbPLLConfigs; i++) {
+		    result.push(new OLLConfig(1001+i));
+		}
+	    }
+	    return result;
+	},
 	nbOLLConfigs: 57,
 	nbPLLConfigs: 21
     };

@@ -75,6 +75,15 @@ define('utils/MyQueryString', [], function () {
 	setArrayValue: function(name, value) {
 	    QueryString[name] = this.arrayToQueryStringValue(value);
 	},
+	setMapValue: function(name, map) {
+	    var values = [];
+	    var key;
+	    for(key in map) {
+		values.push(key, map[key]);
+	    }
+	    this.setArrayValue(name, values);
+	    
+	},
 	getIntValue: function(name) {
 	    return QueryString[name] !== undefined ? parseInt(QueryString[name]) : null;
 	},
@@ -95,6 +104,16 @@ define('utils/MyQueryString', [], function () {
 	    } else {
 		return null;
 	    }
+	},
+	getIntMapValue: function(name, separator) {
+	    var sep = separator || ',';
+	    var values = this.getIntArrayValue(name, sep);
+	    var i = 0;
+	    var map = {};
+	    for(i = 0; values && i < values.length; i+= 2) {
+		map[values[i]] = values[i+1];
+	    }
+	    return map;
 	},
 	arrayToQueryStringValue: function(arrayValue,separator) {
 	    var sep = separator || ',';
