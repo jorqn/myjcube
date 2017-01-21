@@ -247,6 +247,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString'], function(MyQueryString
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));
 	var expires = "expires="+d.toUTCString();
 	document.cookie = "trainerQuery" + this.cookieSuffix + "="+ args.replace(/=/g, "@") + "; " + expires ;
+	this.somethingHasChanged = false;
     }
     OLLTrainerSetupDiv.prototype.createButton = function(text, onclick) {
 	var button;
