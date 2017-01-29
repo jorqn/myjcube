@@ -195,8 +195,15 @@ define("cube/Cube", ['cube/Face'], function(Face) {
 	} else {
 	    this.rotateAll(cmd.axis, cmd.direction, newCube);
 	}
-return newCube;
-    }
+	return newCube;
+    };
+    Cube.prototype.executeCommands = function(commands) {
+	var i, cube = this;
+	for(i = 0; i < commands.length; i++) {
+	    cube = cube.executeCommand(commands[i]);
+	}
+	return cube;
+    };
     Cube.prototype.isSolved = function(checkOrientation) {
 	var key;
 	for(key in this.faces) {

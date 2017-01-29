@@ -13,15 +13,20 @@ define("cube/Interpreter", [], function() {
 		}
 	    }
 	    var tab = [];
-	    var k = 0, c;
+	    var k = 0, c, dbl = false;
 	    while(k < command.length) {
 		c = command.charAt(k);
 		if(c === '2') {
 		    tab.push(tab[tab.length-1]);
+		    dbl = true;
 		} else if(c === "'" || c === "p") {
-		    tab[tab.length-1] += "'";
+		    if(!dbl) {
+			tab[tab.length-1] += "'";
+		    }
+		    dbl = false;
 		} else {
 		    tab.push(c);
+		    dbl = false;
 		}
 		k++;
 	    }

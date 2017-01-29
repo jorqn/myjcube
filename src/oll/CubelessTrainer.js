@@ -1,5 +1,5 @@
-define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', 'oll/OLLConfigDisplay', 'oll/OLLConfigs'],
-function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
+define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', 'oll/OLLConfigDisplay', 'oll/OLLConfigs', 'cube/Interpreter'],
+       function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs, Interpreter) {
     "use strict";
     // added comment
     var currentSequence;
@@ -13,6 +13,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
     var undoStack = [];
     var redoStack = [];
     var lastPushedButton = null;
+    var cube = null;
     var only;
 
     function startSequence(index) {
@@ -73,13 +74,22 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
             lastPushedButton = null;
         }
     }
+
+	   function setCurrentSequence(formula, display) {
+	       formula = formula || "";
+	       display = display || "";
+	       cube = currentConfig.buildCube();
+	       var commands = Interpreter.parse(formula);
+	       cube = cube.executeCommands(commands);
+	       currentSequence = formula;
+	       sequenceDisplay = display;
+	   }
     function onUndo() {
 //        resetLastPushedButton();
 	if(undoStack.length) {
 	    var item = undoStack.pop();
 	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
-	    currentSequence = item.currentSequence || "";
-	    sequenceDisplay = item.sequenceDisplay || "";
+	    setCurrentSequence(item.currentSequence, item.sequenceDisplay);
 	    setLastPushedButton(item.button);
 	    updateDisplay();
 	} else {
@@ -91,8 +101,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	if(redoStack.length) {
 	    var item = redoStack.pop();
 	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
-	    currentSequence = item.currentSequence || "";
-	    sequenceDisplay = item.sequenceDisplay || "";
+	    setCurrentSequence(item.currentSequence, item.sequenceDisplay);
 	    setLastPushedButton(item.button);
 	    updateDisplay();
 	}
@@ -105,11 +114,13 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
 	    setLastPushedButton(button);
 	    redoStack = [];
+	    cube = cube.executeCommands(Interpreter.parse(action));
+	    var solved = cube.isSolved();
 	    currentSequence += action;
 	    sequenceDisplay += display;
 	    updateDisplay();
             var win = false;
-	    if(currentSequence === currentConfig.getSolution()) {
+	    if(solved /*currentSequence === currentConfig.getSolution()*/) {
 		sequence.onSuccess(currentIndex);
 		win = true;
 		if(currentIndex+1 === sequence.sequence.length) {
@@ -123,7 +134,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
 		}
 	    }
 	    if((doZoom && !win)
-	       || (!doZoom && win)) {
+	       || ((!doZoom || only) && win)) {
 		splashText(display, event, win);
 	    }
 	}
@@ -136,8 +147,7 @@ function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs) {
         resetLastPushedButton();
         undoStack = [];
 	redoStack = [];
-	currentSequence = "";
-	sequenceDisplay = "";
+	setCurrentSequence("", "");
 
 	updateDisplay();
     }

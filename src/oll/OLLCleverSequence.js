@@ -67,7 +67,7 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
 	    var i, time, timeMapValue;
 	    for(i = 0; i < list.length; i++) {
 		timeMapValue = _this.timeMap[list[i]];
-		time = timeMapValue ? (Math.floor(timeMapValue / (1000*3600*24))) : 0;
+		time = timeMapValue ? (Math.floor(timeMapValue / (1000*3600*2))) : 0;
 		rval.push({ id: list[i], time: time });
 	    }
 	    rval.sort(function (a,b) {
@@ -119,15 +119,16 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
 	}
 
 	function pickNext() {
-	    removeEmptyLists();
 	    var listName = pickInList(listHat);
 	    return pickInListWithTime(lists[listName]);
 	}
 
 
+	removeEmptyLists();
 	this.sequence = [];
 	while(this.sequence.length < length && listHat.length > 0) {
 	    this.sequence.push(pickNext());
+	    removeEmptyLists();
 	}
 	
     }

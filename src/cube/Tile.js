@@ -6,6 +6,11 @@ define("cube/Tile", [], function() {
 	this.y = params.y;
 	this.rotation = params.rotation;
 	this.mesh = params.mesh;
+	this.alwaysSolved = params.alwaysSolved || false;
+	this.color = params.color;
+    };
+    Tile.prototype.setIgnoreInSolution = function(ignore) {
+	this.alwaysSolved = ignore;
     };
     Tile.prototype.clone = function() {
 	return new Tile(this);

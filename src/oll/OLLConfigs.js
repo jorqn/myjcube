@@ -1,4 +1,4 @@
-define('oll/OLLConfigs', [], function() {
+define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Interpreter) {
     "use strict";
     var configs = [];
     configs[49] = [ "   - ",
@@ -15,7 +15,7 @@ define('oll/OLLConfigs', [], function() {
 		    "  x |",
 		    " xxx ",
 		    " xx  ",
-		    "   - "];
+"   - "];
     configs[52] = [ "     ",
 		    "| xx ",
 		    " xxx ",
@@ -617,6 +617,26 @@ define('oll/OLLConfigs', [], function() {
     };
     OLLConfig.prototype.getNiceName = function () {
 	return this.type + "#" + this.indexInType;
+    };
+    OLLConfig.prototype.buildCube = function () {
+	var cube = new Cube();
+	var i;
+	if(this.type === "OLL") { // upper crown needs to be deactivated
+	    var tiles = [];
+	    var upFace = cube.faces.up;
+	    tiles = tiles.concat(upFace.getNeighborEdgeTiles("up"));
+	    tiles = tiles.concat(upFace.getNeighborEdgeTiles("down"));
+	    tiles = tiles.concat(upFace.getNeighborEdgeTiles("left"));
+	    tiles = tiles.concat(upFace.getNeighborEdgeTiles("right"));
+	    for(i = 0; i < tiles.length; i++) {
+		tiles[i].setIgnoreInSolution(true);
+	    }
+	}
+//	cube = cube.executeCommands(Interpreter.parse("R2'URUR'U'R'U'R'UR'"));
+//	console.log(cube.getFillString());
+	var commands = Interpreter.parse(this.getSolution(), true);
+	cube = cube.executeCommands(commands);
+	return cube;
     };
     var OLLConfigs = {
 	getConfig: function(configId) {

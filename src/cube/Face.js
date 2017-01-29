@@ -54,17 +54,28 @@ define("cube/Face", ["cube/Tile"], function(Tile) {
        return str;
     }
 
-    Face.prototype.getNeighborEdgeString = function(direction) {
+    Face.prototype.getNeighborEdgeTiles = function(direction) {
 	var neighbor = this.neighbors[direction].face;
 	var edgeInNeighbor = neighbor.getEdge(this);
 	var tilesPos = Face.edgesTiles[edgeInNeighbor];
 	var k = 0, tile;
-	var str = "";
+	var tiles = []
 	for(k = 0; k < tilesPos.length; k++) {
 	    tile = neighbor.getTile(tilesPos[k][0], tilesPos[k][1]);
-	    str += tile.color[0];
+	    tiles.push(tile);
 	}
-       return str;
+	return tiles;
+	
+    }
+
+    Face.prototype.getNeighborEdgeString = function(direction) {
+	var str = "";
+	var tiles = Face.getNeighborEdgeTiles(direction);
+	var i;
+	for(i = 0; i < tiles.length; i++) {
+	    str += tiles[i].color[0];
+	}
+	return str;
     }
 
     Face.prototype.fill = function(color) {
@@ -75,7 +86,7 @@ define("cube/Face", ["cube/Tile"], function(Tile) {
 	var x, y;
 	for(x = -1; x <= 1; x++) {
 	    for(y = -1; y <= 1; y++) {
-		addTile(new Tile({id: this.id, x: x, y: y, rotation: 0}));
+		addTile(new Tile({color: color, id: this.id, x: x, y: y, rotation: 0}));
 	    }
 	}
     };
@@ -171,13 +182,15 @@ define("cube/Face", ["cube/Tile"], function(Tile) {
 	}	
     };
     Face.prototype.isSolved = function(checkOrientation) {
-	var id0 = this.tiles[0][0].id;
-	var rotation0 = this.tiles[0][0].rotation;
-	var i, j;
+	var id0 = this.tiles[1][1].id;
+	var rotation0 = this.tiles[1][1].rotation, tile;
+	var i, j, tile;
 	for(i = 0; i < this.tiles.length; i++) {
 	    for(j = 0; j < this.tiles[i].length; j++) {
-		if(this.tiles[i][j].id !== id0
-		   || (checkOrientation && this.tiles[i][j].rotation !== rotation0)) {
+		var tile = this.tiles[i][j];
+		if(!tile.alwaysSolved
+		   && (tile.id !== id0
+		       || (checkOrientation && tile.rotation !== rotation0))) {
 		    return false;
 		}
 	    }
