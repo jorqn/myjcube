@@ -204,10 +204,16 @@ define("cube/Cube", ['cube/Face'], function(Face) {
 	}
 	return cube;
     };
-    Cube.prototype.isSolved = function(checkOrientation) {
+    Cube.prototype.isSolved = function(checkOrientation, upColor) {
 	var key;
 	for(key in this.faces) {
 	    if(!this.faces[key].isSolved(checkOrientation)) {
+		return false;
+	    }
+	}
+	if(upColor) {
+	    var tile = this.faces.up.getCenter();
+	    if(tile.color !== upColor) {
 		return false;
 	    }
 	}

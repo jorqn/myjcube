@@ -115,7 +115,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	    setLastPushedButton(button);
 	    redoStack = [];
 	    cube = cube.executeCommands(Interpreter.parse(action));
-	    var solved = cube.isSolved();
+	    var solved = cube.isSolved(false, "yellow");
 	    currentSequence += action;
 	    sequenceDisplay += display;
 	    updateDisplay();

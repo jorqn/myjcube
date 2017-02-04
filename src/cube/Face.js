@@ -32,6 +32,9 @@ define("cube/Face", ["cube/Tile"], function(Tile) {
     Face.prototype.setTile = function(x, y, tile) {
 	this.tiles[y+1][x+1] = tile;
     };
+    Face.prototype.getCenter = function(x, y) {
+	return this.tiles[1][1];
+    };
 
     Face.prototype.fillFromString = function(str, charToColor) {
 	var k = 0, c, i;

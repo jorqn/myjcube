@@ -348,7 +348,23 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 		 "RUR'URU2R'F'U'L'ULF"
 		];
 
-
+    function rotate(coords, rotation) {
+	rotation = (rotation + 4) % 4;
+	var i;
+	var coords = coords.concat([]);
+	coords[0] -= 2;
+	coords[1] -= 2;
+	switch(rotation) {
+	case 0:
+	    return [2+coords[0], 2+coords[1]];
+	case 1:
+	    return [2+coords[1], 2-coords[0]];
+	case 2:
+	    return [2-coords[0], 2-coords[1]];
+	case 3:
+	    return [2-coords[1], 2+coords[0]];
+	}
+    }
     var arrows = [];
     function addArrows(index, tab) {
 	if(arrows[1000+index]) {
@@ -360,6 +376,16 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 				  " xxx ",
 				  " xxx ",
 				  "     "];
+    }
+    function rotateArrows(arrows, rotation) {
+	if(!arrows) return null;
+	var result = [];
+	var i, arrow;
+	for(i = 0; i < arrows.length; i++) {
+	    arrow = arrows[i];
+	    result.push([rotate(arrow[0],-rotation), arrow[1], rotate(arrow[2],-rotation)]);
+	}
+	return result;
     }
     addArrows(1, [[[1, 2], '->', [3,2]],
 		  [[3,2], '->', [2,3]],
@@ -579,8 +605,8 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
     addSolution("PLL", 9, "R'U2RU2'R'FRUR'U'R'F'R2U'");
     addSolution("PLL", 10, "RUR'F'RUR'U'R'FR2U'R'U'");
     addSolution("PLL", 11, "F2'L'U'rU2'l'UR'U'R2x2");
-    addSolution("PLL", 12, "RU'LU2'R'UL'RU'LU2'R'UL'");
-    addSolution("PLL", 13, "L'UR'U2LU'RL'UR'U2LU'R");
+    addSolution("PLL", 12, "RU'LU2'R'UL'RU'LU2'R'UL'U'");
+    addSolution("PLL", 13, "L'UR'U2LU'RL'UR'U2LU'RU");
         //"L'UR'U2'LU'L'RUR'U2'LU'R");
     addSolution("PLL", 18, "R2'uR'UR'U'Ru'R2y'R'UR");
     addSolution("PLL", 19, "R2u'RU'RUR'uR2'yRU'R'");
@@ -591,8 +617,9 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
     addSolution("PLL", 14, "R'UR'U'x2y'R'UR'U'lRU'R'URUx'");
     addSolution("PLL", 15, "FRU'R'U'RUR'F'RUR'U'l'URU'x'");
 
-    var OLLConfig = function(index) {
+    var OLLConfig = function(index, rotate) {
 	this.index = index;
+	this.rotate = rotate || 0;
 	if(index < 1000) {
 	    this.type = "OLL";
 	    this.indexInType = index;
@@ -602,6 +629,9 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 	}
     };
     OLLConfig.prototype.isFilledAtPoint = function(x, y) {
+	var rotated = rotate([x,y], this.rotate);
+	x = rotated[0];
+	y = rotated[1];
 	var str = configs[this.index][y];
 	var car = str.substr(x, 1);
 	return car !== " ";
@@ -610,7 +640,7 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 	return trainingTable[configToTrainingTable[this.index]];
     };
     OLLConfig.prototype.getArrows = function () {
-	return arrows[this.index];
+	return rotateArrows(arrows[this.index], this.rotate);;
     };
     OLLConfig.prototype.getSolution = function () {
 	return solutions[this.index];
