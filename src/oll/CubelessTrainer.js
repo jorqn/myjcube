@@ -327,6 +327,12 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	undoRedoDiv.appendChild(undoButton);
 
 	sequenceDisplayDiv = document.createElement('div');
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
 	document.body.appendChild(sequenceDisplayDiv);
 	// essai = document.createElement("br");
 	// document.body.appendChild(essai);

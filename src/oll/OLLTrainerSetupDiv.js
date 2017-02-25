@@ -125,11 +125,8 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	    for(j = 0; j < layout[i].length; j++) {
 		id = layout[i][j];
 		if(id !== null) {
-		    divCase = this.caseConfigurator.createDivCase(id, this.notifyChange.bind(this));
+		    divCase = this.caseConfigurator.createDivCase(id, 120*j, y, this.notifyChange.bind(this), this.onCaseAction.bind(this, id));
 		    this.selects.push(divCase.mySelect);
-		    divCase.style.position = 'absolute';
-		    divCase.style.left = (120*j) + 'px';
-		    divCase.style.top =  y + 'px';
 		    divCase.style.opacity = 1;
 		    this.casesDiv.appendChild(divCase);
 		}
@@ -183,6 +180,33 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	document.cookie = "trainerQuery" + this.cookieSuffix + "="+ args.replace(/=/g, "@") + "; " + expires ;
 	this.somethingHasChanged = false;
     }
+    OLLTrainerSetupDiv.prototype.onCaseAction = function(id) {
+//	window.open(this.trainerPage + "?only=" + id);
+        var gray = document.createElement('div');
+        gray.style.position = "absolute";
+        gray.style.top = document.body.scrollTop + "px";
+        window.addEventListener('scroll', function () {
+            gray.style.top = document.body.scrollTop + "px";
+        });
+        gray.style.left = "0px";
+        gray.style.width = "100%";
+        gray.style.height = "100%";
+        gray.style.backgroundColor = "rgba(0,0,0,0.3)";
+        var div = this.caseConfigurator.createConfiguratorDiv(id, undefined, undefined, function onClose() {
+            document.body.removeChild(gray);
+        });
+        div.style.position="absolute";
+        // div.style.position.top = "50px";
+        // div.style.position.left = "50px";
+        div.style.top = 0;
+        div.style.left = 0;
+        div.style.bottom = 0;
+        div.style.right = 0;
+        div.style.margin = "auto";
+        div.style.zIndex = 10;
+        gray.appendChild(div);
+        document.body.appendChild(gray);
+    },
     OLLTrainerSetupDiv.prototype.createButton = function(text, onclick) {
 	var button;
 	button = document.createElement("a");

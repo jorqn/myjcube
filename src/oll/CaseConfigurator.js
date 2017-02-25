@@ -4,45 +4,60 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	this.initLists = initLists;
 	this.trainerPage = trainerPage;
     };
-    CaseConfigurator.prototype.createConfiguratorDiv = function(id, onCloseCB) {
-	var div = document.createElement('div');
-	div.styles.backgroundColor = "rgba(1,1,1,0.5)";
-	var rotate1 = document.createElement('input');
+    CaseConfigurator.prototype.createConfiguratorDiv = function(id, x, y, onCloseCB) {
+        var _this = this;
+	var div = this.createElement('div', x, y);
+        div.style.width = "175px";
+        div.style.height = "178px";
+	div.style.backgroundColor = "rgba(128,128,128,1)";
+	var rotate1 = this.createElement('input', 0, 0);
 	rotate1.type = 'button';
 	rotate1.value = '<-- rotate';
 	rotate1.addEventListener('click', function () {
 	});
 	div.appendChild(rotate1);
-	var rotate2 = document.createElement('input');
+	var rotate2 = this.createElement('input', 100, 0);
 	rotate2.type = 'button';
 	rotate2.value = 'rotate -->';
 	rotate2.addEventListener('click', function() {
 	    
 	});
 	div.appendChild(rotate2);
-	div.appendChild(document.createElement('br'));
-	var divCase = this.createDivCase(id);
+//	div.appendChild(document.createElement('br'));
+	var divCase = this.createDivCase(id, 25, 20);
+        divCase.style.zIndex = -1;
 	div.appendChild(divCase);
-	div.appendChild(document.createElement('br'));
-	var trainOnly = document.createElement('input');
+//	div.appendChild(document.createElement('br'));
+	var trainOnly = this.createElement('input', 70, 150);
 	trainOnly.type = 'button';
 	trainOnly.value = 'Train';
 	trainOnly.addEventListener('click', function() {
+            window.open(_this.trainerPage + "?only=" + id);            
 	});
 	div.appendChild(trainOnly);
-	var close = document.createElement('input');
+	var close = this.createElement('input', 120, 150);
 	close.type = 'button';
 	close.value = 'Close';
 	close.addEventListener('click', onCloseCB);
 	div.appendChild(close);
-    }
-    CaseConfigurator.prototype.createDivCase = function(id, notifyChangeCB) {
-	var div = document.createElement('span');
-	var canvas = this.ollConfigDisplay.createCanvas(id);
+        return div;
+    };
+    CaseConfigurator.prototype.createElement = function(name, x, y) {
+        var element = document.createElement(name);
+        element.style.position = "absolute";
+        element.style.left = x + "px";
+        element.style.top = y + "px";
+        return element;
+    };
+    CaseConfigurator.prototype.createDivCase = function(id, x, y, notifyChangeCB, onActionCB) {
+	var div = this.createElement('span', x, y);
+        div.style.width = 300;
+        div.style.height = 300;
+	var canvas = this.ollConfigDisplay.createCanvas(id, 0, 0);
         var _this = this;
 	if(_this.trainerPage) {
             canvas.addEventListener('dblclick', function() {
-		window.open(_this.trainerPage + "?only=" + id);
+                onActionCB();
             });
 	}
 	var timeout;
@@ -100,10 +115,14 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	div.mySelect = select;
 	div.appendChild(select);
 	onChange(null, true);
+        div.style.position = "absolute";
+        div.style.top = y + "px";
+        div.style.left = x + "px";
 	return div;
     };
     CaseConfigurator.prototype.createSelect = function(onChange) {
-	var select = document.createElement('select');
+        var select = this.createElement('select', this.ollConfigDisplay.size - 100, this.ollConfigDisplay.size - 20);
+//	var select = document.createElement('select');
 	var options = [
 	    {text: 'Exclude', value: 'exclude'},
 //	    {text: 'Easy', value: 'easy'},
@@ -121,9 +140,9 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	    }
 	    select.appendChild(option);
 	}
-	select.style.position = 'absolute';
-	select.style.left = (this.ollConfigDisplay.size - 100) + 'px';
-	select.style.top = (this.ollConfigDisplay.size - 20) + 'px';
+	// select.style.position = 'absolute';
+	// select.style.left = (this.ollConfigDisplay.size - 100) + 'px';
+	// select.style.top = (this.ollConfigDisplay.size - 20) + 'px';
 
 	select.onchange = onChange;
 
