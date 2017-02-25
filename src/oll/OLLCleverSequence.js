@@ -92,10 +92,9 @@ define('oll/OLLCleverSequence', ['oll/OLLConfigs', 'utils/MyQueryString'], funct
 	    newCases: buildCaseList(this.newCases.concat([])),
 	};
 
-	var listHat = [ //'easyCases',
-			'middleCases', 'middleCases',
-			//'hardCases', 'hardCases', 'hardCases', 'hardCases',
-			'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases'];
+	var listHat = !MyQueryString.getBoolValue('onlyNew') ? [ 'middleCases', 'middleCases',
+						   'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases', 'newCases']
+	    : ['newCases'];
 	function removeEmptyLists() {
 	    var i;
 	    for(i = listHat.length - 1; i >= 0; i--) {
