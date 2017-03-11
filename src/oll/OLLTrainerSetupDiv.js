@@ -181,13 +181,15 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	this.somethingHasChanged = false;
     }
     OLLTrainerSetupDiv.prototype.onCaseAction = function(id) {
-//	window.open(this.trainerPage + "?only=" + id);
+	//	window.open(this.trainerPage + "?only=" + id);
+	function onScroll() {
+	    var zoom = document.body.style.zoom || 1;
+            gray.style.top = Math.floor(document.body.scrollTop/zoom) + "px";
+        }
         var gray = document.createElement('div');
         gray.style.position = "absolute";
-        gray.style.top = document.body.scrollTop + "px";
-        window.addEventListener('scroll', function () {
-            gray.style.top = document.body.scrollTop + "px";
-        });
+	onScroll();
+        window.addEventListener('scroll', onScroll);
         gray.style.left = "0px";
         gray.style.width = "100%";
         gray.style.height = "100%";
