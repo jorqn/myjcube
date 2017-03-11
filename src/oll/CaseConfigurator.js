@@ -1,7 +1,7 @@
 define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) {
-    var CaseConfigurator = function (ollConfigDisplay, initLists, trainerPage) {
+    var CaseConfigurator = function (ollConfigDisplay, caseTable, trainerPage) {
 	this.ollConfigDisplay = ollConfigDisplay;
-	this.initLists = initLists;
+	this.caseTable = caseTable;
 	this.trainerPage = trainerPage;
     };
     CaseConfigurator.prototype.createConfiguratorDiv = function(id, x, y, onCloseCB) {
@@ -107,11 +107,13 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	var select = this.createSelect(onChange);
 	select.configId = id
 	var key;
-	for(key in this.initLists) {
-	    if(this.initLists[key] && this.initLists[key].indexOf(id) >= 0) {
-		select.value = key;
-	    }
-	}
+        key = this.caseTable[id].list;
+        select.value = key;
+	// for(key in this.initLists) {
+	//     if(this.initLists[key] && this.initLists[key].indexOf(id) >= 0) {
+	// 	select.value = key;
+	//     }
+	// }
 	div.mySelect = select;
 	div.appendChild(select);
 	onChange(null, true);

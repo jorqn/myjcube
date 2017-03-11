@@ -20,7 +20,9 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	    new: MyQueryString.getIntArrayValue('new')
 	};
 
-	this.caseConfigurator = new CaseConfigurator(ollConfigDisplay, this.initLists, trainerPage);
+        this.caseTable = this.createCaseTable(layout, this.initLists);
+
+	this.caseConfigurator = new CaseConfigurator(ollConfigDisplay, this.caseTable, trainerPage);
 	this.ollConfigDisplay = ollConfigDisplay;
 	this.selects = [];
 	this.trainerPage = trainerPage;
@@ -126,6 +128,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 		id = layout[i][j];
 		if(id !== null) {
 		    divCase = this.caseConfigurator.createDivCase(id, 120*j, y, this.notifyChange.bind(this), this.onCaseAction.bind(this, id));
+                    this.caseTable[id].select = divCase.mySelect;
 		    this.selects.push(divCase.mySelect);
 		    divCase.style.opacity = 1;
 		    this.casesDiv.appendChild(divCase);
@@ -216,6 +219,30 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	button.innerHTML = text;
 	button.onclick = onclick;
 	return button;
+    }
+    OLLTrainerSetupDiv.prototype.createCaseTable = function(layout, initList) {
+        var table = {};
+        var i, j, line;
+        for(i = 0; i < layout.length; i++) {
+            line = layout[i];
+            for(j = 0; j < line.length; j++) {
+                if(line[j]) {
+                    table[line[j]] = { list: 'normal' };
+                }
+            }
+        }
+        var key, list;
+        for(key in initList) {
+            list = initList[key];
+            if(list) {
+                for(i = 0; i < list.length; i++) {
+                    if(table[list[i]]) {
+                        table[list[i]].list = key;
+                    }
+                }
+            }
+        }
+        return table;
     }
     return OLLTrainerSetupDiv;
 });
