@@ -349,7 +349,7 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 		];
 
     function rotate(coords, rotation) {
-	rotation = (rotation + 4) % 4;
+	rotation = ((rotation%4) + 4) % 4;
 	var i;
 	var coords = coords.concat([]);
 	coords[0] -= 2;
@@ -666,11 +666,17 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
 //	console.log(cube.getFillString());
 	var commands = Interpreter.parse(this.getSolution(), true);
 	cube = cube.executeCommands(commands);
+	if(this.rotate) {
+	    this.rotate = ((this.rotate % 4) + 4) % 4;
+	    for(i = 0; i < this.rotate; i++) {
+		cube = cube.executeCommand('y');
+	    }
+	}
 	return cube;
     };
     var OLLConfigs = {
-	getConfig: function(configId) {
-	    return new OLLConfig(configId);
+	getConfig: function(configId, rotate) {
+	    return new OLLConfig(configId, rotate);
 	},
 	getAllConfigs: function(pll) {
 	    var result = [];

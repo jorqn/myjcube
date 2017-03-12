@@ -24,7 +24,6 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 
 	this.caseConfigurator = new CaseConfigurator(ollConfigDisplay, this.caseTable, trainerPage);
 	this.ollConfigDisplay = ollConfigDisplay;
-	this.selects = [];
 	this.trainerPage = trainerPage;
         this.enableOnly = true;
 	this.setupPage = setupPage;
@@ -88,11 +87,16 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 
 	function addAllToButton(value) {
 	    _this.div.appendChild(_this.createButton("All to " + value, function() {
-		var i;
-		for(i = 0; i < _this.selects.length; i++) {
-		    _this.selects[i].value = value;
-		    _this.selects[i].onchange();
+		var key;
+		for(key in _this.caseTable) {
+		    _this.caseTable[key].list = value;
+		    _this.updateCaseDiv(key);
 		}
+		// var i;
+		// for(i = 0; i < _this.selects.length; i++) {
+		//     _this.selects[i].value = value;
+		//     _this.selects[i].onchange();
+		// }
 	    }));
 	}
 
@@ -119,19 +123,19 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 
 	this.casesDiv = document.createElement('div');
 	this.casesDiv.style.position = 'relative';
+	this.casesDiv.style.userSelect = 'none';
 	this.div.appendChild(this.casesDiv);
 	var y = 0;
-	var i = 0, id, divCase;
+	var i = 0, id, divCase, object;
 	for(i = 0; i < layout.length; i++) {
 	    var j = 0;
 	    for(j = 0; j < layout[i].length; j++) {
 		id = layout[i][j];
 		if(id !== null) {
-		    divCase = this.caseConfigurator.createDivCase(id, 120*j, y, this.notifyChange.bind(this), this.onCaseAction.bind(this, id));
-                    this.caseTable[id].select = divCase.mySelect;
-		    this.selects.push(divCase.mySelect);
-		    divCase.style.opacity = 1;
-		    this.casesDiv.appendChild(divCase);
+		    object = this.caseTable[id];
+		    object.coords = { x: 120*j, y: y};
+		    this.updateCaseDiv(id);
+		    divCase = object.div;
 		}
 	    }
 	    if(layout[i].length) {
@@ -147,13 +151,20 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
        OLLTrainerSetupDiv.prototype.getSaveArgs = function() {
 	   var lists = { exclude: [], new: [], normal: []};
 	   var i, value;
-	   for(i = 0; i < this.selects.length; i++) {
-	       value = this.selects[i].value;
+	   for(key in this.caseTable) {
+	       value = this.caseTable[key].list;
 	       if(!lists[value]) {
 		   alert('Unknown list');
 	       }
-	       lists[value].push(this.selects[i].configId);
+	       lists[value].push(key);
 	   }
+	   // for(i = 0; i < this.selects.length; i++) {
+	   //     value = this.selects[i].value;
+	   //     if(!lists[value]) {
+	   // 	   alert('Unknown list');
+	   //     }
+	   //     lists[value].push(this.selects[i].configId);
+	   // }
 	   console.log(lists);
 	   var args = "length="+this.sequenceLength.value, key;
 	   for(key in lists) {
@@ -171,6 +182,17 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 		       args += "empty";
 		   }
 	       }
+	   }
+	   var rotateTable={}, hasRotation = false;
+	   for(key in this.caseTable) {
+	       if(this.caseTable[key].rotate) {
+		   hasRotation = true;
+		   rotateTable[key] = this.caseTable[key].rotate;
+	       }
+	   }
+	   if(hasRotation) {
+	       MyQueryString.setMapValue('rotate', rotateTable);
+	       args += '&rotate=' + MyQueryString.getValue('rotate');
 	   }
 	   return args;
        };
@@ -197,8 +219,10 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
         gray.style.width = "100%";
         gray.style.height = "100%";
         gray.style.backgroundColor = "rgba(0,0,0,0.3)";
+	var _this = this;
         var div = this.caseConfigurator.createConfiguratorDiv(id, undefined, undefined, function onClose() {
             document.body.removeChild(gray);
+	    _this.updateCaseDiv(id);
         });
         div.style.position="absolute";
         // div.style.position.top = "50px";
@@ -211,7 +235,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
         div.style.zIndex = 10;
         gray.appendChild(div);
         document.body.appendChild(gray);
-    },
+    };
     OLLTrainerSetupDiv.prototype.createButton = function(text, onclick) {
 	var button;
 	button = document.createElement("a");
@@ -219,7 +243,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	button.innerHTML = text;
 	button.onclick = onclick;
 	return button;
-    }
+    };
     OLLTrainerSetupDiv.prototype.createCaseTable = function(layout, initList) {
         var table = {};
         var i, j, line;
@@ -227,7 +251,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
             line = layout[i];
             for(j = 0; j < line.length; j++) {
                 if(line[j]) {
-                    table[line[j]] = { list: 'normal' };
+                    table[line[j]] = { list: 'normal', rotate: 0 };
                 }
             }
         }
@@ -242,7 +266,25 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
                 }
             }
         }
+
+	var rotateTable = MyQueryString.getIntMapValue('rotate'), entry;
+	for(key in rotateTable) {
+	    entry = table[key];
+	    if(entry) {
+		entry.rotate = rotateTable[key];
+	    }
+	}
         return table;
-    }
+    };
+    OLLTrainerSetupDiv.prototype.updateCaseDiv = function(id) {
+	var object = this.caseTable[id];
+	var divCase = this.caseConfigurator.createDivCase(id, object.coords.x, object.coords.y, this.notifyChange.bind(this), this.onCaseAction.bind(this, id));
+	if(object.div) {
+	    this.casesDiv.removeChild(object.div);
+	}
+	object.div = divCase;
+	divCase.style.opacity = 1;
+	this.casesDiv.appendChild(divCase);
+    };
     return OLLTrainerSetupDiv;
 });

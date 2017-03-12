@@ -7,6 +7,8 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
     CaseConfigurator.prototype.createConfiguratorDiv = function(id, x, y, onCloseCB) {
         var _this = this;
 	var div = this.createElement('div', x, y);
+	var divCase;
+	this.div = div;
         div.style.width = "175px";
         div.style.height = "178px";
 	div.style.backgroundColor = "rgba(128,128,128,1)";
@@ -14,19 +16,22 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	rotate1.type = 'button';
 	rotate1.value = '<-- rotate';
 	rotate1.addEventListener('click', function () {
+	    var rotate = _this.caseTable[id].rotate + 3;
+	    _this.caseTable[id].rotate = rotate % 4;
+	    divCase = _this.refreshDivCase(id, div, divCase);
 	});
 	div.appendChild(rotate1);
 	var rotate2 = this.createElement('input', 100, 0);
 	rotate2.type = 'button';
 	rotate2.value = 'rotate -->';
 	rotate2.addEventListener('click', function() {
-	    
+	    var rotate = _this.caseTable[id].rotate + 1;
+	    _this.caseTable[id].rotate = rotate % 4;
+	    divCase = _this.refreshDivCase(id, div, divCase);
 	});
 	div.appendChild(rotate2);
+	divCase = this.refreshDivCase(id, div, divCase);
 //	div.appendChild(document.createElement('br'));
-	var divCase = this.createDivCase(id, 25, 20);
-        divCase.style.zIndex = -1;
-	div.appendChild(divCase);
 //	div.appendChild(document.createElement('br'));
 	var trainOnly = this.createElement('input', 70, 150);
 	trainOnly.type = 'button';
@@ -42,6 +47,16 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	div.appendChild(close);
         return div;
     };
+    CaseConfigurator.prototype.refreshDivCase = function(id, div, divCase) {
+	if(divCase) {
+	    div.removeChild(divCase);
+	}
+	divCase = this.createDivCase(id, 25, 20);
+        divCase.style.zIndex = -1;
+	divCase = divCase;
+	div.appendChild(divCase);
+	return divCase;
+    };
     CaseConfigurator.prototype.createElement = function(name, x, y) {
         var element = document.createElement(name);
         element.style.position = "absolute";
@@ -51,9 +66,9 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
     };
     CaseConfigurator.prototype.createDivCase = function(id, x, y, notifyChangeCB, onActionCB) {
 	var div = this.createElement('span', x, y);
-        div.style.width = 300;
-        div.style.height = 300;
-	var canvas = this.ollConfigDisplay.createCanvas(id, 0, 0);
+        div.style.width = this.ollConfigDisplay.size;
+        div.style.height = this.ollConfigDisplay.size;
+	var canvas = this.ollConfigDisplay.createCanvas(id, 0, 0, this.caseTable[id].rotate);
         var _this = this;
 	if(_this.trainerPage) {
             canvas.addEventListener('dblclick', function() {
@@ -100,6 +115,7 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 		canvas.style.backgroundColor = "transparent";
 		break;
 	    }
+	    _this.caseTable[id].list = select.value;
 	    if(!init && notifyChangeCB) {
 		notifyChangeCB();
 	    }

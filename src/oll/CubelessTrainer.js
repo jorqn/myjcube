@@ -13,15 +13,17 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
     var undoStack = [];
     var redoStack = [];
     var lastPushedButton = null;
-    var cube = null;
+	   var cube = null;
+	   var rotateTable = {};
     var only;
 
     function startSequence(index) {
 	undoStack = [];
 	redoStack = [];
 	var ollConfigDisplay = new OLLConfigDisplay();
-	var canvas = ollConfigDisplay.createCanvas(sequence.sequence[index]);
-	currentConfig = OLLConfigs.getConfig(sequence.sequence[index]);
+	var caseId = sequence.sequence[index];
+	var canvas = ollConfigDisplay.createCanvas(caseId, undefined, undefined, rotateTable[caseId] || 0);
+	currentConfig = OLLConfigs.getConfig(sequence.sequence[index], rotateTable[caseId] || 0);
 //	document.title = "Cubeless Trainer - " + currentConfig.getNiceName() + " (" + (index+1)
 //	    + "/" + sequence.sequence.length + ")";
 	statusText.textContent = currentConfig.getNiceName() + " (" + (index+1)
@@ -39,7 +41,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 
     function splashConfig(index) {
 	var ollConfigDisplay = new OLLConfigDisplay();
-	var canvas = ollConfigDisplay.createCanvas(index);
+	var canvas = ollConfigDisplay.createCanvas(index, undefined, undefined, rotateTable[caseId] || 0);
 	canvas.style.position = "absolute";
 	canvas.style.pointerEvents = 'none';
 	var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -99,7 +101,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 
     function onRedo() {
 	if(redoStack.length) {
-	    var item = redoStack.pop();
+	    var item = redoStack.pop();pp
 	    undoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
 	    setCurrentSequence(item.currentSequence, item.sequenceDisplay);
 	    setLastPushedButton(item.button);
@@ -213,7 +215,8 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 
     return function OLLTrainer() {
 //	if(!MyQueryString.getValue('write')) {
-	    MyQueryString.addFromCookie('trainerQueryCubeless');
+	MyQueryString.addFromCookie('trainerQueryCubeless');
+	rotateTable = MyQueryString.getIntMapValue('rotate');
 	//	}
 	// doZoom = MyQueryString.getValue('zoom') === "true";
 	// if(doZoom) {
