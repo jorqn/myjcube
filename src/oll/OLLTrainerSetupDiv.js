@@ -222,6 +222,7 @@ define('oll/OLLTrainerSetupDiv', ['utils/MyQueryString', 'oll/CaseConfigurator']
 	var _this = this;
         var div = this.caseConfigurator.createConfiguratorDiv(id, undefined, undefined, function onClose() {
             document.body.removeChild(gray);
+	    _this.notifyChange();
 	    _this.updateCaseDiv(id);
         });
         div.style.position="absolute";

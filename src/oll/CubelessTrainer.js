@@ -41,7 +41,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 
     function splashConfig(index) {
 	var ollConfigDisplay = new OLLConfigDisplay();
-	var canvas = ollConfigDisplay.createCanvas(index, undefined, undefined, rotateTable[caseId] || 0);
+	var canvas = ollConfigDisplay.createCanvas(index, undefined, undefined, rotateTable[index] || 0);
 	canvas.style.position = "absolute";
 	canvas.style.pointerEvents = 'none';
 	var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
