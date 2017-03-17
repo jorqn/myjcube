@@ -37,7 +37,8 @@ define('oll/CaseConfigurator', ['utils/MyQueryString'], function(MyQueryString) 
 	trainOnly.type = 'button';
 	trainOnly.value = 'Train';
 	trainOnly.addEventListener('click', function() {
-            window.open(_this.trainerPage + "?only=" + id);            
+            window.open(_this.trainerPage + "?only=" + id);
+	    onCloseCB();
 	});
 	div.appendChild(trainOnly);
 	var close = this.createElement('input', 120, 150);
