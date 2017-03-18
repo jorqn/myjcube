@@ -2,7 +2,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
        function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs, Interpreter) {
     "use strict";
     // added comment
-    var absoluteTop = 120;
+    var absoluteTop = 80;
     var currentSequence;
     var currentIndex;
     var currentConfig;
@@ -94,7 +94,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	if(undoStack.length) {
 	    var item = undoStack.pop();
 	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
-	    setCurrentSequence(item.currentSequence, item.sequenceDisplay);
+	    setCurrentSeqpuence(item.currentSequence, item.sequenceDisplay);
 	    setLastPushedButton(item.button);
 	    updateDisplay();
 	} else {
@@ -295,18 +295,28 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	document.body.appendChild(skipButton);
         document.body.appendChild(document.createElement('br'));
         var languageSelect = document.createElement("select");
+	var options = {};
         var option;
         option = document.createElement("option");
         option.text = "Standard convention (R,L,U...)";
         option.value = "classic";
+	options.classic = option;
         languageSelect.appendChild(option);
         option = document.createElement("option");
         option.text = "SHATARO convention";
-        option.value = "lang";
+        option.value = "shataro";
+	options.shataro = option;
         languageSelect.appendChild(option);
         document.body.appendChild(languageSelect);
         convention = 'classic';
-
+	MyQueryString.addFromCookie("CubelessTrainerPageSettings");
+	var selected = MyQueryString.getValue('language');
+	if(selected && options[selected]) {
+	    options[selected].selected = true;
+	    convention = selected;
+	    MyQueryString.saveToCookie("CubelessTrainerPageSettings", ["language"]);
+	}
+	
         languageSelect.onchange = function () {
             convention = languageSelect.value;
             if(buttons) {
@@ -314,6 +324,8 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
                 buttons = buildButtonsMatrix();
                 document.body.appendChild(buttons);
             }
+	    MyQueryString.setValue("language", languageSelect.value);
+	    MyQueryString.saveToCookie("CubelessTrainerPageSettings", ["language"]);
         };
 	// var br = document.createElement("br");
 	// document.body.appendChild(br);
@@ -389,159 +401,159 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	var axes = [
 	    {
 		classic: 'b',
-		lang: 'BE'
+		shataro: 'BE'
 	    },
 	    {
 		classic: 'f',
-		lang: 'FE'
+		shataro: 'FE'
 	    },
 	    {
 		classic: 'd',
-		lang: 'DE'
+		shataro: 'DE'
 	    },
 	    {
 		classic: 'u',
-		lang: 'TE'
+		shataro: 'TE'
 	    },
 	    {
 		classic: 'l',
-		lang: 'LE'
+		shataro: 'LE'
 	    },
 	    {
 		classic: 'r',
-		lang: 'RE'
+		shataro: 'RE'
 	    },
 	    {
 		classic: 'D',
-		lang: 'D'
+		shataro: 'D'
 	    },
 	    {
 		classic: 'U',
-		lang: 'T'
+		shataro: 'T'
 	    },
 	    {
 		classic: 'R',
-		lang: 'R'
+		shataro: 'R'
 	    },
 	    {
 		classic: 'L',
-		lang: 'L'
+		shataro: 'L'
 	    },
 	    {
 		classic: 'F',
-		lang: 'F'
+		shataro: 'F'
 	    },
 	    {
 		classic: 'B',
-		lang: 'B'
+		shataro: 'B'
 	    },
 	];
 	var axes2 = [
 	    {
 		classic: 'x',
-		lang: 'M'
+		shataro: 'M'
 	    },
 	    {
 		classic: 'y',
-		lang: 'N'
+		shataro: 'N'
 	    },
 	    {
 		classic: 'z',
-		lang: 'P'
+		shataro: 'P'
 	    }
 	];
 	// var axes = [
 	//     {
 	// 	classic: 'U',
-	// 	lang: 'T'
+	// 	shataro: 'T'
 	//     },
 	//     {
 	// 	classic: 'D',
-	// 	lang: 'D'
+	// 	shataro: 'D'
 	//     },
 	//     {
 	// 	classic: 'L',
-	// 	lang: 'L'
+	// 	shataro: 'L'
 	//     },
 	//     {
 	// 	classic: 'R',
-	// 	lang: 'R'
+	// 	shataro: 'R'
 	//     },
 	//     {
 	// 	classic: 'F',
-	// 	lang: 'F'
+	// 	shataro: 'F'
 	//     },
 	//     {
 	// 	classic: 'B',
-	// 	lang: 'B'
+	// 	shataro: 'B'
 	//     },
 	//     {
 	// 	classic: 'x',
-	// 	lang: 'M'
+	// 	shataro: 'M'
 	//     },
 	//     {
 	// 	classic: 'y',
-	// 	lang: 'N'
+	// 	shataro: 'N'
 	//     },
 	//     {
 	// 	classic: 'z',
-	// 	lang: 'P'
+	// 	shataro: 'P'
 	//     },
 	//     {
 	// 	classic: 'u',
-	// 	lang: 'TE'
+	// 	shataro: 'TE'
 	//     },
 	//     {
 	// 	classic: 'd',
-	// 	lang: 'DE'
+	// 	shataro: 'DE'
 	//     },
 	//     {
 	// 	classic: 'l',
-	// 	lang: 'LE'
+	// 	shataro: 'LE'
 	//     },
 	//     {
 	// 	classic: 'r',
-	// 	lang: 'RppE'
+	// 	shataro: 'RppE'
 	//     },
 	//     {
 	// 	classic: 'f',
-	// 	lang: 'FE'
+	// 	shataro: 'FE'
 	//     },
 	//     {
 	// 	classic: 'b',
-	// 	lang: 'BE'
+	// 	shataro: 'BE'
 	//     }
 	// ];
 	var modifiers = [
 	    {
 		classic: '',
-		lang: 'A'
+		shataro: 'A'
 	    },
 	    {
 		classic: "'",
-		lang: 'O'
+		shataro: 'O'
 	    },
 	    {
 		classic: '2',
-		lang: 'I'
+		shataro: 'I'
 	    },
 	];
 	var specials = [
 	    {
 		classic: "RUR'",
-		lang: "SHA"
+		shataro: "SHA"
 	    },
 	    {
 		classic: "R'UR",
-		lang: "SHO"
+		shataro: "SHO"
 	    },
 	    {
 		classic: "RU'R'",
-		lang: "SHU"
+		shataro: "SHU"
 	    },
 	    {
 		classic: "UR'U'",
-		lang: "SHI"
+		shataro: "SHI"
 	    },
 	];
 	function createButton(text, action) {
@@ -567,7 +579,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	    }
 	    div.appendChild(document.createElement('br'));
 	}
-        if(convention === 'lang') {
+        if(convention === 'shataro') {
 	    for(i = 0; i < specials.length; i++) {
 	        button = createButton(specials[i][convention], specials[i].classic);
 	        div.appendChild(button);
