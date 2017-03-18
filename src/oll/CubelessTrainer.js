@@ -2,6 +2,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
        function(OLLCleverSequence, MyQueryString, OLLConfigDisplay, OLLConfigs, Interpreter) {
     "use strict";
     // added comment
+    var absoluteTop = 120;
     var currentSequence;
     var currentIndex;
     var currentConfig;
@@ -12,10 +13,12 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
     var statusText;
     var undoStack = [];
     var redoStack = [];
+    var buttons;
     var lastPushedButton = null;
 	   var cube = null;
 	   var rotateTable = {};
     var only;
+           var convention;
 
     function startSequence(index) {
 	undoStack = [];
@@ -290,7 +293,28 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	    onSkip();
 	};
 	document.body.appendChild(skipButton);
+        document.body.appendChild(document.createElement('br'));
+        var languageSelect = document.createElement("select");
+        var option;
+        option = document.createElement("option");
+        option.text = "Standard convention (R,L,U...)";
+        option.value = "classic";
+        languageSelect.appendChild(option);
+        option = document.createElement("option");
+        option.text = "SHATARO convention";
+        option.value = "lang";
+        languageSelect.appendChild(option);
+        document.body.appendChild(languageSelect);
+        convention = 'classic';
 
+        languageSelect.onchange = function () {
+            convention = languageSelect.value;
+            if(buttons) {
+                document.body.removeChild(buttons);
+                buttons = buildButtonsMatrix();
+                document.body.appendChild(buttons);
+            }
+        };
 	// var br = document.createElement("br");
 	// document.body.appendChild(br);
 	
@@ -304,7 +328,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 
 	var undoRedoDiv = document.createElement('div');
 	undoRedoDiv.style.position= 'absolute';
-	undoRedoDiv.style.top = '80px';
+	undoRedoDiv.style.top = absoluteTop + 'px';
 	undoRedoDiv.style.left='140px';
 	document.body.appendChild(undoRedoDiv);
 
@@ -346,7 +370,8 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	// document.body.appendChild(br);
 	startSequence(0);
 
-	document.body.appendChild(buildButtonsMatrix());
+        buttons = buildButtonsMatrix();
+	document.body.appendChild(buttons);
 //	var htmlDisplay = new OLLSequenceHTMLDisplay(sequence, configDisplay);
 
 	// var i;
@@ -532,27 +557,29 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	}
 	var div = document.createElement('div');
 	div.style.position = 'absolute';
-	div.style.top = '215px';
+	div.style.top = (absoluteTop + 135) +'px';
 	div.style.left = '0px';
 	var i, j, button;
 	for(i = 0; i < axes.length; i++) {
 	    for(j = 0; j < modifiers.length; j++) {
-		button = createButton(axes[i].lang + modifiers[j].lang, axes[i].classic + modifiers[j].classic);
+		button = createButton(axes[i][convention] + modifiers[j][convention], axes[i].classic + modifiers[j].classic);
 		div.appendChild(button);
 	    }
 	    div.appendChild(document.createElement('br'));
 	}
-	for(i = 0; i < specials.length; i++) {
-	    button = createButton(specials[i].lang, specials[i].classic);
-	    div.appendChild(button);
-	    if(i % 3 == 2) {
-		div.appendChild(document.createElement('br'));
+        if(convention === 'lang') {
+	    for(i = 0; i < specials.length; i++) {
+	        button = createButton(specials[i][convention], specials[i].classic);
+	        div.appendChild(button);
+	        if(i % 3 == 2) {
+		    div.appendChild(document.createElement('br'));
+	        }
 	    }
-	}
-	div.appendChild(document.createElement('br'));
+	    div.appendChild(document.createElement('br'));
+        }
 	for(i = 0; i < axes2.length; i++) {
 	    for(j = 0; j < modifiers.length; j++) {
-		button = createButton(axes2[i].lang + modifiers[j].lang, axes2[i].classic + modifiers[j].classic);
+		button = createButton(axes2[i][convention] + modifiers[j][convention], axes2[i].classic + modifiers[j].classic);
 		div.appendChild(button);
 	    }
 	    div.appendChild(document.createElement('br'));
