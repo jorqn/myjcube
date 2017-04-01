@@ -1,0 +1,45 @@
+Page d'accueil
+- petite présentation du site (langage, méthode de
+résolution, formules OLL et PLL, outils d'apprentissage)
+- sous sujets
+ * langage shataro
+ * méthode de résolution débutant en shataro
+ * formules shataro pour l'OLL et PLL
+ * outils d'apprentissage OLL et PLL
+ * javascript cube (?)
+
+Page «langage shataro»
+- introduction
+- sous sujets
+ * pourquoi la création du shataro?
+ * spécifications
+ * page de traduction shataro <-> standard
+
+Page «méthode de résolution débutant en shataro»
+- brève description + lien vers les sous étapes
+- sous sujets
+ * la croix
+ * la première couronne
+ * la deuxième couronne
+ * la deuxième croix - étape 1
+ * la deuxième croix - étape 2
+ * la face jaune - étape 1
+ * la face jaune - étape 2
+
+Page «Formules de résolution OLL et PLL»
+- dire que c'est déjà pour les initiés, et que la 
+méthode shataro permet un apprentissage plus simple
+- sous sujets:
+ * formules OLL
+ * formules PLL
+
+Page «Outils d'apprentissage OLL et PLL»
+- Décrire les deux outils disponibles et dire qu'ils ont
+été utilisés pour de vrai
+- sous sujets:
+ * OLL trainer (description + lien sur l'outil)
+ * Cubeless trainer (description + lien sur l'outil)
+
+Page «WebGL cube»
+- le cube avec le disclaimer «ok les cubes sur ordi ne
+sont jamais terribles»
