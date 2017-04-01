@@ -94,7 +94,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
 	if(undoStack.length) {
 	    var item = undoStack.pop();
 	    redoStack.push({currentSequence: currentSequence, sequenceDisplay: sequenceDisplay, button: lastPushedButton});
-	    setCurrentSeqpuence(item.currentSequence, item.sequenceDisplay);
+	    setCurrentSequence(item.currentSequence, item.sequenceDisplay);
 	    setLastPushedButton(item.button);
 	    updateDisplay();
 	} else {
