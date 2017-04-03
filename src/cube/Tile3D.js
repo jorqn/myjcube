@@ -115,6 +115,8 @@ define("cube/Tile3D", [], function() {
 			    v: uvBounds.v};
 	this.geometry = new THREE.MyPlaneBufferGeometry(size,size,1,1, newUvBounds);
 	this.mesh = new THREE.Mesh( this.geometry, null );
+	this.backMesh = new THREE.Mesh( this.geometry, null );
+	this.backMesh.material = new THREE.MeshBasicMaterial({ color: "black", side: THREE.BackSide });
 	this.mesh.mytile = this;
 	// if(this.normal.x === 1) {
 	//     this.mesh.rotateY(Math.PI/2);
@@ -136,6 +138,7 @@ define("cube/Tile3D", [], function() {
 	this.subnode0 = new THREE.Object3D();
 	    this.subnode0.setRotationFromQuaternion(quat);
 	this.subnode0.add(this.mesh);
+	this.subnode0.add(this.backMesh);
 //	}
 
 	var subnode = new THREE.Object3D();

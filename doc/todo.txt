@@ -1,0 +1,5 @@
+un directory en et un fr
+l'en-tête et le menu latéral sont générés en js, nourris par un json (un en anglais, et un en français)
+chaque page inclus le menu latéral en indiquant ce qu'elle affiche, et sa langue
+
+faire la traduction juste à la fin…

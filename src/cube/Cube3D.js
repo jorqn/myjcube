@@ -73,12 +73,12 @@ define("cube/Cube3D", ["cube/Tile3D", "cube/Cube", "cube/CubeTexCoords"], functi
 	this.tiles.push(new Tile3D([ 0, 1,-1], [ 0, 0,-1], [1,0], this, uvBounds));
 	this.tiles.push(new Tile3D([ 1, 1,-1], [ 0, 0,-1], [0,0], this, uvBounds));
 	this.materials = params.materials ||  {
-	    down: new THREE.MeshPhongMaterial({color: 0xffffff}),
-	    up: new THREE.MeshPhongMaterial({color: 0xffff00}),
-	    back: new THREE.MeshPhongMaterial({color: 0x0000ff}),
-	    front: new THREE.MeshPhongMaterial({color: 0x00ff00}),
-	    left: new THREE.MeshPhongMaterial({color: 0xff0000}),
-	    right: new THREE.MeshPhongMaterial({color: 0xff8800})
+	    down: new THREE.MeshBasicMaterial({color: 0xffffff}),
+	    up: new THREE.MeshBasicMaterial({color: 0xffff00}),
+	    back: new THREE.MeshBasicMaterial({color: 0x0000ff}),
+	    front: new THREE.MeshBasicMaterial({color: 0x00ff00}),
+	    left: new THREE.MeshBasicMaterial({color: 0xff0000}),
+	    right: new THREE.MeshBasicMaterial({color: 0xff8800})
 	};
 	// this.maps =  {
 	//     green: THREE.ImageUtils.loadTexture('img/green.jpg'),
