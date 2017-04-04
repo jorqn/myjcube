@@ -1,5 +1,5 @@
-define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter'],
-function(Cube, Cube3D, Interpreter) {
+define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/ArrowMesh'],
+function(Cube, Cube3D, Interpreter, ArrowMesh) {
     "use strict";
     var FormulaPlayer = function(width, height) {
 	this.width = width;
@@ -27,6 +27,16 @@ function(Cube, Cube3D, Interpreter) {
 	this.cube3d = new Cube3D({size: 1.0, cube: new Cube()/*, cubeTexCoords: cubeTexCoords, materials: cubeMate*/    });
 	this.scene.add(this.cube3d.node);
 	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
+
+	var arrowTest = new ArrowMesh({
+	    start: new THREE.Vector3(0, 3.1, 3.1),
+	    end: new THREE.Vector3(3.1, 0, 3.1),
+	    normal: new THREE.Vector3(0, 0, 1),
+	    headSize: 0.3,
+	    width: 0.15
+	});
+	var mesh = new THREE.Mesh(arrowTest, new THREE.MeshBasicMaterial({color: "black", side: THREE.DoubleSide}));
+	this.scene.add(mesh);
     };
 
     // FormulaPlayer.prototype.playCommands = function(commands) {

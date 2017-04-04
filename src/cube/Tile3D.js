@@ -113,10 +113,12 @@ define("cube/Tile3D", [], function() {
 				     y: uvBounds.origin.y + uvs[0]*uvBounds.u.y + uvs[1]*uvBounds.v.y},
 			    u: uvBounds.u,
 			    v: uvBounds.v};
-	this.geometry = new THREE.MyPlaneBufferGeometry(size,size,1,1, newUvBounds);
-	this.mesh = new THREE.Mesh( this.geometry, null );
-	this.backMesh = new THREE.Mesh( this.geometry, null );
-	this.backMesh.material = new THREE.MeshBasicMaterial({ color: "black", side: THREE.BackSide });
+	this.backGeometry = new THREE.MyPlaneBufferGeometry(size,size,1,1, newUvBounds);
+	this.stickerGeometry = new THREE.MyPlaneBufferGeometry(size*0.95,size*0.95,1,1, newUvBounds);
+	this.mesh = new THREE.Mesh( this.stickerGeometry, null );
+	this.mesh.position.set(0,0,size*0.01);
+	this.backMesh = new THREE.Mesh( this.backGeometry, null );
+	this.backMesh.material = new THREE.MeshBasicMaterial({ color: "black", side: THREE.DoubleSide });
 	this.mesh.mytile = this;
 	// if(this.normal.x === 1) {
 	//     this.mesh.rotateY(Math.PI/2);
