@@ -1,5 +1,5 @@
-define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/ArrowMesh'],
-function(Cube, Cube3D, Interpreter, ArrowMesh) {
+define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/ArrowMesh', 'scene/PlayBackButtonFactory'],
+       function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
     "use strict";
     var FormulaPlayer = function(width, height) {
 	this.width = width;
@@ -10,6 +10,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh) {
 	this.camera = new THREE.OrthographicCamera(fact*-480/2.0, fact*480/2.0, fact*480/2.0, fact*-480/2.0, -100, 100.0);
 //	this.camera = new THREE.PerspectiveCamera(-20,-20, 20, 20, 0.1, 50);
 	this.camera.position.set(4,4,4);
+//	this.camera.position.set(0,0,4);
 	this.camera.up = new THREE.Vector3(0, 1, 0);
 	this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
@@ -36,7 +37,16 @@ function(Cube, Cube3D, Interpreter, ArrowMesh) {
 	    width: 0.15
 	});
 	var mesh = new THREE.Mesh(arrowTest, new THREE.MeshBasicMaterial({color: "black", side: THREE.DoubleSide}));
-	this.scene.add(mesh);
+//	this.scene.add(mesh);
+
+	var factory = new PlayBackButtonFactory(1);
+	var buttonsMaterial = new THREE.MeshBasicMaterial({color: "black", side: THREE.DoubleSide});
+	var play = factory.createPlayButton();
+	play.material = buttonsMaterial;
+//	this.scene.add(play);
+	var pause = factory.createPauseButton();
+	pause.material = buttonsMaterial;
+//	this.scene.add(pause);
     };
 
     // FormulaPlayer.prototype.playCommands = function(commands) {
