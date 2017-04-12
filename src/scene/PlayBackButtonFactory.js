@@ -1,7 +1,7 @@
 define('scene/PlayBackButtonFactory', function() {
     "use strict";
     var PlayBackButtonFactory = function(size) {
-	this.size = size;
+	this.size = size/(2*Math.sin(2*Math.PI/3));
 	this.step = size*1.1;
 	this.width = size / 5;
     };

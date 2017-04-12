@@ -7,7 +7,7 @@ window.start = function() {
 	}
     });
     require(['scene/FormulaPlayer'], function(FormulaPlayer) {
-	var player = new FormulaPlayer(400, 400);
+	var player = new FormulaPlayer(400, 400, 25);
 	document.body.appendChild(player.domElement);
 	player.startAnimationLoop();
 	window.player = player;
