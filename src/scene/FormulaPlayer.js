@@ -20,6 +20,8 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	// stringBuilder.fillFace("up", "_");
 	// this.startCube.fillFromString(stringBuilder.getString());
 	this.scene = new THREE.Scene();
+	this.root = new THREE.Object3D();
+	this.scene.add(this.root);
 	this.cameraMove = null;
 	this.pause = true;
 	this.ended = false;
@@ -50,15 +52,43 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 //	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
 	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 
-	var arrowTest = new ArrowMesh({
-	    start: new THREE.Vector3(0, 3.1, 3.1),
-	    end: new THREE.Vector3(3.1, 0, 3.1),
-	    normal: new THREE.Vector3(0, 0, 1),
-	    headSize: 0.3,
-	    width: 0.15
-	});
-	var mesh = new THREE.Mesh(arrowTest, new THREE.MeshBasicMaterial({
-	    color: "black", side: THREE.DoubleSide}));
+	this.arrows = [];
+	var i;
+	if(parameters.arrows) {
+	    var k = 1.52;
+	    for(i = 0; i < parameters.arrows.length; i++) {
+		var arrow = parameters.arrows[i];
+		var start = arrow.start, end = arrow.end, normal = arrow.normal;
+		var arrowGeometry = new ArrowMesh({
+		    start: new THREE.Vector3(1*(start.x ) + k*normal.x,
+					     1*(start.y ) + k*normal.y,
+					     1*(start.z ) + k*normal.z),
+		    end: new THREE.Vector3(1*(end.x ) + k*normal.x,
+					   1*(end.y )+ k*normal.y,
+					   1*(end.z )+ k*normal.z),
+		    normal: new THREE.Vector3(normal.x,
+					      normal.y,
+					      normal.z),
+		    headSize: 0.3,
+		    width: 0.15
+		});
+		var arrowMesh = new THREE.Mesh(arrowGeometry,
+					       new THREE.MeshBasicMaterial({
+						   color: "black",
+						   side: THREE.BackSide}));
+		this.root.add(arrowMesh);
+		this.arrows.push(arrowMesh)
+	    }
+	}
+	// var arrowTest = new ArrowMesh({
+	//     start: new THREE.Vector3(0, 3.1, 3.1),
+	//     end: new THREE.Vector3(3.1, 0, 3.1),
+	//     normal: new THREE.Vector3(0, 0, 1),
+	//     headSize: 0.3,
+	//     width: 0.15
+	// });
+	// var mesh = new THREE.Mesh(arrowTest, new THREE.MeshBasicMaterial({
+	//     color: "black", side: THREE.DoubleSide}));
 	//	this.scene.add(mesh);
 
 	this.camera.updateMatrix();
@@ -140,10 +170,10 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 
     FormulaPlayer.prototype.initCube = function() {
 	if(this.cube3d) {
-	    this.scene.remove(this.cube3d.node);
+	    this.root.remove(this.cube3d.node);
 	}
 	this.cube3d = new Cube3D({size: 1.0, cube: this.startCube});
-	this.scene.add(this.cube3d.node);
+	this.root.add(this.cube3d.node);
     };
 
     FormulaPlayer.prototype.computeMousePosition = function(event) {
@@ -317,6 +347,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 
     FormulaPlayer.prototype.onRestartButton = function() {
 	this.initCube();
+	this.setArrowsVisibility(true);
 	this.commandQueue = [];
 	this.playFormula(this.formula);
 	this.onPauseButton();
@@ -325,6 +356,13 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     FormulaPlayer.prototype.onNextButton = function() {
 	this.pause = false;
 	this.single++;;
+    };
+
+    FormulaPlayer.prototype.setArrowsVisibility = function(visible) {
+	var i;
+	for(i = 0; i < this.arrows.length; i++) {
+	    this.arrows[i].visible = visible;
+	}
     };
 
     FormulaPlayer.prototype.addCommands = function(commands) {
@@ -355,6 +393,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		    _this.ended = true;
 		} else {
 		    if(!_this.pause) {
+			_this.setArrowsVisibility(false);
 			if(_this.single) {
 			    _this.single--;
 			    _this.pause = _this.single ? false : true;
@@ -379,8 +418,8 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	    var ry = (this.cameraMove.position.x - this.cameraMove.start.x)*0.02;
 	    rx *= this.cameraMove.k;
 	    ry *= this.cameraMove.k;
-	    this.cube3d.node.setRotationFromAxisAngle(new THREE.Vector3(1/Math.sqrt(2), 0, -1/Math.sqrt(2)), rx);
-	    this.cube3d.node.rotateY(ry);
+	    this.root.setRotationFromAxisAngle(new THREE.Vector3(1/Math.sqrt(2), 0, -1/Math.sqrt(2)), rx);
+	    this.root.rotateY(ry);
 	    if(this.cameraMove.k === 0) {
 		this.cameraMove = null;
 	    }

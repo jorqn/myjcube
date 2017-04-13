@@ -12,7 +12,15 @@ window.start = function() {
 	    height: 400,
 	    buttonsSize: 25,
 	    formula: "URU'R'd'L'ULy'",
-	    fillString: "rrr_r__r_____o_ooo_g_______wwwwwwwwwggg_g____bbb_b____"
+	    fillString:"rrr_r__r_____o_ooo_g_______wwwwwwwwwggg_g____bbb_b____",
+	    arrows: [
+		{
+		    start: { x: 0, y: 1, z: 0},
+		    end: {x: 1, y: 0, z: 0},
+		    normal: { x: 0, y:0, z: 1}
+		}
+	    ]
+	    
 	});
 	document.body.appendChild(player.domElement);
 	player.startAnimationLoop();
