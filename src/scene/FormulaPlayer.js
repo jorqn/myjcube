@@ -7,6 +7,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	this.buttonsSize = buttonsSize;    
 	this.commandQueue = [];
 	this.scene = new THREE.Scene();
+	this.cameraMove = null;
 	var fact = 0.012*0.9;
 	this.camera = new THREE.OrthographicCamera(fact*-480/2.0,
 			fact*480/2.0, fact*480/2.0, fact*-480/2.0, -100, 100.0);
@@ -171,9 +172,9 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	}
     }
 
-    FormulaPlayer.prototype.onMouseMove = function(event) {
-	if(!this.mouseInside) {
-	    this.mouseInside = true;
+    FormulaPlayer.prototype.showButtons = function() {
+	if(!this.oldButtonsVisibility) {
+	    this.oldButtonsVisibility = true;
 	    var material = this.buttonsMaterial;
 	    clearInterval(this.mouseInsideToken);
 	    var _this = this;
@@ -185,33 +186,11 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 		}
 	    }, 50);
 	}
-	var mouse = this.computeMousePosition(event);
-	var button = this.getButtonFromMousePosition(mouse);
-	if(this.highlightButton !== button) {
-	    this.setHighlight(this.highlightButton, false);
-	    this.setHighlight(button, true);
-	    this.highlightButton = button;
-	}
     };
 
-    FormulaPlayer.prototype.onMouseDown = function(event) {
-	var mouse = this.computeMousePosition(event);
-	var button = this.getButtonFromMousePosition(mouse);
-	this.currentButton = button;
-    };
-
-    FormulaPlayer.prototype.onMouseUp = function(event) {
-	var mouse = this.computeMousePosition(event);
-	var button = this.getButtonFromMousePosition(mouse);
-	if(button && button === this.currentButton) {
-	    this[button.action]();
-	}
-	this.currentButton = null;
-    };
-
-    FormulaPlayer.prototype.onMouseLeave = function(event) {
-	if(this.mouseInside) {
-	    this.mouseInside = false;
+    FormulaPlayer.prototype.hideButtons = function() {
+	if(this.oldButtonsVisibility) {
+	    this.oldButtonsVisibility = false;
 	    var material = this.buttonsMaterial;
 	    var _this = this;
 	    clearInterval(this.mouseInsideToken);
@@ -223,10 +202,69 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 		}
 	    }, 50);
 	}
+    };
+
+    FormulaPlayer.prototype.onMouseMove = function(event) {
+	this.mouseInside = true;
+	if(this.cameraMove && !this.cameraMove.ended) {
+//	    this.hideButtons();
+	    this.cameraMove.position = {x: event.clientX, y: event.clientY};
+	} else {
+//	    this.showButtons();
+	    var mouse = this.computeMousePosition(event);
+	    var button = this.getButtonFromMousePosition(mouse);
+	    if(this.highlightButton !== button) {
+		this.setHighlight(this.highlightButton, false);
+		this.setHighlight(button, true);
+		this.highlightButton = button;
+	    }
+	}
+    };
+
+    FormulaPlayer.prototype.onMouseDown = function(event) {
+	var mouse = this.computeMousePosition(event);
+	var button = this.getButtonFromMousePosition(mouse);
+	this.currentButton = button;
+	if(!button && !this.cameraMove) {
+	    this.cameraMove = {
+		start: {
+		    x: event.clientX,
+		    y: event.clientY
+		},
+		k: 1,
+		ended: false
+	    };
+//	    this.hideButtons();
+	}
+    };
+
+    FormulaPlayer.prototype.onMouseUp = function(event) {
+	if(this.cameraMove) {
+	    if(this.cameraMove.position) {
+		this.cameraMove.ended = true;
+	    } else {
+		this.cameraMove = null;
+	    }
+	} else {
+	    var mouse = this.computeMousePosition(event);
+	    var button = this.getButtonFromMousePosition(mouse);
+	    if(button && button === this.currentButton) {
+		this[button.action]();
+	    }
+	    this.currentButton = null;
+	}
+    };
+
+    FormulaPlayer.prototype.onMouseLeave = function(event) {
+	this.mouseInside = false;
+//	this.hideButtons();
 	this.curentButton = null;
 	if(this.highlightButton) {
 	    this.setHighlight(this.highlightButton, false);
 	    this.highlightButton = null;
+	}
+	if(this.cameraMove) {
+	    this.cameraMove.ended = true;
 	}
     };
 
@@ -272,6 +310,29 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 		}
 	    });
 	} while(this.cube3d.instantMode && this.commandQueue.length);
+
+	if(this.cameraMove && this.cameraMove.position) {
+	    if(this.cameraMove.ended) {
+		this.cameraMove.k -= 0.05;
+		if(this.cameraMove.k < 0) {
+		    this.cameraMove.k = 0;
+		}
+	    }
+	    var rx = (this.cameraMove.position.y - this.cameraMove.start.y)*0.02;
+	    var ry = (this.cameraMove.position.x - this.cameraMove.start.x)*0.02;
+	    rx *= this.cameraMove.k;
+	    ry *= this.cameraMove.k;
+	    this.cube3d.node.setRotationFromAxisAngle(new THREE.Vector3(1/Math.sqrt(2), 0, -1/Math.sqrt(2)), rx);
+	    this.cube3d.node.rotateY(ry);
+	    if(this.cameraMove.k === 0) {
+		this.cameraMove = null;
+	    }
+	}
+	if(this.mouseInside && !this.cameraMove) {
+	    this.showButtons();
+	} else {
+	    this.hideButtons();
+	}
 	this.renderer.render(this.scene, this.camera);
     };
 	
