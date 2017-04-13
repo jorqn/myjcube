@@ -15,8 +15,8 @@ window.start = function() {
 	    fillString:"rrr_r__r_____o_ooo_g_______wwwwwwwwwggg_g____bbb_b____",
 	    arrows: [
 		{
-		    start: { x: 0, y: 1, z: 0},
-		    end: {x: 1, y: 0, z: 0},
+		    start: { x: 0, y: 1},
+		    end: {x: 1, y: 0},
 		    normal: { x: 0, y:0, z: 1}
 		}
 	    ]

@@ -60,12 +60,12 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		var arrow = parameters.arrows[i];
 		var start = arrow.start, end = arrow.end, normal = arrow.normal;
 		var arrowGeometry = new ArrowMesh({
-		    start: new THREE.Vector3(1*(start.x ) + k*normal.x,
-					     1*(start.y ) + k*normal.y,
-					     1*(start.z ) + k*normal.z),
-		    end: new THREE.Vector3(1*(end.x ) + k*normal.x,
-					   1*(end.y )+ k*normal.y,
-					   1*(end.z )+ k*normal.z),
+		    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
+					     1*(start.y||0) + k*normal.y,
+					     1*(start.z||0) + k*normal.z),
+		    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
+					   1*(end.y||0)+ k*normal.y,
+					   1*(end.z||0)+ k*normal.z),
 		    normal: new THREE.Vector3(normal.x,
 					      normal.y,
 					      normal.z),
@@ -75,7 +75,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		var arrowMesh = new THREE.Mesh(arrowGeometry,
 					       new THREE.MeshBasicMaterial({
 						   color: "black",
-						   side: THREE.BackSide}));
+						   side: THREE.DoubleSide}));
 		this.root.add(arrowMesh);
 		this.arrows.push(arrowMesh)
 	    }
