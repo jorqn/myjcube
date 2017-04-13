@@ -1,13 +1,29 @@
-define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/ArrowMesh', 'scene/PlayBackButtonFactory'],
-function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
+define('scene/FormulaPlayer', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/ArrowMesh', 'scene/PlayBackButtonFactory'/*, 'cube/FillStringBuilder'*/],
+function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStringBuilder*/) {
     "use strict";
-    var FormulaPlayer = function(width, height, buttonsSize) {
-	this.width = width;
-	this.height = height;
-	this.buttonsSize = buttonsSize;    
+    var FormulaPlayer = function(parameters) {
+	this.width = parameters.width || 400;
+	this.height = parameters.height || 400;
+	this.buttonsSize = parameters.buttonsSize || 25;
+	this.formula = parameters.formula;
 	this.commandQueue = [];
+	this.startCube = new Cube({empty:true});
+//	this.startCube.fillFromString("____r_rrr____o_ooo_________wwwwwwwww____g_ggg____b_bbb");
+	//	this.startCube.fillFromString("rrr_r________o_ooo_________wwwwwwwwwggg_g____bbb_b____");
+	if(parameters.fillString) {
+	    this.startCube.fillFromString(parameters.fillString);
+	} else {
+	    this.startCube.fill();
+	}
+//	this.startCube.fill();
+	// var stringBuilder = new FillStringBuilder();
+	// stringBuilder.fillFace("up", "_");
+	// this.startCube.fillFromString(stringBuilder.getString());
 	this.scene = new THREE.Scene();
 	this.cameraMove = null;
+	this.pause = true;
+	this.ended = false;
+	this.single = 0;
 	var fact = 0.012*0.9;
 	this.camera = new THREE.OrthographicCamera(fact*-480/2.0,
 			fact*480/2.0, fact*480/2.0, fact*-480/2.0, -100, 100.0);
@@ -29,9 +45,10 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	directionalLight2.position.set( -1, -1, 0.5 );
 	this.scene.add( directionalLight2 );
 
-	this.cube3d = new Cube3D({size: 1.0, cube: new Cube()});
-	this.scene.add(this.cube3d.node);
-	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
+	this.cube3d = null;
+	this.initCube();
+//	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
+	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 
 	var arrowTest = new ArrowMesh({
 	    start: new THREE.Vector3(0, 3.1, 3.1),
@@ -52,7 +69,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	
 
 	var camera = this.camera;
-	var bSize = this.buttonsSize * (camera.top - camera.bottom)/height;
+	var bSize = this.buttonsSize * (camera.top - camera.bottom)/this.height;
 //	play.scale.set(bSize, bSize, bSize);
 	var factory = new PlayBackButtonFactory(bSize);
 	var buttonsMaterial = new THREE.MeshBasicMaterial({
@@ -86,20 +103,25 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	}
 	var play = factory.createPlayButton();
 	set2d(play, 4.75, "onPlayButton");
+	this.playButton = play;
 	var pause = factory.createPauseButton();
 	set2d(pause, 4.75, "onPauseButton");
+	this.pauseButton = pause;
 	pause.visible = false;
 
 	var restart = factory.createRestartButton();
 	set2d(restart, 1, "onRestartButton");
+	this.restartButton = restart;
 
 	var next = factory.createNextButton();
 	set2d(next, 8, "onNextButton");
+	this.nextButton = next;
 	var canvas = this.domElement;
 	canvas.addEventListener("mousemove",this.onMouseMove.bind(this));
 	canvas.addEventListener("mousedown",this.onMouseDown.bind(this));
 	canvas.addEventListener("mouseup",this.onMouseUp.bind(this));
 	canvas.addEventListener("mouseleave",this.onMouseLeave.bind(this));
+	this.playFormula(this.formula);
 	
 //	this.scene.add(pause);
     };
@@ -116,6 +138,14 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
     // 	goCommand(0);
     // }
 
+    FormulaPlayer.prototype.initCube = function() {
+	if(this.cube3d) {
+	    this.scene.remove(this.cube3d.node);
+	}
+	this.cube3d = new Cube3D({size: 1.0, cube: this.startCube});
+	this.scene.add(this.cube3d.node);
+    };
+
     FormulaPlayer.prototype.computeMousePosition = function(event) {
 	var mouse = {};
 	var div = this.domElement;
@@ -128,7 +158,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 	var i, button;
 	for(i = 0; i < this.buttons.length; i++) {
 	    button = this.buttons[i];
-	    if(mouse.x >= button.x && mouse.y >= button.y
+	    if(button.mesh.visible && mouse.x >= button.x && mouse.y >= button.y
 	       && mouse.x < button.x + button.width
 	       && mouse.y < button.y + button.height) {
 		return button;
@@ -269,16 +299,32 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
     };
 
     FormulaPlayer.prototype.onPlayButton = function() {
-	this.playFormula("RUR'");
+	this.pause = false;
+	this.playButton.visible = false;
+	this.pauseButton.visible = true;
+	this.nextButton.visible = false;
+	this.restartButton.visible = false;
+	this.pause = false;
     };
 
     FormulaPlayer.prototype.onPauseButton = function() {
+	this.pause = true;
+	this.playButton.visible = this.ended ? false : true;
+	this.pauseButton.visible = false;
+	this.nextButton.visible = this.ended ? false : true;
+	this.restartButton.visible = true;
     };
 
     FormulaPlayer.prototype.onRestartButton = function() {
+	this.initCube();
+	this.commandQueue = [];
+	this.playFormula(this.formula);
+	this.onPauseButton();
     };
 
     FormulaPlayer.prototype.onNextButton = function() {
+	this.pause = false;
+	this.single++;;
     };
 
     FormulaPlayer.prototype.addCommands = function(commands) {
@@ -286,6 +332,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
     };
 
     FormulaPlayer.prototype.playFormula = function(str) {
+	this.ended = false;
 	var tab = Interpreter.parse(str);
 	this.addCommands(tab);
     };
@@ -302,11 +349,21 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory) {
 		// if(_this.cube3d.cube.isSolved()) {
 		//     alert('solved!');
 		// }
-		if(_this.commandQueue.length > 0) {
-		    _this.cube3d.startCommand(_this.commandQueue.shift(), true);
-		    commandRunning = true;
-		} else {
+		if(_this.commandQueue.length === 0) {
+		    _this.onPauseButton();
 		    commandRunning = false;
+		    _this.ended = true;
+		} else {
+		    if(!_this.pause) {
+			if(_this.single) {
+			    _this.single--;
+			    _this.pause = _this.single ? false : true;
+			}
+			_this.cube3d.startCommand(_this.commandQueue.shift(), true);
+			commandRunning = true;
+		    } else {
+			commandRunning = false;
+		    }
 		}
 	    });
 	} while(this.cube3d.instantMode && this.commandQueue.length);

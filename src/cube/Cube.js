@@ -47,7 +47,8 @@ define("cube/Cube", ['cube/Face'], function(Face) {
     var faceList = [ "front", "back", "up", "down", "right",
 		     "left" ];
     var charToColor = { "r": "red", "o": "orange", "y": "yellow", 
-		       "w": "white", "g": "green", "b": "blue"};
+			"w": "white", "g": "green", "b": "blue",
+			"_": "gray"};
     function invertTable(table) {
 	var key;
 	var inverseTable = {};
