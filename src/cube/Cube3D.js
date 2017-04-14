@@ -5,6 +5,24 @@ define("cube/Cube3D", ["cube/Tile3D", "cube/Cube", "cube/CubeTexCoords"], functi
 	this.cube = params.cube;
 	this.cubeTexCoords = params.cubeTexCoords || new CubeTexCoords();
 	this.tiles = [];
+	this.materials = params.materials ||  {
+	    white: new THREE.MeshBasicMaterial({color: 0xffffff}),
+	    yellow: new THREE.MeshBasicMaterial({color: 0xffff00}),
+	    blue: new THREE.MeshBasicMaterial({color: 0x0000ff}),
+	    green: new THREE.MeshBasicMaterial({color: 0x00ff00}),
+	    red: new THREE.MeshBasicMaterial({color: 0xff0000}),
+	    orange: new THREE.MeshBasicMaterial({color: 0xff8800}),
+	    gray: new THREE.MeshBasicMaterial({color: "gray"}),
+	    space: new THREE.MeshBasicMaterial({color: "#dddddd"})
+	};
+	this.skin = params.skin || {
+	    down: "white",
+	    up: "yellow",
+	    back: "orange",
+	    front: "red",
+	    left: "blue",
+	    right: "green",
+	};
 	var uvBounds;
 	uvBounds = this.cubeTexCoords.getFaceUvBounds('right');
 	this.tiles.push(new Tile3D([ 1,-1,-1], [ 1, 0, 0], [2,0], this, uvBounds));
@@ -72,14 +90,8 @@ define("cube/Cube3D", ["cube/Tile3D", "cube/Cube", "cube/CubeTexCoords"], functi
 	this.tiles.push(new Tile3D([-1, 1,-1], [ 0, 0,-1], [2,0], this, uvBounds));
 	this.tiles.push(new Tile3D([ 0, 1,-1], [ 0, 0,-1], [1,0], this, uvBounds));
 	this.tiles.push(new Tile3D([ 1, 1,-1], [ 0, 0,-1], [0,0], this, uvBounds));
-	this.materials = params.materials ||  {
-	    down: new THREE.MeshBasicMaterial({color: 0xffffff}),
-	    up: new THREE.MeshBasicMaterial({color: 0xffff00}),
-	    back: new THREE.MeshBasicMaterial({color: 0x0000ff}),
-	    front: new THREE.MeshBasicMaterial({color: 0x00ff00}),
-	    left: new THREE.MeshBasicMaterial({color: 0xff0000}),
-	    right: new THREE.MeshBasicMaterial({color: 0xff8800})
-	};
+	
+	
 	// this.maps =  {
 	//     green: THREE.ImageUtils.loadTexture('img/green.jpg'),
 	//     red: THREE.ImageUtils.loadTexture('img/red.jpg'),

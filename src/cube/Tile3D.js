@@ -118,7 +118,9 @@ define("cube/Tile3D", [], function() {
 	this.mesh = new THREE.Mesh( this.stickerGeometry, null );
 	this.mesh.position.set(0,0,size*0.01);
 	this.backMesh = new THREE.Mesh( this.backGeometry, null );
-	this.backMesh.material = new THREE.MeshBasicMaterial({ color: "#dddddd", side: THREE.DoubleSide });
+	//	this.backMesh.material = new THREE.MeshBasicMaterial({ color: "#dddddd", side: THREE.DoubleSide });
+	this.cube3d.materials.space.side = THREE.DoubleSide;
+	this.backMesh.material = this.cube3d.materials.space;
 	this.mesh.mytile = this;
 	// if(this.normal.x === 1) {
 	//     this.mesh.rotateY(Math.PI/2);
@@ -165,9 +167,10 @@ define("cube/Tile3D", [], function() {
 	} else {
 	    tile.mesh = this.mesh;
 	    if(tile.id) {
-		this.mesh.material = this.cube3d.materials[tile.id];
+		var color = this.cube3d.skin[tile.id];
+		this.mesh.material = this.cube3d.materials[color];
 	    } else {
-		this.mesh.material = new THREE.MeshBasicMaterial({ color: tile.color });
+		this.mesh.material = this.cube3d.materials[tile.color];
 	    }
 	}
 	if(this.normal.z < -0.5) {
