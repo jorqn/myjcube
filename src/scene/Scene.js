@@ -1,6 +1,7 @@
 define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Arrow', 'scene/ArrowMaterial'], function(Cube, Cube3D, Interpreter, Arrow, ArrowMaterial) {
     "use strict";
     var Scene = function(width, height, init, fill, scramble, cubeMaterials, cubeTexCoords) {
+	
 	this.frameIndex = 1000;
 	this.width = width;
 	this.height = height;
@@ -8,7 +9,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
 	this.scene = new THREE.Scene();
 //	this.camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
-	var fact = 0.012;
+	var fact = 0.011;
 	this.camera = new THREE.OrthographicCamera(fact*-480/2.0, fact*480/2.0, fact*480/2.0, fact*-480/2.0, -100, 100.0);
 //	this.camera = new THREE.PerspectiveCamera(-20,-20, 20, 20, 0.1, 50);
 	this.camera.position.set(4,4,4);
@@ -28,7 +29,8 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
 	console.log(toScreenXY(new THREE.Vector3(1.0, 0, 0), this.camera));
 
-	this.renderer = new THREE.WebGLRenderer();
+	this.renderer = new THREE.WebGLRenderer({antialias: true});
+	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 	this.renderer.setSize(this.width, this.height);
 	this.domElement = this.renderer.domElement;
 
@@ -41,7 +43,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	directionalLight2.position.set( -1, -1, 0.5 );
 	this.scene.add( directionalLight2 );
 
-	this.cube3d = new Cube3D({size: 1.0, cube: new Cube(), cubeTexCoords: cubeTexCoords/*, materials: cubeMaterials*/});
+	this.cube3d = new Cube3D({size: 1.0, cube: new Cube(), cubeTexCoords: cubeTexCoords, materials: cubeMaterials});
 	if(fill) {
 	    cube.fillFromString(fill);
 	} else if(scramble) {
@@ -55,13 +57,14 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	this.cameraMove = null;
 
 	this.commandQueue = [];
-	this.texArrow = THREE.ImageUtils.loadTexture('img/arrow.png');
+	var rootDir = window.rootDir || "";
+	this.texArrow = THREE.ImageUtils.loadTexture(rootDir + 'img/arrow.png');
 	this.texArrow.minFilter = THREE.NearestFilter;
 	this.texArrow.magFilter = THREE.NearestFilter;
-	this.texRoundArrow = THREE.ImageUtils.loadTexture('img/roundarrow.png');
+	this.texRoundArrow = THREE.ImageUtils.loadTexture(rootDir + 'img/roundarrow.png');
 	this.texRoundArrow.minFilter = THREE.NearestFilter;
 	this.texRoundArrow.magFilter = THREE.NearestFilter;
-	this.texArrowHL = THREE.ImageUtils.loadTexture('img/arrowhl.png');
+	this.texArrowHL = THREE.ImageUtils.loadTexture(rootDir + 'img/arrowhl.png');
 	this.straightArrowMaterial = new ArrowMaterial({map: this.texArrow});
         // this.materialArrow1 = new THREE.MeshBasicMaterial({map: this.texArrow, transparent: true, opacity: 0.2, depthTest: false, side: THREE.DoubleSide});
         // this.materialArrow = new THREE.MeshBasicMaterial({map: this.texArrow, transparent: true, opacity: 0.5, depthTest: false, side: THREE.DoubleSide});
@@ -272,7 +275,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	var i = 0;
 	for(i = 0; i < this.arrows.length; i++) {
 	    if(this.arrows[i].permanent && !this.cameraMove) {
-		this.arrows[i].setVisible((this.arrows[i].permanent === this.position) ? true : false, this.frameIndex);
+		this.arrows[i].setVisible(this.mouseIn && (this.arrows[i].permanent === this.position) ? true : false, this.frameIndex);
 	    }
 	}
 
@@ -405,6 +408,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	return mouse;
     }
     Scene.prototype.onMouseMove = function(event) {
+	this.mouseIn = true;
 	var arrow;
 	if(this.cameraMove && !this.cameraMove.ended) {
 	    this.cameraMove.position = {x: event.clientX, y: event.clientY};
@@ -456,8 +460,8 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
 		for(i = 0; i < this.arrows.length; i++) {
 		    arrow = this.arrows[i];
-		    if((arrow.permanent === this.position) || (!arrow.permanent && normal && arrow.normal.x === normal.x && arrow.normal.y === normal.y
-					   && arrow.normal.z === normal.z)) {
+		    if(this.mouseIn && ((arrow.permanent === this.position) || (!arrow.permanent && normal && arrow.normal.x === normal.x && arrow.normal.y === normal.y
+										&& arrow.normal.z === normal.z))) {
 			arrow.setVisible(true, this.frameIndex);
 		    } else {
 			arrow.setVisible(false, this.frameIndex);
@@ -531,6 +535,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	}
     };
     Scene.prototype.onMouseLeave = function(event) {
+	this.mouseIn = false;
 	if(this.cameraMove) {
 	    this.cameraMove.ended = true;
 	    this.cameraMove.target = this.cameraMove.start;
