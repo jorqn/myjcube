@@ -41,7 +41,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	directionalLight2.position.set( -1, -1, 0.5 );
 	this.scene.add( directionalLight2 );
 
-	this.cube3d = new Cube3D({size: 1.0, cube: new Cube(), cubeTexCoords: cubeTexCoords, materials: cubeMaterials});
+	this.cube3d = new Cube3D({size: 1.0, cube: new Cube(), cubeTexCoords: cubeTexCoords/*, materials: cubeMaterials*/});
 	if(fill) {
 	    cube.fillFromString(fill);
 	} else if(scramble) {
@@ -387,6 +387,23 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
     };
 
     var louve = 0;
+    Scene.prototype.computeMousePosition = function(event) {
+	var mouse = {};
+	var canvas = this.renderer.domElement;
+	var div = canvas;
+	var mouse = {
+	    x: event.pageX,
+	    y: event.pageY
+	};
+	while(div) {
+	    mouse.x -= div.offsetLeft;
+	    mouse.y -= div.offsetTop;
+	    div = div.parentElement;
+	}
+	mouse.x = 2*mouse.x/canvas.width - 1;
+	mouse.y = -2*mouse.y/canvas.height + 1;
+	return mouse;
+    }
     Scene.prototype.onMouseMove = function(event) {
 	var arrow;
 	if(this.cameraMove && !this.cameraMove.ended) {
@@ -397,8 +414,9 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	    var renderer = this.renderer;
 	    var camera = this.camera;
 	    var div = renderer.domElement;
-	    mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
-	    mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+	    // mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
+	    // mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+	    mouse = this.computeMousePosition(event);
 
 	    raycaster.setFromCamera( mouse, camera );
 
@@ -421,8 +439,9 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 		var renderer = this.renderer;
 		var camera = this.camera;
 		var div = renderer.domElement;
-		mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
-		mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+		// mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
+		// mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+		mouse = this.computeMousePosition(event);
 
 		raycaster.setFromCamera( mouse, camera );
 
@@ -524,8 +543,9 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	var renderer = this.renderer;
 	var camera = this.camera;
 	var div = renderer.domElement;
-	mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
-	mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+	// mouse.x = ( (event.clientX-div.offsetLeft) / div.width ) * 2 - 1;
+	// mouse.y = - ( (event.clientY-div.offsetTop) / div.height ) * 2 + 1;
+	mouse = this.computeMousePosition(event);
 
 	raycaster.setFromCamera( mouse, camera );
 

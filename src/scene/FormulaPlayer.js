@@ -179,8 +179,19 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     FormulaPlayer.prototype.computeMousePosition = function(event) {
 	var mouse = {};
 	var div = this.domElement;
-	mouse.x = (event.clientX-div.offsetLeft);
-	mouse.y = (event.clientY-div.offsetTop);
+	var mouse = {
+	    x: event.pageX,
+	    y: event.pageY
+	};
+	while(div) {
+	    mouse.x -= div.offsetLeft;
+	    mouse.y -= div.offsetTop;
+	    div = div.parentElement;
+	}
+	// mouse.x = (event.clientX-div.offsetLeft);
+	// mouse.y = (event.clientY-div.offsetTop);
+	// mouse.x = (event.pageX - div.offsetLeft);
+	// mouse.y = (event.pageY - div.offsetTop);
 	return mouse;
     };
 

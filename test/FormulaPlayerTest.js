@@ -22,7 +22,13 @@ window.start = function() {
 	    ]
 	    
 	});
-	document.body.appendChild(player.domElement);
+	var div = document.createElement('div');
+	div.style.position = "absolute";
+	div.style.left = "100px";
+	div.style.top = "50px";
+	document.body.appendChild(div);
+	div.appendChild(player.domElement);
+//	document.body.appendChild(player.domElement);
 	player.startAnimationLoop();
 	window.player = player;
     });
