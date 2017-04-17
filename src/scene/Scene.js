@@ -540,6 +540,11 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	    this.cameraMove.ended = true;
 	    this.cameraMove.target = this.cameraMove.start;
 	}
+	var i, arrow;
+	for(i = 0; i < this.arrows.length; i++) {
+	    arrow = this.arrows[i];
+	    arrow.setVisible(false, this.frameIndex);
+	}
     };
     Scene.prototype.onMouseDown = function(event) {
 	event.preventDefault();
