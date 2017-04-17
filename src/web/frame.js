@@ -116,7 +116,7 @@
     window.rootDir = '../';
     window.addOnLoadedRef();
     function onResize() {
-	console.log(document.body.clientWidth);
+//	console.log(document.body.clientWidth);
 	var mainPane = document.getElementsByClassName('mainPane')[0];
 	leftDiv.style.height = document.body.clientHeight - 200;
 	topDiv.style.width = document.body.clientWidth - 200;
@@ -159,7 +159,8 @@
 	    width: 200,
 	    height: 200,
 	    cubeMaterials: materials,
-	    backgroundColor: "#ffffff"
+	    backgroundColor: "#ffffff",
+	    scramble: true
 	});
 	scene.domElement.style.position = "absolute";
 	scene.domElement.style.left = "0px";
@@ -177,6 +178,10 @@
 	});
 	scene.domElement.addEventListener("mouseleave", function(event) {
 	    scene.onMouseLeave(event);
+	});
+	scene.domElement.addEventListener("contextmenu", function(event) {
+	    event.preventDefault();
+	    return false;
 	});
 	window.releaseOnLoadedRef();
     });

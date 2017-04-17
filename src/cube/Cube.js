@@ -174,7 +174,7 @@ define("cube/Cube", ['cube/Face'], function(Face) {
 	    var faceIndex = Math.floor(Math.random()*6);
 	    var direction = Math.random() < 0.5 ? -1 : 1;
 	    currentCube.rotate(faceList[faceIndex], direction, newCube);
-	    console.log(faceList[faceIndex] + " " + direction);
+//	    console.log(faceList[faceIndex] + " " + direction);
 	    currentCube = newCube;
 	}
 	return currentCube;

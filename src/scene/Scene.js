@@ -38,7 +38,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
         }
 
-	console.log(toScreenXY(new THREE.Vector3(1.0, 0, 0), this.camera));
+//	console.log(toScreenXY(new THREE.Vector3(1.0, 0, 0), this.camera));
 
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
 	this.renderer.setClearColor(new THREE.Color(backgroundColor), 1);
@@ -268,7 +268,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	    clearTimeout(this.stopAnimationTimeout);
 	}
 	var _this = this;
-	this.stopAnimationTimeout = setTimeout(function() {
+	this.stopAnimationTimeout = null && setTimeout(function() {
 	    _this.stopAnimation = true;
 	    console.log("stop animation");
 	}, 1000);
