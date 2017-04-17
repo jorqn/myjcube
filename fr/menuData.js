@@ -1,25 +1,26 @@
 window.menuData = {
     lang: 'fr',
     navigationRoot: {
-	id: 'root',
+	title: "Bienvenue !",
+	id: 'index',
 	children: [
 	    {
-		shortTitle: "Langage SHATARO",
-		title: "Langage SHATARO",
-		id: 'language',
+		shortTitle: "Notation SHATARO",
+		title: "Notation SHATARO",
+		id: 'shataro_index',
 		children: [
 		    {
-			id: 'why',
+			id: 'why_shataro',
 			shortTitle: "Pourquoi?",
 			title: "Pourquoi une nouvelle notation?",
 		    },
 		    {
-			id: 'description',
-			shortTitle: "SHATARO description",
-			title: "Tout savoir sur le langage SHATARO"
+			id: 'shataro_specs',
+			shortTitle: "Définition de SHATARO",
+			title: "Tout savoir sur la notation SHATARO"
 		    },
 		    {
-			id: 'tools',
+			id: 'shataro_tools',
 			shortTitle: "Outil de traduction",
 			title: "Outil de traduction entre SHATARO et notation standard"
 		    }

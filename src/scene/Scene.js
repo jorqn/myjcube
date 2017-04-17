@@ -1,7 +1,17 @@
 define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Arrow', 'scene/ArrowMaterial'], function(Cube, Cube3D, Interpreter, Arrow, ArrowMaterial) {
     "use strict";
-    var Scene = function(width, height, init, fill, scramble, cubeMaterials, cubeTexCoords) {
-	
+    var Scene = function(// width, height, init, fill, scramble, cubeMaterials, cubeTexCoords
+	                 parameters
+			) {
+	parameters = parameters || {};
+	var width = parameters.width,
+	    height = parameters.height,
+	    init = parameters.init,
+	    fill = parameters.fill,
+	    scramble = parameters.scramble,
+	    cubeMaterials = parameters.cubeMaterials,
+	    cubeTexCoords = parameters.cubeTexCoords,
+	    backgroundColor = parameters.backgroundColor;
 	this.frameIndex = 1000;
 	this.width = width;
 	this.height = height;
@@ -15,6 +25,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	this.camera.position.set(4,4,4);
 	this.camera.up = new THREE.Vector3(0, 1, 0);
 	this.camera.lookAt(new THREE.Vector3(0, 0, 0));
+	this.stopAnimation = true;
 
 	function toScreenXY( position, camera ) {
             var pos = position.clone();
@@ -30,7 +41,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	console.log(toScreenXY(new THREE.Vector3(1.0, 0, 0), this.camera));
 
 	this.renderer = new THREE.WebGLRenderer({antialias: true});
-	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
+	this.renderer.setClearColor(new THREE.Color(backgroundColor), 1);
 	this.renderer.setSize(this.width, this.height);
 	this.domElement = this.renderer.domElement;
 
@@ -249,16 +260,27 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
     };
 
     Scene.prototype.startAnimationLoop = function() {
-	this.animate();
+	if(this.stopAnimation) {
+	    this.stopAnimation = false;
+	    this.animate();
+	}
+	if(this.stopAnimationTimeout) {
+	    clearTimeout(this.stopAnimationTimeout);
+	}
+	var _this = this;
+	this.stopAnimationTimeout = setTimeout(function() {
+	    _this.stopAnimation = true;
+	    console.log("stop animation");
+	}, 1000);
 //	this.playCommands(["H","H","C","H","C","H","C","H","H","C'","H","C'","H","C'"]);
 //	this.playCommands(["F", "B", "R", "L", "U", "D", "D'", "U'", "L'", "R'", "B'", "F'"]);
 //	this.playCommands(["R"]);
 //	var Interpreter.parse("0R'B2U'F2L2D'UL'FD2RU2B'LR0");
-	var tab = Interpreter.parse("0"+this.init+"0");
+	// var tab = Interpreter.parse("0"+this.init+"0");
 //	var tab = interpreter.parse("xyzz'y'x'");
 //	var tab = interpreter.parse("ufbrldd'l'r'b'f'u'");
 //	var tab = interpreter.parse("Uz'");
-	this.addCommands(tab);
+//	this.addCommands(tab);
     }
 
     var counter = 0;
@@ -269,9 +291,11 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
     Scene.prototype.animate = function() {
 	var _this = this;
-	requestAnimationFrame(function() {
-	    _this.animate();
-	});
+	if(!this.stopAnimation) {
+	    requestAnimationFrame(function() {
+		_this.animate();
+	    });
+	}
 	var i = 0;
 	for(i = 0; i < this.arrows.length; i++) {
 	    if(this.arrows[i].permanent && !this.cameraMove) {
@@ -408,6 +432,8 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	return mouse;
     }
     Scene.prototype.onMouseMove = function(event) {
+	this.startAnimationLoop();
+	
 	this.mouseIn = true;
 	var arrow;
 	if(this.cameraMove && !this.cameraMove.ended) {

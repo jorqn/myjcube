@@ -10,10 +10,8 @@
     cubeDiv.className = "cubePane";
     document.body.appendChild(cubeDiv);
 
-    var hidePane = document.createElement("div");
-    hidePane.className = "hidePane";
-    document.body.appendChild(hidePane);
-    
+    var useHidePane = false;
+    var hidePane = useHidePane ? document.createElement("div") : null;
     window.addOnLoadedRef = function() {
 	if(!window.onLoadedCount) {
 	    window.onLoadedCount = 0;
@@ -21,17 +19,34 @@
 	window.onLoadedCount++;
     }
 
+    window.showPage = function() {
+	if(!hidePane) return;
+	var myHidePane = hidePane;
+	hidePane = null;
+	myHidePane.style.opacity = 1;
+	var interval = setInterval(function () {
+	    myHidePane.style.opacity -= 0.25;
+	    if(myHidePane.style.opacity <= 0) {
+		document.body.removeChild(myHidePane);
+		clearInterval(interval);
+	    }
+	}, 50);
+    }
+
+    if(hidePane) {
+	hidePane.className = "hidePane";
+	document.body.appendChild(hidePane);
+	setTimeout(function() {
+	    window.showPage();
+	}, 3000);
+    }
+    
     window.releaseOnLoadedRef = function() {
+//	return;
+	if(!hidePane) return;
 	window.onLoadedCount--;
 	if(window.onLoadedCount === 0) {
-	    hidePane.style.opacity = 1;
-	    var interval = setInterval(function () {
-		hidePane.style.opacity -= 0.25;
-		if(hidePane.style.opacity <= 0) {
-		    document.body.removeChild(hidePane);
-		    clearInterval(interval);
-		}
-	    }, 50);
+	    window.showPage();
 	}
     }
 
@@ -51,6 +66,11 @@
 	return null;
     }
     var path = buildSubPath(window.menuData.navigationRoot);
+    function createOnMenuClickCb(id) {
+	return function() {
+		window.location = "./" + id + ".html";
+	};
+    }
     function displayLevel(index) {
 	var i;
 	var node = path[index], element, child;
@@ -61,6 +81,7 @@
 		+ (child.id === pageId ? " leftPaneMenuHighlight"+index : "");
 	    element.innerText = child.shortTitle;
 	    leftDiv.appendChild(element);
+	    element.onclick = createOnMenuClickCb(child.id);
 	    if(child === path[index+1]) {
 		displayLevel(index+1);
 	    }
@@ -76,8 +97,13 @@
     myJCube.src = '../img/myJCube.png';
     myJCube.style.position = "relative";
     myJCube.style.left = "20px";
-    myJCube.style.top = "0px";
+    myJCube.style.top = "-20px";
     myJCube.onload = window.releaseOnLoadedRef;
+    myJCube.style.cursor = "pointer";
+    myJCube.onclick = function () {
+	document.location = './index.html';
+    }
+    
     topDiv.appendChild(myJCube);
     require.config({
 	paths: {
@@ -89,6 +115,25 @@
     });
     window.rootDir = '../';
     window.addOnLoadedRef();
+    function onResize() {
+	console.log(document.body.clientWidth);
+	var mainPane = document.getElementsByClassName('mainPane')[0];
+	leftDiv.style.height = document.body.clientHeight - 200;
+	topDiv.style.width = document.body.clientWidth - 200;
+	if(mainPane) {
+	    mainPane.style.width = document.body.clientWidth - 200;
+	}
+	leftDiv.style.height = document.body.clientHeight - 200;
+    }
+    window.addEventListener('resize', onResize, false);
+    window.onload = onResize;
+    window.doResize = onResize;
+    window.insertTitle = function () {
+	var title = path[path.length-1].title;
+	document.write("<h1 class='title'>"+title+"</h1>");
+    }
+    
+    onResize();
     require(['scene/Scene'],  function(Scene) {
 	var materials = {
 	    white: new THREE.MeshBasicMaterial({color: "#666666"}),
@@ -100,7 +145,22 @@
 	    gray: new THREE.MeshBasicMaterial({color: "gray"}),
 	    space: new THREE.MeshBasicMaterial({color: "white"})
 	};
-	var scene = new Scene(200, 200, undefined, undefined, undefined, materials);
+	// var materials = {
+	//     white: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     blue: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     green: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     red: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     orange: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     gray: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	//     space: new THREE.MeshBasicMaterial({color: 0xfe84cd})
+	// };
+	var scene = new Scene({
+	    width: 200,
+	    height: 200,
+	    cubeMaterials: materials,
+	    backgroundColor: "#ffffff"
+	});
 	scene.domElement.style.position = "absolute";
 	scene.domElement.style.left = "0px";
 	scene.domElement.style.top = "0px";

@@ -1,3 +1,23 @@
+
+element {
+    --my-bg-color: #ffffff
+}
+
+p, h1, h2, ul {
+    font-family: "Segoe UI",Arial,sans-serif;
+}
+
+p, ul {
+    font-size: 15px;
+}
+
+ul {
+    list-style: square inside url("../img/puce.png");
+}
+li {
+    margin-top: 5px;
+}
+
 div.hidePane {
     position: absolute;
     top: 0px;
@@ -13,7 +33,7 @@ div.cubePane {
     left: 0px;
     width: 200px;
     height: 200px;
-    background-color: #cccccc;
+    background-color: --my-bg-color;
 }
 div.topPane {
     position: absolute;
@@ -21,7 +41,9 @@ div.topPane {
     left: 200px;
     width: 100%;
     height: 200px;
+    overflow: hidden;
     background-color: #ffab01;
+    margin: 0;
 }
 div.leftPane {
     position: absolute;
@@ -36,24 +58,27 @@ div.mainPane {
     top: 200px;
     left: 200px;
     width: 100%;
-    height: 100%;
-    background-color: #cccccc;
+    overflow: hidden;
+//    height: 100%;
+    background-color: --my-bg-color;
+    margin: 0;
+    //    margin-left: 15px;
+//    padding-left: 15px;
 }
 
 p.leftPaneMenu0 {
-    font-family: "Segoe UI",Arial,sans-serif;
-    font-size: 15px;
-    color: black;
+    color: white;
     font-weight: normal;
-    margin: 2px;
     padding-left: 10px;
-    margin-top: 0px;
+    margin: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     margin-left: 0px;
     margin-right: 0px;
+    cursor: pointer;
 }
 p.leftPaneMenu1 {
     font-family: "Segoe UI",Arial,sans-serif;
-    font-size: 15px;
     font-weight: normal;
     color: white;
     margin: 2px;
@@ -61,6 +86,8 @@ p.leftPaneMenu1 {
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
+    font-style: italic;
+    cursor: pointer;
 }
 p.leftPaneMenuHighlight0 {
     background-color: #fe84cd;
@@ -71,4 +98,38 @@ p.leftPaneMenuHighlight1 {
     background-color: #fe452c;
 //    font-weight: bold;
 //    text-decoration: underline;
+}
+
+p.leftPaneMenu0:hover {
+    color: #fe452c;
+}
+
+p.leftPaneMenu1:hover {
+    color: #fe452c;
+}
+
+p {
+    padding-left: 18px;
+}
+
+h2 {
+    padding-left: 18px;
+    font-weight: normal;
+}
+
+h1 {
+    padding-left: 18px;
+    font-weight: normal;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+h1.title {
+    background-color: #fe452c;
+    color: white;
+}
+
+a {
+    color: #fe452c;
 }
