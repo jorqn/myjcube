@@ -1,5 +1,9 @@
 (function() {
     "use strict";
+    var link = document.createElement("link");
+    link.setAttribute("rel", "icon");
+    link.setAttribute("href", "../img/myjcube_icon.png");
+    document.head.appendChild(link);
     var topDiv = document.createElement("div");
     topDiv.className = "topPane";
     document.body.appendChild(topDiv);
@@ -132,6 +136,7 @@
 	var title = path[path.length-1].title;
 	document.write("<h1 class='title'>"+title+"</h1>");
     }
+    document.title = 'myJCube - ' + path[path.length-1].title;
     
     onResize();
     require(['scene/Scene'],  function(Scene) {

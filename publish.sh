@@ -1,2 +1,2 @@
 #/bin/bash
-rsync -avzh ~/Projects/myjcube /var/www/html
+rsync -avzh --exclude='.git' --delete ~/Projects/myjcube /var/www/html
