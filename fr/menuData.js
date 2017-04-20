@@ -10,9 +10,9 @@ window.menuData = {
 		id: 'shataro_index',
 		children: [
 		    {
-			id: 'why_shataro',
-			shortTitle: "Pourquoi?",
-			title: "Pourquoi une nouvelle notation?",
+			id: 'shataro_overview',
+			shortTitle: "Vue d'ensemble",
+			title: "Vue d'ensemble de la notation SHATARO",
 		    },
 		    {
 			id: 'shataro_specs',
