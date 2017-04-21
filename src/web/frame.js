@@ -119,6 +119,9 @@
     });
     window.rootDir = '../';
     window.addOnLoadedRef();
+    var bgDiv = document.createElement('div');
+    bgDiv.className = "bgPane";
+    document.body.appendChild(bgDiv);
     function onResize() {
 //	console.log(document.body.clientWidth);
 	var mainPane = document.getElementsByClassName('mainPane')[0];
@@ -128,6 +131,16 @@
 	    mainPane.style.width = document.body.clientWidth - 200;
 	}
 	leftDiv.style.height = document.body.clientHeight - 200;
+	bgDiv.style.height = document.body.clientHeight - 200;
+	var margin = Math.floor((document.body.clientWidth - (topDiv.clientWidth + 200))/2);
+	margin = Math.max(margin, 0);
+	var margin2 = margin + 200;
+	mainPane && (mainPane.style.left = margin2+"px");
+	topDiv.style.left = margin2 + "px";
+	bgDiv.style.left = margin2 + "px";
+	cubeDiv.style.left = margin + "px";
+	leftDiv.style.left = margin + "px";
+	
     }
     window.addEventListener('resize', onResize, false);
     window.onload = onResize;
@@ -167,7 +180,7 @@
 	    backgroundColor: "#ffffff",
 	    scramble: true
 	});
-	scene.domElement.style.position = "absolute";
+	scene.domElement.style.position = "relative";
 	scene.domElement.style.left = "0px";
 	scene.domElement.style.top = "0px";
 	cubeDiv.appendChild(scene.domElement);
