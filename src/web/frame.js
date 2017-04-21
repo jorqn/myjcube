@@ -130,7 +130,8 @@
 	if(mainPane) {
 	    mainPane.style.width = document.body.clientWidth - 200;
 	}
-	leftDiv.style.height = document.body.clientHeight - 200;
+	bgDiv.style.width = document.body.clientWidth - 200;
+	leftDiv.style.height = Math.max(mainPane ? mainPane.clientHeight : 0, document.body.clientHeight - 200);
 	bgDiv.style.height = document.body.clientHeight - 200;
 	var margin = Math.floor((document.body.clientWidth - (topDiv.clientWidth + 200))/2);
 	margin = Math.max(margin, 0);
