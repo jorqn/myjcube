@@ -157,7 +157,7 @@
     var formulaPlayers = [];
     window.insertFormulaPlayer = function(parameters) {
 //	var name, fillString, width, height, buttonsSize, formula
-	document.write("<div id='"+parameters.name+"' style='clear: both'></div>");
+	document.write("<div id='"+parameters.name+"'"/*+" style='clear: both'"*/+"></div>");
 	formulaPlayers.push({ name: parameters.name, parameters: parameters });
     }
     window.playFormula = function(name, formula) {
