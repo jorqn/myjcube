@@ -188,3 +188,12 @@ h1.title {
 a {
     color: #fe452c;
 }
+
+a.discrete {
+    color: #000000;
+    text-decoration: none;
+}
+
+a.discrete:hover {
+    color: #fe452c;
+}
