@@ -22,6 +22,36 @@ li {
     margin-top: 5px;
 }
 
+table {
+    margin: 18px;
+    margin-top: 0px;
+    float: left;
+//    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+tr {
+    margin: 0px;
+}
+
+td, th{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+th {
+    background-color: #fe452c;
+    color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #b1eb00;
+}
+
+tr:nth-child(odd) {
+    background-color: #fe84cd;
+}
+
 div.hidePane {
     position: absolute;
     top: 0px;
@@ -139,6 +169,7 @@ p {
 h2 {
     padding-left: 18px;
     font-weight: normal;
+    
 }
 
 h1 {
