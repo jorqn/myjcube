@@ -425,7 +425,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	while(div) {
 	    mouse.x -= div.offsetLeft;
 	    mouse.y -= div.offsetTop;
-	    div = div.parentElement;
+	    div = div.offsetParent;
 	}
 	mouse.x = 2*mouse.x/canvas.width - 1;
 	mouse.y = -2*mouse.y/canvas.height + 1;

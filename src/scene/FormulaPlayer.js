@@ -4,8 +4,10 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     var FormulaPlayer = function(parameters) {
 	this.width = parameters.width || 400;
 	this.height = parameters.height || 400;
+	this.materials = parameters.materials;
 	this.buttonsSize = parameters.buttonsSize || 25;
 	this.formula = parameters.formula;
+	this.noButtons = parameters.noButtons;
 	this.commandQueue = [];
 	this.startCube = new Cube({empty:true});
 //	this.startCube.fillFromString("____r_rrr____o_ooo_________wwwwwwwww____g_ggg____b_bbb");
@@ -49,8 +51,8 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 
 	this.cube3d = null;
 	this.initCube();
-//	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
-	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
+	this.renderer.setClearColor(new THREE.Color(1,1,1), 1);
+//	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 
 	this.arrows = [];
 	var i;
@@ -131,27 +133,31 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		action: action
 	    });
 	}
-	var play = factory.createPlayButton();
-	set2d(play, 4.75, "onPlayButton");
-	this.playButton = play;
-	var pause = factory.createPauseButton();
-	set2d(pause, 4.75, "onPauseButton");
-	this.pauseButton = pause;
-	pause.visible = false;
+	if(!this.noButtons) {
+	    var play = factory.createPlayButton();
+	    set2d(play, 4.75, "onPlayButton");
+	    this.playButton = play;
+	    var pause = factory.createPauseButton();
+	    set2d(pause, 4.75, "onPauseButton");
+	    this.pauseButton = pause;
+	    pause.visible = false;
 
-	var restart = factory.createRestartButton();
-	set2d(restart, 1, "onRestartButton");
-	this.restartButton = restart;
+	    var restart = factory.createRestartButton();
+	    set2d(restart, 1, "onRestartButton");
+	    this.restartButton = restart;
 
-	var next = factory.createNextButton();
-	set2d(next, 8, "onNextButton");
-	this.nextButton = next;
+	    var next = factory.createNextButton();
+	    set2d(next, 8, "onNextButton");
+	    this.nextButton = next;
+	}
 	var canvas = this.domElement;
 	canvas.addEventListener("mousemove",this.onMouseMove.bind(this));
 	canvas.addEventListener("mousedown",this.onMouseDown.bind(this));
 	canvas.addEventListener("mouseup",this.onMouseUp.bind(this));
 	canvas.addEventListener("mouseleave",this.onMouseLeave.bind(this));
-	this.playFormula(this.formula);
+	if(this.formula) {
+	    this.playFormula(this.formula);
+	}
 	
 //	this.scene.add(pause);
     };
@@ -172,7 +178,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	if(this.cube3d) {
 	    this.root.remove(this.cube3d.node);
 	}
-	this.cube3d = new Cube3D({size: 1.0, cube: this.startCube});
+	this.cube3d = new Cube3D({size: 1.0, cube: this.startCube, materials: this.materials});
 	this.root.add(this.cube3d.node);
     };
 
@@ -186,7 +192,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	while(div) {
 	    mouse.x -= div.offsetLeft;
 	    mouse.y -= div.offsetTop;
-	    div = div.parentElement;
+	    div = div.offsetParent;
 	}
 	// mouse.x = (event.clientX-div.offsetLeft);
 	// mouse.y = (event.clientY-div.offsetTop);
@@ -350,17 +356,19 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 
     FormulaPlayer.prototype.onPauseButton = function() {
 	this.pause = true;
-	this.playButton.visible = this.ended ? false : true;
-	this.pauseButton.visible = false;
-	this.nextButton.visible = this.ended ? false : true;
-	this.restartButton.visible = true;
+	if(!this.noButtons) {
+	    this.playButton.visible = this.ended ? false : true;
+	    this.pauseButton.visible = false;
+	    this.nextButton.visible = this.ended ? false : true;
+	    this.restartButton.visible = true;
+	}
     };
 
     FormulaPlayer.prototype.onRestartButton = function() {
 	this.initCube();
 	this.setArrowsVisibility(true);
 	this.commandQueue = [];
-	this.playFormula(this.formula);
+	this.formula && this.playFormula(this.formula);
 	this.onPauseButton();
     };
 
@@ -380,10 +388,14 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	this.commandQueue = this.commandQueue.concat(commands);
     };
 
-    FormulaPlayer.prototype.playFormula = function(str) {
+    FormulaPlayer.prototype.playFormula = function(str, play) {
+	this.formula = str;
 	this.ended = false;
 	var tab = Interpreter.parse(str);
 	this.addCommands(tab);
+	if(play) {
+	    this.pause = false;
+	}
     };
 
     FormulaPlayer.prototype.startAnimationLoop = function() {

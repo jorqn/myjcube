@@ -153,17 +153,34 @@
     document.title = 'myJCube - ' + path[path.length-1].title;
     
     onResize();
-    require(['scene/Scene'],  function(Scene) {
-	var materials = {
-	    white: new THREE.MeshBasicMaterial({color: "#666666"}),
-	    yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
-	    blue: new THREE.MeshBasicMaterial({color: 0x55bbf4}),
-	    green: new THREE.MeshBasicMaterial({color: 0xb1eb00}),
-	    red: new THREE.MeshBasicMaterial({color: 0xfe452c}),
-	    orange: new THREE.MeshBasicMaterial({color: 0xffab01}),
-	    gray: new THREE.MeshBasicMaterial({color: "gray"}),
-	    space: new THREE.MeshBasicMaterial({color: "white"})
-	};
+
+    var formulaPlayers = [];
+    window.insertFormulaPlayer = function(parameters) {
+//	var name, fillString, width, height, buttonsSize, formula
+	document.write("<div id='"+parameters.name+"' style='clear: both'></div>");
+	formulaPlayers.push({ name: parameters.name, parameters: parameters });
+    }
+    window.playFormula = function(name, formula) {
+	var i;
+	for(i = 0; i < formulaPlayers.length; i++) {
+	    if(formulaPlayers[i].name === name) {
+		formulaPlayers[i].player.playFormula(formula, true);
+	    }
+	}
+    }
+    require(['scene/Scene', 'scene/FormulaPlayer'],  function(Scene, FormulaPlayer) {
+	function getMaterials() {
+	    return {
+		white: new THREE.MeshBasicMaterial({color: "#666666"}),
+		yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+		blue: new THREE.MeshBasicMaterial({color: 0x55bbf4}),
+		green: new THREE.MeshBasicMaterial({color: 0xb1eb00}),
+		red: new THREE.MeshBasicMaterial({color: 0xfe452c}),
+		orange: new THREE.MeshBasicMaterial({color: 0xffab01}),
+		gray: new THREE.MeshBasicMaterial({color: "gray"}),
+		space: new THREE.MeshBasicMaterial({color: "white"})
+	    };
+	}
 	// var materials = {
 	//     white: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
 	//     yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
@@ -177,7 +194,7 @@
 	var scene = new Scene({
 	    width: 200,
 	    height: 200,
-	    cubeMaterials: materials,
+	    cubeMaterials: getMaterials(),
 	    backgroundColor: "#ffffff",
 	    scramble: true
 	});
@@ -202,6 +219,17 @@
 	    event.preventDefault();
 	    return false;
 	});
+
+	var i, div, player;
+	for(i = 0; i < formulaPlayers.length; i++) {
+	    div = document.getElementById(formulaPlayers[i].name);
+	    formulaPlayers[i].parameters.materials = getMaterials();
+	    player = new FormulaPlayer(formulaPlayers[i].parameters);
+	    formulaPlayers[i].div = div;
+	    formulaPlayers[i].player = player;
+	    div.appendChild(player.domElement);
+	    player.startAnimationLoop();
+	}
 	window.releaseOnLoadedRef();
     });
 })();
