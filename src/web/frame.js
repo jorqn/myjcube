@@ -156,17 +156,21 @@
 
     var formulaPlayers = [];
     window.insertFormulaPlayer = function(parameters) {
-//	var name, fillString, width, height, buttonsSize, formula
-	document.write("<div id='"+parameters.name+"'"/*+" style='clear: both'"*/+"></div>");
+	//	var name, fillString, width, height, buttonsSize, formula
+	var style = parameters.style ? ' style="' + parameters.style + '"': "";
+	document.write("<div id='"+parameters.name+"'" + style +"></div>");
 	formulaPlayers.push({ name: parameters.name, parameters: parameters });
     }
-    window.playFormula = function(name, formula) {
+    window.getFormulaPlayer = function(name) {
 	var i;
 	for(i = 0; i < formulaPlayers.length; i++) {
 	    if(formulaPlayers[i].name === name) {
-		formulaPlayers[i].player.playFormula(formula, true);
+		return formulaPlayers[i].player;
 	    }
 	}
+    }
+    window.playFormula = function(name, formula) {
+	window.getFormulaPlayer(name).playFormula(formula, true);
     }
     require(['scene/Scene', 'scene/FormulaPlayer'],  function(Scene, FormulaPlayer) {
 	function getMaterials() {
@@ -196,7 +200,7 @@
 	    height: 200,
 	    cubeMaterials: getMaterials(),
 	    backgroundColor: "#ffffff",
-	    scramble: true
+	    scramble: false//true
 	});
 	scene.domElement.style.position = "relative";
 	scene.domElement.style.left = "0px";

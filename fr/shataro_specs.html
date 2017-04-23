@@ -44,7 +44,6 @@
 	  <!--     <td>FA / FO</td> -->
 	  <!--   </tr> -->
 	  <!-- </table> -->
-	  <script>window.insertTables();</script>
 	<!-- </li> -->
 	<!-- <li>Mouvements doubles (rangée du centre + rangée voisine) -->
 	<!--   <table> -->
@@ -93,9 +92,14 @@
 	<!--       <td>PA / PO</td> -->
 	<!--     </tr> -->
 	<!--   </table> -->
-	<script>window.insertFormulaPlayer({ name: "formulaTest", noButtons: true,
+	<script>
+	  window.insertTable(0, "left");
+	  window.insertFormulaPlayer({ name: "formulaTest", noButtons: true,
 	  fillString: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-	  width: 200, height: 200});</script>
+	  width: 200, height: 200, style: "float: left; margin-top: 70px"});
+	  window.insertTable(1, "left");
+	  window.insertTable(2, "left");
+	</script>
       <!-- <div style="clear: both"> -->
       <!-- </div> -->
 	  <!-- <script>window.insertFormulaPlayer({ name: "formulaTest", noButtons: true, -->

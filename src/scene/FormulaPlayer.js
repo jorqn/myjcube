@@ -55,33 +55,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 //	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 
 	this.arrows = [];
-	var i;
-	if(parameters.arrows) {
-	    var k = 1.52;
-	    for(i = 0; i < parameters.arrows.length; i++) {
-		var arrow = parameters.arrows[i];
-		var start = arrow.start, end = arrow.end, normal = arrow.normal;
-		var arrowGeometry = new ArrowMesh({
-		    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
-					     1*(start.y||0) + k*normal.y,
-					     1*(start.z||0) + k*normal.z),
-		    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
-					   1*(end.y||0)+ k*normal.y,
-					   1*(end.z||0)+ k*normal.z),
-		    normal: new THREE.Vector3(normal.x,
-					      normal.y,
-					      normal.z),
-		    headSize: 0.3,
-		    width: 0.15
-		});
-		var arrowMesh = new THREE.Mesh(arrowGeometry,
-					       new THREE.MeshBasicMaterial({
-						   color: "black",
-						   side: THREE.DoubleSide}));
-		this.root.add(arrowMesh);
-		this.arrows.push(arrowMesh)
-	    }
-	}
+	this.setArrows(parameters.arrows);
 	// var arrowTest = new ArrowMesh({
 	//     start: new THREE.Vector3(0, 3.1, 3.1),
 	//     end: new THREE.Vector3(3.1, 0, 3.1),
@@ -160,6 +134,41 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	}
 	
 //	this.scene.add(pause);
+    };
+
+    FormulaPlayer.prototype.setArrows = function(arrows, invert) {
+	var i;
+	for(i = 0; i < this.arrows.length; i++) {
+	    this.root.remove(this.arrows[i]);
+	}
+	this.arrows = [];
+	if(arrows) {
+	    var k = 1.52;
+	    for(i = 0; i < arrows.length; i++) {
+		var arrow = arrows[i];
+		var start = invert ? arrow.end : arrow.start, end = invert ? arrow.start : arrow.end, normal = arrow.normal;
+		var arrowGeometry = new ArrowMesh({
+		    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
+					     1*(start.y||0) + k*normal.y,
+					     1*(start.z||0) + k*normal.z),
+		    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
+					   1*(end.y||0)+ k*normal.y,
+					   1*(end.z||0)+ k*normal.z),
+		    normal: new THREE.Vector3(normal.x,
+					      normal.y,
+					      normal.z),
+		    headSize: 0.3,
+		    width: 0.15
+		});
+		var arrowMesh = new THREE.Mesh(arrowGeometry,
+					       new THREE.MeshBasicMaterial({
+						   color: "black",
+						   side: THREE.DoubleSide}));
+		this.root.add(arrowMesh);
+		this.arrows.push(arrowMesh)
+	    }
+	}
+	
     };
 
     // FormulaPlayer.prototype.playCommands = function(commands) {
@@ -414,6 +423,9 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		    _this.onPauseButton();
 		    commandRunning = false;
 		    _this.ended = true;
+		    if(_this.noButtons) {
+			_this.setArrowsVisibility(true);
+		    }
 		} else {
 		    if(!_this.pause) {
 			_this.setArrowsVisibility(false);
@@ -453,6 +465,14 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	    this.hideButtons();
 	}
 	this.renderer.render(this.scene, this.camera);
+    };
+    FormulaPlayer.prototype.setFillString = function(fillString) {
+	this.startCube = new Cube({empty: true});
+	if(fillString) {
+	    this.startCube.fillFromString(fillString);
+	} else {
+	    this.startCube.fill();
+	}
     };
 	
     return FormulaPlayer;

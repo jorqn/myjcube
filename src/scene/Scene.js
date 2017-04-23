@@ -268,10 +268,10 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	    clearTimeout(this.stopAnimationTimeout);
 	}
 	var _this = this;
-	this.stopAnimationTimeout = null && setTimeout(function() {
+	this.stopAnimationTimeout = setTimeout(function() {
 	    _this.stopAnimation = true;
 	    console.log("stop animation");
-	}, 1000);
+	}, 5000);
 //	this.playCommands(["H","H","C","H","C","H","C","H","H","C'","H","C'","H","C'"]);
 //	this.playCommands(["F", "B", "R", "L", "U", "D", "D'", "U'", "L'", "R'", "B'", "F'"]);
 //	this.playCommands(["R"]);
