@@ -144,7 +144,7 @@
 	
     }
     window.addEventListener('resize', onResize, false);
-    window.onload = onResize;
+    document.body.onload = onResize;
     window.doResize = onResize;
     window.insertTitle = function () {
 	var title = path[path.length-1].title;
@@ -152,7 +152,7 @@
     }
     document.title = 'myJCube - ' + path[path.length-1].title;
     
-    onResize();
+//    onResize();
 
     var formulaPlayers = [];
     window.insertFormulaPlayer = function(parameters) {
@@ -200,7 +200,7 @@
 	    height: 200,
 	    cubeMaterials: getMaterials(),
 	    backgroundColor: "#ffffff",
-	    scramble: false//true
+	    scramble: true
 	});
 	scene.domElement.style.position = "relative";
 	scene.domElement.style.left = "0px";
@@ -235,5 +235,6 @@
 	    player.startAnimationLoop();
 	}
 	window.releaseOnLoadedRef();
+	onResize();
     });
 })();

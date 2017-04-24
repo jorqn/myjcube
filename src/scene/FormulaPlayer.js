@@ -136,36 +136,50 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 //	this.scene.add(pause);
     };
 
-    FormulaPlayer.prototype.setArrows = function(arrows, invert) {
+    FormulaPlayer.prototype.createArrowMesh = function(start, end, normal) {
+	var k = 1.52;
+	var arrowGeometry = new ArrowMesh({
+	    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
+				     1*(start.y||0) + k*normal.y,
+				     1*(start.z||0) + k*normal.z),
+	    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
+				   1*(end.y||0)+ k*normal.y,
+				   1*(end.z||0)+ k*normal.z),
+	    normal: new THREE.Vector3(normal.x,
+				      normal.y,
+				      normal.z),
+	    headSize: 0.3,
+	    width: 0.15
+	});
+	var arrowMesh = new THREE.Mesh(arrowGeometry,
+				       new THREE.MeshBasicMaterial({
+					   color: "black",
+					   side: THREE.DoubleSide}));
+	return arrowMesh;
+    }
+    FormulaPlayer.prototype.setArrows = function(arrows, type) {
+	type = type || "single";
+	var invert = type === "inverse";
+	var dbl = type === "double";
 	var i;
 	for(i = 0; i < this.arrows.length; i++) {
 	    this.root.remove(this.arrows[i]);
 	}
 	this.arrows = [];
 	if(arrows) {
-	    var k = 1.52;
 	    for(i = 0; i < arrows.length; i++) {
 		var arrow = arrows[i];
 		var start = invert ? arrow.end : arrow.start, end = invert ? arrow.start : arrow.end, normal = arrow.normal;
-		var arrowGeometry = new ArrowMesh({
-		    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
-					     1*(start.y||0) + k*normal.y,
-					     1*(start.z||0) + k*normal.z),
-		    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
-					   1*(end.y||0)+ k*normal.y,
-					   1*(end.z||0)+ k*normal.z),
-		    normal: new THREE.Vector3(normal.x,
-					      normal.y,
-					      normal.z),
-		    headSize: 0.3,
-		    width: 0.15
-		});
-		var arrowMesh = new THREE.Mesh(arrowGeometry,
-					       new THREE.MeshBasicMaterial({
-						   color: "black",
-						   side: THREE.DoubleSide}));
-		this.root.add(arrowMesh);
-		this.arrows.push(arrowMesh)
+		var middle = {x: (start.x+end.x)/2, y: (start.y+end.y)/2, z: (start.z+end.z)/2};
+
+		var ext = dbl ? [[start, middle], [middle, end]] : [[start, end]];
+		var j;
+		var arrowMesh;
+		for(j = 0; j < ext.length; j++) {
+		    arrowMesh = this.createArrowMesh(ext[j][0], ext[j][1], normal);
+		    this.root.add(arrowMesh);
+		    this.arrows.push(arrowMesh)
+		}
 	    }
 	}
 	

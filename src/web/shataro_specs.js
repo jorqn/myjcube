@@ -18,7 +18,7 @@
     };
 
     var tableData1 = [
-	[ "R", "Rp", "RA", "RO", [
+	[ "R", "R", [
 	    {
 		start: { x: 1, y: -1},
 		end: {x: 1, y: 1},
@@ -32,7 +32,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "bbobbobbobbobbobbobbobbobbobbobbobboooooooooobbbbbbbbb"
 	],
-	[ "L", "Lp", "LA", "LO", [
+	[ "L", "L", [
 	    {
 		start: { x: -1, y: 1},
 		end: {x: -1, y: -1},
@@ -46,7 +46,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "obbobbobbobbobbobbobbobbobbobbobbobbbbbbbbbbbooooooooo"
 	],
-	[ "U", "Up", "TA", "TO", [
+	[ "U", "T", [
 	    {
 		start: { y: 1, z: -1},
 		end: {y: 1, z: 1},
@@ -60,7 +60,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "bbbbbboooooobbbbbbooooooooobbbbbbbbbbbbbbbooobbbbbbooo"
 	],
-	[ "D", "Dp", "DA", "DO", [
+	[ "D", "D", [
 	    {
 		start: { y: -1, z: 1},
 		end: {y: -1, z: -1},
@@ -73,7 +73,7 @@
 	    }
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "ooobbbbbbbbbbbbooobbbbbbbbboooooooooooobbbbbbooobbbbbb"],
-	[ "F", "Fp", "FA", "FO", [
+	[ "F", "F", [
 	    {
 		start: { x: -1, z: 1},
 		end: {x: 1, z: 1},
@@ -86,7 +86,7 @@
 	    }
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "ooooooooobbbbbbbbbooobbbbbbbbbbbboooobbobbobbbbobbobbo"],
-	[ "B", "Bp", "BA", "BO", [
+	[ "B", "B", [
 	    {
 		start: { x: 1, z: -1},
 		end: {x: -1, z: -1},
@@ -101,7 +101,7 @@
 	   "bbbbbbbbbooooooooobbbbbboooooobbbbbbbbobbobboobbobbobb"]
     ];
     var tableData2 = [
-	[ "r", "rp", "REA", "REO", [
+	[ "r", "RE", [
 	    {
 		start: { x: .5, y: -1},
 		end: {x: .5, y: 1},
@@ -115,7 +115,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "boobooboobooboobooboobooboobooboobooooooooooobbbbbbbbb"
 	],
-	[ "l", "lp", "LEA", "LEO", [
+	[ "l", "LE", [
 	    {
 		start: { x: -.5, y: 1},
 		end: {x: -.5, y: -1},
@@ -129,7 +129,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "ooboobooboobooboobooboobooboobooboobbbbbbbbbbooooooooo"
 	],
-	[ "u", "up", "TEA", "TEO", [
+	[ "u", "TE", [
 	    {
 		start: { y: .5, z: -1},
 		end: {y: .5, z: 1},
@@ -143,7 +143,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "bbboooooooooooobbbooooooooobbbbbbbbbbbboooooobbboooooo"
 	],
-	[ "d", "dp", "DEA", "DEO", [
+	[ "d", "DE", [
 	    {
 		start: { y: -.5, z: 1},
 		end: {y: -.5, z: -1},
@@ -156,7 +156,7 @@
 	    }
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "oooooobbbbbboooooobbbbbbbbbooooooooooooooobbboooooobbb"],
-	[ "f", "fp", "FEA", "FEO", [
+	[ "f", "FE", [
 	    {
 		start: { x: -1, z: .5},
 		end: {x: 1, z: .5},
@@ -169,7 +169,7 @@
 	    }
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	   "ooooooooobbbbbbbbboooooobbbbbboooooooobooboobboobooboo"],
-	[ "b", "bp", "BEA", "BEO", [
+	[ "b", "BE", [
 	    {
 		start: { x: 1, z: -.5},
 		end: {x: -1, z: -.5},
@@ -192,7 +192,7 @@
     // 	[ "b", "bp", "BEA", "BEO"]
     // ];
     var tableData3 = [
-	[ "x", "xp", "MA", "MO", [
+	[ "x", "M", [
 	    {
 		start: { x: .5, y: -1},
 		end: {x: .5, y: 1},
@@ -216,7 +216,7 @@
 	],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	  "oooooooooooooooooooooooooooooooooooooooooooooooooooooo"
 	],
-	[ "y", "yp", "NA", "NO", [
+	[ "y", "N", [
 	    {
 		start: { y: .5, z: -1},
 		end: {y: .5, z: 1},
@@ -240,7 +240,7 @@
 	    ],//rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
 	  "oooooooooooooooooooooooooooooooooooooooooooooooooooooo"
 	],
-	[ "z", "zp", "PA", "PO", [ {
+	[ "z", "P", [ {
 		start: { x: -1, z: .5},
 		end: {x: 1, z: .5},
 		normal: { x: 0, y:1, z: 0}
@@ -266,31 +266,39 @@
     ];
     var tables = [tableData1, tableData2, tableData3];
 
-    window.executeMove = function(tableIndex, rowIndex, inverse) {
-	window.playFormula('formulaTest', tables[tableIndex][rowIndex][0] + (inverse ? "'" : ""));
+    var stdSuffix = {
+	single: "",
+	inverse: "'",
+	double: "2"
+    };
+    var shataroSuffix = {
+	single: "A",
+	inverse: "O",
+	double: "I"
     }
-    window.executeMoveMouseOver = function(tableIndex, rowIndex, inverse) {
-	console.log("enter");
+    window.executeMove = function(tableIndex, rowIndex, type) {
+	window.playFormula('formulaTest', tables[tableIndex][rowIndex][0] + stdSuffix[type]);
+    }
+    window.executeMoveMouseOver = function(tableIndex, rowIndex, type) {
 	var formulaPlayer = window.getFormulaPlayer('formulaTest');
-	var arrows = tables[tableIndex][rowIndex][4] || [];
-	var fillString = tables[tableIndex][rowIndex][5] || "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-	formulaPlayer.setArrows(arrows, inverse);
+	var arrows = tables[tableIndex][rowIndex][2] || [];
+	var fillString = tables[tableIndex][rowIndex][3] || "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+	formulaPlayer.setArrows(arrows, type);
 	formulaPlayer.setFillString(fillString);
 	formulaPlayer.initCube();
 	
     }
-    window.executeMoveMouseLeave = function(tableIndex, rowIndex, inverse) {
+    window.executeMoveMouseLeave = function(tableIndex, rowIndex, type) {
 	var formulaPlayer = window.getFormulaPlayer('formulaTest');
 	formulaPlayer.setArrows([]);
 	formulaPlayer.setFillString("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 	formulaPlayer.initCube();
     }
-    function insertRow2(tableData, rowIndex, inverse, tableIndex) {
-	var shataroIndex = inverse ? 3 : 2;
+    function insertRow2(tableData, rowIndex, type, tableIndex) {
 	var row = tableData[rowIndex];
-	document.writeln('<tr onclick="javascript:window.executeMove('+tableIndex+','+rowIndex+','+inverse+')" onmouseenter="javascript:window.executeMoveMouseOver('+tableIndex+','+rowIndex+','+inverse+')" onmouseleave="javascript:window.executeMoveMouseLeave('+tableIndex+','+rowIndex+','+inverse+')">');
-	document.writeln('<td>' + row[0] + (inverse ? "'" : "") + '</td>');
-	document.writeln('<td>' + row[shataroIndex] + '</td>');
+	document.writeln('<tr onclick="javascript:window.executeMove('+tableIndex+','+rowIndex+',\''+type+'\')" onmouseenter="javascript:window.executeMoveMouseOver('+tableIndex+','+rowIndex+',\''+type+'\')" onmouseleave="javascript:window.executeMoveMouseLeave('+tableIndex+','+rowIndex+',\''+type+'\')">');
+	document.writeln('<td>' + row[0] + stdSuffix[type] + '</td>');
+	document.writeln('<td>' + row[1] + shataroSuffix[type] + '</td>');
 	document.writeln('</tr>');
     }
     
@@ -298,8 +306,9 @@
 	var i, tableData = tables[tableIndex];;
 	document.writeln('<table style="float: '+floating+';clear: '+clear+'"><tr><th>Standard</th><th>SHATARO</th></tr>');
 	for(i = 0; i < tableData.length; i++) {
-	    insertRow2(tableData, i, false, tableIndex); 
-	    insertRow2(tableData, i, true, tableIndex); 
+	    insertRow2(tableData, i, 'single', tableIndex); 
+	    insertRow2(tableData, i, 'inverse', tableIndex); 
+	    insertRow2(tableData, i, 'double', tableIndex); 
 	}
 	document.writeln('</table>');
 	// document.writeln('<table style="clear: '+clear+'"><tr><th>Standard</th><th>SHATARO</th></tr>');
