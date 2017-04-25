@@ -54,6 +54,7 @@
 
     function xToY(x, y, input, withCombo) {
 	var str = input || "";
+	str = str.replace(/\s/g, '');
 	var result = "", i, found, entry;
 	while(str.length) {
 	    found = false;
@@ -65,16 +66,20 @@
 		    str = str.substr(entry[x].length);
 		}
 	    }
+	    if(!found) {
+		return { complete: false, result: result };
+	    }
 	}
-	return result;
+	return { complete: true, result: result };
     }
 
     function stdToShataro(std, withCombo) {
 	return xToY('std', 'shataro', std, withCombo);
     }
     function shataroToStd(shataro) {
-	return xToY('shataro', 'std', true);
+	return xToY('shataro', 'std', shataro.toUpperCase(), true);
     }
 
-    consol.log(stdToShataro('RUR'U'R2
+    console.log(stdToShataro("RUR'U'R2", true));
+    console.log(shataroToStd("SHAMAPOSHOBOROTÈLEA"));
 })();
