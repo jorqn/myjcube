@@ -13,7 +13,71 @@
     <script src="../src/web/frame.js"></script>
     <div class= "mainPane">
       <script>window.insertTitle()</script>
-      <h2>Table de conversion vers SHATARO</h2>
+      <h2>Définitions</h2>
+      <p>Pour simplifier l'explication, voici la définition de deux mots utilisés par la suite…</p>
+      <ul>
+	<li>Nous appelerons <b>radical</b> la lettre qui identifie une face. Cette définition est principalement issue de la notation standard.
+	  <ul class='inside'>
+	    <li>Droite : <b>R</b></li>
+	    <li>Gauche : <b>L</b></li>
+	    <li>Haut : <b>T</b></li>
+	    <li>Bas : <b>D</b></li>
+	    <li>Devant : <b>F</b></li>
+	    <li>Derrière : <b>B</b></li>
+	  </ul>
+	  Des radicaux existent aussi pour les rotations totales du cube. (cf. schéma des tables complètes plus bas pour plus de détails)
+	  <ul class='inside'>
+	    <li>Rotation selon l'axe x : <b>M</b>
+	    <li>Rotation selon l'axe y : <b>N</b>
+	    <li>Rotation selon l'axe z : <b>P</b>
+	  </ul>
+	</li><br/><br/>
+	<li>On nomme <b>modificateur</b> ce qui donne le sens ou qui spécifie une rotation double. Les lettres sont les suivantes
+	  <ul class='inside'>
+	    <li><b>A</b> : sens des aiguilles d'une montre</li>
+	    <li><b>O</b> : sens inverse des aiguilles d'une montre</li>
+	    <li><b>I</b> : rotation double</li>
+	  </ul>
+	</li>
+      </ul>
+      <h2>Mouvements simples</h2>
+      <p>On note les mouvements simples (c'est à dire d'une seule rangée extrême) de cette façon :<p>
+      <p>
+	<b>Mouvement simple = radical + modificateur</b>
+      </p>
+      <p> Cela donnera donc par exemple
+	<ul>
+	  <li>RA : rotation de la face droite dans le sens des aiguilles d'une montre</li>
+	  <li>FO : rotation de la face de devant dans le sens inverse des aiguilles d'une montre</li>
+	  <li>TI : rotation double de la face du dessus</li>
+	</ul>
+      </p>
+      <h2>Mouvements doubles</h2>
+      <p>Les mouvements doubles (c'est à dire la rotation d'une rangée centrale + d'une rangée extrême) sont notées ainsi:</p>
+      <p>
+	<b>Mouvement double = radical + «E» + modificateur</b>
+      </p>
+      <p> Cela donnera donc par exemple
+	<ul>
+	  <li>LEA : rotation de la face de gauche + de la rangée du centre dans le sens des aiguilles d'une montre</li>
+	  <li>FEO : rotation de la face de devant + de la rangée du centre dans le sens inverse des aiguilles d'une montre</li>
+	  <li>REI : rotation double de la face de droite + de la rangée du centre</li>
+	</ul>
+      </p>
+      <h2>Phonèmes optionnels</h2>
+      <p>Pour ajouter un peu de variété et raccourcir les formules, quelques alias ont été créés. Cela dit ils sont optionnels. La référence est donnée en notation standard.
+	<ul>
+	  <!-- <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RURp');">RUR'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RURp');"><b>SHA</b></a>»</li> -->
+	  <!-- <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RUpRp');">RU'R'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RUpRp');"><b>SHU</b></a>»</li> -->
+	  <!-- <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RpUR');">R'UR</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RpUR');"><b>SHO</b></a>»</li> -->
+	  <!-- <li>«<a class="discrete" href="javascript:playFormula('formulaTest','URpUp');">UR'U'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','URpUp');"><b>SHI</b></a>»</li> -->
+	  <li>RUR' s'écrit <b>SHA</b></li>
+	  <li>RU'R' s'écrit <b>SHU</b></li>
+	  <li>R'UR s'écrit <b>SHO</b></li>
+	  <li>UR'U' s'écrit <b>SHI</b></li>
+	</ul>
+      </p>
+      <h2>Tables complètes avec schéma</h2>
       <!-- <ul> -->
       <!-- 	<li>Mouvements simples -->
       <!-- <span> -->
@@ -109,18 +173,6 @@
       <!-- </ul> -->
 	
 	
-      <h2 style="clear: both">Phonèmes optionnels</h2>
-      <p>Pour ajouter un peu de variété et raccourcir les formules, quelques alias ont été créés. Cela dit ils sont optionnels.
-	<ul>
-	  <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RURp');">RUR'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RURp');"><b>SHA</b></a>»</li>
-	  <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RUpRp');">RU'R'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RUpRp');"><b>SHU</b></a>»</li>
-	  <li>«<a class="discrete" href="javascript:playFormula('formulaTest','RpUR');">R'UR</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','RpUR');"><b>SHO</b></a>»</li>
-	  <li>«<a class="discrete" href="javascript:playFormula('formulaTest','URpUp');">UR'U'</a>» s'écrit «<a class="discrete" href="javascript:playFormula('formulaTest','URpUp');"><b>SHI</b></a>»</li>
-	  <!-- <li>«RU'R'» s'écrit «SHU»</li> -->
-	  <!-- <li>«R'UR» s'écrit «SHO»</li> -->
-	  <!-- <li>«UR'U'» s'écrit «SHI»</li> -->
-	</ul>
-      </p>
     </div>
   </body>
 <html/>

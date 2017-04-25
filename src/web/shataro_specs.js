@@ -297,14 +297,14 @@
     function insertRow2(tableData, rowIndex, type, tableIndex) {
 	var row = tableData[rowIndex];
 	document.writeln('<tr onclick="javascript:window.executeMove('+tableIndex+','+rowIndex+',\''+type+'\')" onmouseenter="javascript:window.executeMoveMouseOver('+tableIndex+','+rowIndex+',\''+type+'\')" onmouseleave="javascript:window.executeMoveMouseLeave('+tableIndex+','+rowIndex+',\''+type+'\')">');
-	document.writeln('<td>' + row[0] + stdSuffix[type] + '</td>');
 	document.writeln('<td>' + row[1] + shataroSuffix[type] + '</td>');
+	document.writeln('<td>' + row[0] + stdSuffix[type] + '</td>');
 	document.writeln('</tr>');
     }
     
     function insertTable2(tableIndex, floating, clear) {
 	var i, tableData = tables[tableIndex];;
-	document.writeln('<table style="float: '+floating+';clear: '+clear+'"><tr><th>Standard</th><th>SHATARO</th></tr>');
+	document.writeln('<table style="float: '+floating+';clear: '+clear+'"><tr><th>SHATARO</th><th>Standard</th></tr>');
 	for(i = 0; i < tableData.length; i++) {
 	    insertRow2(tableData, i, 'single', tableIndex); 
 	    insertRow2(tableData, i, 'inverse', tableIndex); 

@@ -18,6 +18,11 @@ p, ul {
 ul {
     list-style: square inside url("../img/puce.png");
 }
+
+ul.inside {
+    list-style-image: none;
+}
+
 li {
     margin-top: 5px;
 }
