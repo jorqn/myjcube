@@ -123,17 +123,21 @@
     bgDiv.className = "bgPane";
     document.body.appendChild(bgDiv);
     function onResize() {
-//	console.log(document.body.clientWidth);
+	//	console.log(document.body.clientWidth);
+	
 	var mainPane = document.getElementsByClassName('mainPane')[0];
-	leftDiv.style.height = document.body.clientHeight - 200;
-	topDiv.style.width = document.body.clientWidth - 200;
+	var winWidth = window.innerWidth;
+	var winHeight = window.innerHeight;
+	leftDiv.style.height = winHeight - 200;
+	topDiv.style.width = winWidth - 200;
 	if(mainPane) {
 	    mainPane.style.width = document.body.clientWidth - 200;
+	    mainPane.style.visibility = 'visible';
 	}
-	bgDiv.style.width = document.body.clientWidth - 200;
-	leftDiv.style.height = Math.max(mainPane ? mainPane.clientHeight : 0, document.body.clientHeight - 200);
-	bgDiv.style.height = document.body.clientHeight - 200;
-	var margin = Math.floor((document.body.clientWidth - (topDiv.clientWidth + 200))/2);
+	bgDiv.style.width = winWidth - 200;
+	leftDiv.style.height = Math.max(mainPane ? mainPane.clientHeight : 0, winHeight - 200);
+	bgDiv.style.height = winHeight - 200;
+	var margin = Math.floor((winWidth - (topDiv.clientWidth + 200))/2);
 	margin = Math.max(margin, 0);
 	var margin2 = margin + 200;
 	mainPane && (mainPane.style.left = margin2+"px");
@@ -141,6 +145,9 @@
 	bgDiv.style.left = margin2 + "px";
 	cubeDiv.style.left = margin + "px";
 	leftDiv.style.left = margin + "px";
+	if(mainPane) {
+	    console.log(mainPane.style.left);
+	}
 	
     }
     window.addEventListener('resize', onResize, false);

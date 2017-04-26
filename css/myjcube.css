@@ -113,6 +113,7 @@ div.mainPane {
 //    height: 100%;
     background-color: #ffffff;
     margin: 0;
+    visibility: hidden;
     //    margin-left: 15px;
 //    padding-left: 15px;
 }
