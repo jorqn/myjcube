@@ -182,6 +182,7 @@
     window.playFormula = function(name, formula) {
 	window.getFormulaPlayer(name).playFormula(formula, true);
     }
+    onResize();
     require(['scene/Scene', 'scene/FormulaPlayer'],  function(Scene, FormulaPlayer) {
 	function getMaterials() {
 	    return {
