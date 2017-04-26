@@ -151,15 +151,18 @@
 	
     }
     window.addEventListener('resize', onResize, false);
-    document.body.onload = onResize;
+    document.body.onload = function () {
+	onResize();
+	if(window.onStart) {
+	    window.onStart();
+	}
+    }
     window.doResize = onResize;
     window.insertTitle = function () {
 	var title = path[path.length-1].title;
 	document.write("<h1 class='title'>"+title+"</h1>");
     }
     document.title = 'myJCube - ' + path[path.length-1].title;
-    
-    onResize();
 
     var formulaPlayers = [];
     window.insertFormulaPlayer = function(parameters) {
