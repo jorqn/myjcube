@@ -186,15 +186,25 @@
     require(['scene/Scene', 'scene/FormulaPlayer'],  function(Scene, FormulaPlayer) {
 	function getMaterials() {
 	    return {
-		white: new THREE.MeshBasicMaterial({color: "#666666"}),
-		yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
-		blue: new THREE.MeshBasicMaterial({color: 0x55bbf4}),
-		green: new THREE.MeshBasicMaterial({color: 0xb1eb00}),
-		red: new THREE.MeshBasicMaterial({color: 0xfe452c}),
-		orange: new THREE.MeshBasicMaterial({color: 0xffab01}),
-		gray: new THREE.MeshBasicMaterial({color: "gray"}),
-		space: new THREE.MeshBasicMaterial({color: "white"})
+	    	white: new THREE.MeshBasicMaterial({color: "#666666"}),
+	    	yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	    	blue: new THREE.MeshBasicMaterial({color: 0x55bbf4}),
+	    	green: new THREE.MeshBasicMaterial({color: 0xb1eb00}),
+	    	red: new THREE.MeshBasicMaterial({color: 0xfe452c}),
+	    	orange: new THREE.MeshBasicMaterial({color: 0xffab01}),
+	    	gray: new THREE.MeshBasicMaterial({color: 0xdddddd}),
+	    	space: new THREE.MeshBasicMaterial({color: "white"})
 	    };
+	    // return {
+	    // 	white: new THREE.MeshBasicMaterial({color: "white"}),
+	    // 	yellow: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
+	    // 	blue: new THREE.MeshBasicMaterial({color: 0x55bbf4}),
+	    // 	green: new THREE.MeshBasicMaterial({color: 0xb1eb00}),
+	    // 	red: new THREE.MeshBasicMaterial({color: 0xfe452c}),
+	    // 	orange: new THREE.MeshBasicMaterial({color: 0xffab01}),
+	    // 	gray: new THREE.MeshBasicMaterial({color: 0xdddddd}),
+	    // 	space: new THREE.MeshBasicMaterial({color: "black"})
+	    // };
 	}
 	// var materials = {
 	//     white: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
