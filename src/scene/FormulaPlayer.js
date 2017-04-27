@@ -9,6 +9,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	this.formula = parameters.formula;
 	this.noButtons = parameters.noButtons;
 	this.commandQueue = [];
+	this.stopAnimation = true;
 	this.startCube = new Cube({empty:true});
 //	this.startCube.fillFromString("____r_rrr____o_ooo_________wwwwwwwww____g_ggg____b_bbb");
 	//	this.startCube.fillFromString("rrr_r________o_ooo_________wwwwwwwwwggg_g____bbb_b____");
@@ -305,6 +306,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     };
 
     FormulaPlayer.prototype.onMouseMove = function(event) {
+	this.startAnimationLoop();
 	this.mouseInside = true;
 	if(this.cameraMove && !this.cameraMove.ended) {
 //	    this.hideButtons();
@@ -322,6 +324,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     };
 
     FormulaPlayer.prototype.onMouseDown = function(event) {
+	this.startAnimationLoop();
 	var mouse = this.computeMousePosition(event);
 	var button = this.getButtonFromMousePosition(mouse);
 	this.currentButton = button;
@@ -339,6 +342,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     };
 
     FormulaPlayer.prototype.onMouseUp = function(event) {
+	this.startAnimationLoop();
 	if(this.cameraMove) {
 	    if(this.cameraMove.position) {
 		this.cameraMove.ended = true;
@@ -422,11 +426,24 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
     };
 
     FormulaPlayer.prototype.startAnimationLoop = function() {
-	this.animate();
+	if(this.stopAnimation) {
+	    this.stopAnimation = false;
+	    this.animate();
+	}
+	if(this.stopAnimationTimeout) {
+	    clearTimeout(this.stopAnimationTimeout);
+	}
+	var _this = this;
+	this.stopAnimationTimeout = setTimeout(function() {
+	    _this.stopAnimation = true;
+	    console.log("stop animation FormulaPlayer");
+	}, 5000);
     };
     var commandRunning = false;
     FormulaPlayer.prototype.animate = function() {
-	requestAnimationFrame(this.animate.bind(this));
+	if(!this.stopAnimation) {
+	    requestAnimationFrame(this.animate.bind(this));
+	}
 	var _this = this;
 	do {
 	    this.cube3d.continueCommand(2.0*1000.0/60, function onCommandEnd() {
@@ -447,6 +464,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 			    _this.single--;
 			    _this.pause = _this.single ? false : true;
 			}
+			_this.startAnimationLoop();
 			_this.cube3d.startCommand(_this.commandQueue.shift(), true);
 			commandRunning = true;
 		    } else {
