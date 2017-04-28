@@ -7,7 +7,7 @@ body {
     background-color: #dddddd;
 }
 
-p, h1, h2, ul {
+p, h1, h2, h3, ul {
     font-family: "Segoe UI",Arial,sans-serif;
 }
 
@@ -180,6 +180,24 @@ p.leftPaneMenu1:hover {
 
 p {
     padding-left: 18px;
+}
+
+span.formulaOff {
+    font-size: 18px;
+    color: #000000;
+    font-weight: bold;
+}
+
+span.formulaOn {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fe452c;
+}
+
+h3 {
+    padding-left: 18px;
+    font-weight: normal;
+    font-style: italic;
 }
 
 h2 {
