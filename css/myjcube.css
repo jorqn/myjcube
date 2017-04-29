@@ -184,14 +184,17 @@ p {
 
 span.formulaOff {
     font-size: 18px;
+    padding: 5px;
     color: #000000;
     font-weight: bold;
 }
 
 span.formulaOn {
     font-size: 18px;
+    padding: 5px;
     font-weight: bold;
-    color: #fe452c;
+    background-color: #fe452c;
+    color: white;
 }
 
 h3 {

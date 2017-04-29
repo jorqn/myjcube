@@ -57,7 +57,6 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 //	this.renderer.setClearColor(new THREE.Color(0.8, 0.8, 0.8), 1);
 
 	this.arrows = [];
-	this.setArrows(parameters.arrows);
 	// var arrowTest = new ArrowMesh({
 	//     start: new THREE.Vector3(0, 3.1, 3.1),
 	//     end: new THREE.Vector3(3.1, 0, 3.1),
@@ -134,6 +133,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	if(this.formula) {
 	    this.playFormula(this.formula);
 	}
+	this.setArrows(parameters.arrows);
 	
 //	this.scene.add(pause);
     };
@@ -160,6 +160,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	return arrowMesh;
     }
     FormulaPlayer.prototype.setArrows = function(arrows, type) {
+	this.startAnimationLoop();
 	type = type || "single";
 	var invert = type === "inverse";
 	var dbl = type === "double";
@@ -458,9 +459,9 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	if(!this.stopAnimation) {
 	    requestAnimationFrame(this.animate.bind(this));
 	}
-	var _this = this, command;
+	var _this = this, command, nextCommand, wasSingle;
 	do {
-	    this.cube3d.continueCommand(2.0*1000.0/60, function onCommandEnd() {
+	    this.cube3d.continueCommand(1.0*1000.0/60, function onCommandEnd() {
 		// if(_this.cube3d.cube.isSolved()) {
 		//     alert('solved!');
 		// }
@@ -471,17 +472,25 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		    if(_this.noButtons) {
 			_this.setArrowsVisibility(true);
 		    }
+		    _this.highlightFormulaSpan(-1);
 		} else {
 		    if(!_this.pause) {
 			_this.setArrowsVisibility(false);
 			if(_this.single) {
+			    nextCommand = _this.commandQueue[0];
 			    _this.single--;
 			    _this.pause = _this.single ? false : true;
+			    wasSingle = true;
 			}
 			_this.startAnimationLoop();
 			command = _this.commandQueue.shift();
+			nextCommand = _this.commandQueue[0];
 			_this.highlightFormulaSpan(command.index);
 			_this.cube3d.startCommand(command.command, true);
+			if(nextCommand && command.index === nextCommand.index && wasSingle) {
+			    _this.single++;
+			    _this.pause = false;
+			}
 			commandRunning = true;
 		    } else {
 			commandRunning = false;
