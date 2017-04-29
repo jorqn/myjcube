@@ -172,6 +172,9 @@
     // 	formulaPlayers.push({ name: parameters.name, parameters: parameters });
     // }
     window.insertFormulaPlayer = function(parameters) {
+	if(!parameters.name) {
+	    parameters.name = 'formulaPlayer#'+formulaPlayers.length;
+	}
 	//	var name, fillString, width, height, buttonsSize, formula
 	if(parameters.formula) {
 	    document.write('<div style="width:'+parameters.width+'">');
