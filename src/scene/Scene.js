@@ -16,6 +16,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 	this.width = width;
 	this.height = height;
 	this.init = init ? init : "";
+	this.onCommandCompletedCB = parameters.onCommandCompletedCB || null;
 
 	this.scene = new THREE.Scene();
 //	this.camera = new THREE.PerspectiveCamera( 75, width / height, 0.1, 1000 );
@@ -56,7 +57,7 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 
 	this.cube3d = new Cube3D({size: 1.0, cube: new Cube(), cubeTexCoords: cubeTexCoords, materials: cubeMaterials});
 	if(fill) {
-	    cube.fillFromString(fill);
+	    this.cube3d.cube.fillFromString(fill);
 	} else if(scramble) {
 	    this.cube3d.cube = this.cube3d.cube.scramble();
 	}
@@ -308,6 +309,9 @@ define('scene/Scene', ['cube/Cube', 'cube/Cube3D', 'cube/Interpreter', 'scene/Ar
 		// if(_this.cube3d.cube.isSolved()) {
 		//     alert('solved!');
 		// }
+		if(_this.onCommandCompletedCB) {
+		    _this.onCommandCompletedCB();
+		}
 		if(_this.commandQueue.length > 0) {
 		    _this.cube3d.startCommand(_this.commandQueue.shift(), true);
 		    commandRunning = true;

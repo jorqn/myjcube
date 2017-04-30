@@ -325,7 +325,7 @@ define('oll/CubelessTrainer', ['oll/OLLCleverSequence', 'utils/MyQueryString', '
                 document.body.appendChild(buttons);
             }
 	    MyQueryString.setValue("language", languageSelect.value);
-	    MyQueryString.saveToCookie("CubelessTrainerPageSettings", ["language"]);
+	    MyQueryString.saveToCookie("CubelessTrainerPageSettings", 60, ["language"]);
         };
 	// var br = document.createElement("br");
 	// document.body.appendChild(br);

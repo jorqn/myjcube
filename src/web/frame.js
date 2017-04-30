@@ -210,7 +210,7 @@
 	window.getFormulaPlayer(name).playFormula(formula, true);
     }
     onResize();
-    require(['scene/Scene', 'scene/FormulaPlayer'],  function(Scene, FormulaPlayer) {
+    require(['scene/Scene', 'scene/FormulaPlayer', 'utils/MyQueryString'],  function(Scene, FormulaPlayer, MyQueryString) {
 	function getMaterials() {
 	    return {
 	    	white: new THREE.MeshBasicMaterial({color: "#666666"}),
@@ -243,13 +243,26 @@
 	//     gray: new THREE.MeshBasicMaterial({color: 0xfe84cd}),
 	//     space: new THREE.MeshBasicMaterial({color: 0xfe84cd})
 	// };
+	MyQueryString.addFromCookie('myjcube');
+	var fillString = MyQueryString.getValue('fill');
 	var scene = new Scene({
 	    width: 200,
 	    height: 200,
 	    cubeMaterials: getMaterials(),
 	    backgroundColor: "#ffffff",
-	    scramble: true
+	    scramble: fillString ? false : true,
+	    fill: fillString || undefined,
+	    onCommandCompletedCB: updateCubeCookie
 	});
+
+	function updateCubeCookie() {
+	    var fillString = scene.cube3d.cube.getFillString();
+	    MyQueryString.setValue('fill', fillString);
+	    MyQueryString.saveToCookie('myjcube', 60, ['fill']);
+	}
+	if(!fillString) {
+	    updateCubeCookie();
+	}
 	scene.domElement.style.position = "relative";
 	scene.domElement.style.left = "0px";
 	scene.domElement.style.top = "0px";
