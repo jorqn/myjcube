@@ -154,12 +154,26 @@ p.leftPaneMenu1 {
     font-style: italic;
     cursor: pointer;
 }
+
+p.leftPaneMenu2 {
+    font-family: "Segoe UI",Arial,sans-serif;
+    font-weight: normal;
+    color: white;
+    margin: 2px;
+    padding-left: 28px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    font-style: italic;
+    cursor: pointer;
+}
+
 p.leftPaneMenuHighlight0 {
     background-color: #fe84cd;
 //    font-weight: bold;
 //    text-decoration: underline;
 }
-p.leftPaneMenuHighlight1 {
+p.leftPaneMenuHighlight1, p.leftPaneMenuHighlight2 {
     background-color: #fe452c;
 //    font-weight: bold;
 //    text-decoration: underline;
@@ -173,7 +187,7 @@ p.leftPaneMenu0:hover {
 /* p.leftPaneMenuHighlight1:hover { */
 /* } */
 
-p.leftPaneMenu1:hover {
+p.leftPaneMenu1:hover, p.leftPaneMenu2:hover {
     color: #b1eb00;
 //    color: #fe452c;
 }

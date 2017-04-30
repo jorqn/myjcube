@@ -49,10 +49,15 @@ define("cube/Face", ["cube/Tile"], function(Tile) {
 
     Face.prototype.getFillString = function() {
 	var k = 0, tile;
-	var str = "";
+	var str = "", chr;
 	for(k = 0; k < 9; k++) {
 	    tile = this.getTile((k%3)-1, Math.floor(k/3)-1);
-	    str += tile.color[0];
+	    if(tile.color === 'gray') {
+		chr = '_';
+	    } else {
+		chr = tile.color[0];
+	    }
+	    str += chr;
 	}
        return str;
     }

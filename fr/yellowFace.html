@@ -1,0 +1,39 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = 'yellowFace';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>Objectif de cette étape</h2>
+      <p>Le cube de démonstration n'ayant pas de couleur jaune, il sera donc question de ici de résoudre la face rose. Voici à quoi doit ressembler le cube à la fin de cette étape:</p>
+      <script>
+	window.insertFormulaPlayer({ noButtons: true,
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"ooooooooorrrrrrrrrwwwwwwwwwyyyyyyyyygggggggggbbbbbbbbb",
+	fillString:"rrrrrr_r__o_ooooooyyyyyyyyywwwwwwwwwgggggg_g_bbbbbb_b_",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>Comment faire</h2>
+      <p>Cette face est assez délicate car, si la formule à utiliser est très simple, il y a une procédure dont il ne faut pas s'écarter</p>
+      <p>La formule tourne le coin arrière gauche du cube. Il faut l'utiliser jusqu'à ce que le coin soit bien orienté. Une fois que le coin est bien orienté, le reste du cube peut être cassé mais c'est normal. Il faut alors tourner la face du haut afin de remplacer le coin maintenant bien placé par à autre à tourner. On utilise alors de nouveau la formule jusqu'à ce que le coin soit bien tourné, puis on passe au suivant et ains de suite… <p>Une fois que tous les coins sont bien orientés, le reste du cube (qui avait été cassé) est automatiquement réparé. Il ne faut surtout <b>pas tourner le cube entre deux applications</b>, mais bien ne tourner que la face du haut.</p>
+      <script>
+	window.insertFormulaPlayer({ formula: "RDR'D'RDR'D'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrrrrr_r__o_oooooo_y_yyy_y_wwwwwwwwwgggggg_gybbbbbb_b_",
+	width: 300, height: 300,
+	});
+      </script>
+      <h2>Vous avez réussi?…</h2>
+      <p>C'est presque terminé. À vous la  <a href='./finalPhase.html'>phase final</a>!</p>
+    </div>
+  </body>
+<html/>

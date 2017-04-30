@@ -175,15 +175,16 @@
 	if(!parameters.name) {
 	    parameters.name = 'formulaPlayer#'+formulaPlayers.length;
 	}
+	var displayFormula = parameters.formula && !parameters.hideFormula;
 	//	var name, fillString, width, height, buttonsSize, formula
-	if(parameters.formula) {
+	if(displayFormula) {
 	    document.write('<div style="width:'+parameters.width+'">');
 	}
 	var style = parameters.style ? ' style="' + parameters.style + '"': "";
 	document.write("<div id='"+parameters.name+"'" + style +"></div>");
 	formulaPlayers.push({ name: parameters.name, parameters: parameters });
 	var formula = parameters.formula;
-	if(formula) {
+	if(displayFormula && formula) {
 	    var translation = window.stdToShataro(formula, false, ",");
 	    var phonems = translation.result.split(",");
 	    var i;
@@ -193,7 +194,7 @@
 	    }
 	    document.write("</p>");
 	}
-	if(parameters.formula) {
+	if(displayFormula) {
 	    document.write('</div>');
 	}
     }

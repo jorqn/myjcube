@@ -59,7 +59,14 @@ window.menuData = {
 		    {
 			id: 'yellowFace',
 			shortTitle: "Face jaune",
-			title: "Compléter la face jaune"
+			title: "Compléter la face jaune",
+			children: [
+			    {
+				id: 'yellowFaceSample',
+				shortTitle: 'Exemple',
+				title: 'Exemple de résolution de la phase jaune'
+			    }
+			]
 		    },
 		    {
 			id: 'finalPhase',

@@ -1,0 +1,58 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = '2ndCross_2';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>Objectif de cette étape</h2>
+      <p>Voici à quoi doit ressembler le cube à la fin de cette étape:</p>
+      <script>
+	window.insertFormulaPlayer({ name: "firstCrown", noButtons: true,
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrrrrr_r__o_oooooo_y_yyy_y_wwwwwwwwwgggggg_g_bbbbbb_b_",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>Formule</h2>
+      <p>Une seule formule est suffisante ici. Vous devrez souvent l'utiliser plusieurs fois en étudiant bien comment les pièces doivent bouger.</p>
+      <script>
+	window.insertFormulaPlayer({ formula: "RU2R'U'RU'R'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrrrrr_r__g_oooooo_y_yyy_y_wwwwwwwwwgggggg_b_bbbbbb_o_",
+	width: 300, height: 300,
+	arrows: [
+	{
+		start: { x: -1, z: 0},
+		end: {x: 0, z: -1},
+	        normal: { x: 0, y:1, z: 0}
+	},
+	{
+		start: { x: 0, z: -1},
+		end: {x: 1, z: 0},
+		normal: { x: 0, y:1, z: 0}
+	},
+	{
+		start: { x: 1, z: 0},
+		end: {x: -1, z: 0},
+		normal: { x: 0, y:1, z: 0}
+	},
+
+	],
+	arrowWidth: 0.15/2,
+	arrowHeadSize: 0.2,
+        arrowLengthRatio: 0.9
+	});
+      </script>
+      <h2>Quand c'est tout bon…</h2>
+      <p>Allez <a href='./2ndCross_2.html'>là</a></p>
+    </div>
+  </body>
+<html/>

@@ -10,6 +10,10 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	this.noButtons = parameters.noButtons;
 	this.commandQueue = [];
 	this.name = parameters.name;
+	this.arrowWidth = parameters.arrowWidth || 0.15;
+	this.arrowHeadSize = parameters.arrowHeadSize || 0.3;
+	this.speed = parameters.speed || 1;
+	this.arrowLengthRatio = parameters.arrowLengthRatio || 1;
 	this.stopAnimation = true;
 	this.startCube = new Cube({empty:true});
 //	this.startCube.fillFromString("____r_rrr____o_ooo_________wwwwwwwww____g_ggg____b_bbb");
@@ -33,7 +37,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	var fact = 0.012*0.9;
 	this.camera = new THREE.OrthographicCamera(fact*-480/2.0,
 			fact*480/2.0, fact*480/2.0, fact*-480/2.0, -100, 100.0);
-//	this.camera = new THREE.PerspectiveCamera(-20,-20, 20, 20, 0.1, 50);
+//	this.camera = new THREE.PerspectiveCamera(-2,0-20, 20, 20, 0.1, 50);
 	this.camera.position.set(4,4,4);
 //	this.camera.position.set(0,0,4);
 	this.camera.up = new THREE.Vector3(0, 1, 0);
@@ -138,20 +142,37 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 //	this.scene.add(pause);
     };
 
-    FormulaPlayer.prototype.createArrowMesh = function(start, end, normal) {
+    FormulaPlayer.prototype.createArrowMesh = function(start, end, normal, ratio) {
+	ratio = ratio || 1;
 	var k = 1.52;
+	var startV = new THREE.Vector3(1*(start.x||0) + k*normal.x,
+				       1*(start.y||0) + k*normal.y,
+				       1*(start.z||0) + k*normal.z);
+	var endV = new THREE.Vector3(1*(end.x||0) + k*normal.x,
+				     1*(end.y||0)+ k*normal.y,
+				     1*(end.z||0)+ k*normal.z);
+	var normalV = new THREE.Vector3(normal.x,
+				       normal.y,
+				       normal.z);
+	var delta = endV.clone();
+	delta.sub(startV);
+	var rStart = (1-ratio)/2;
+	var rEnd = 1-(1-ratio)/2;
+	var newStart = new THREE.Vector3(startV.x + rStart*delta.x,
+					 startV.y + rStart*delta.y,
+					 startV.z + rStart*delta.z);
+	var newEnd = new THREE.Vector3(startV.x + rEnd*delta.x,
+					 startV.y + rEnd*delta.y,
+					 startV.z + rEnd*delta.z);
+	
 	var arrowGeometry = new ArrowMesh({
-	    start: new THREE.Vector3(1*(start.x||0) + k*normal.x,
-				     1*(start.y||0) + k*normal.y,
-				     1*(start.z||0) + k*normal.z),
-	    end: new THREE.Vector3(1*(end.x||0) + k*normal.x,
-				   1*(end.y||0)+ k*normal.y,
-				   1*(end.z||0)+ k*normal.z),
+	    start: newStart,
+	    end: newEnd,
 	    normal: new THREE.Vector3(normal.x,
 				      normal.y,
 				      normal.z),
-	    headSize: 0.3,
-	    width: 0.15
+	    headSize: this.arrowHeadSize,
+	    width: this.arrowWidth
 	});
 	var arrowMesh = new THREE.Mesh(arrowGeometry,
 				       new THREE.MeshBasicMaterial({
@@ -179,7 +200,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 		var j;
 		var arrowMesh;
 		for(j = 0; j < ext.length; j++) {
-		    arrowMesh = this.createArrowMesh(ext[j][0], ext[j][1], normal);
+		    arrowMesh = this.createArrowMesh(ext[j][0], ext[j][1], normal, this.arrowLengthRatio);
 		    this.root.add(arrowMesh);
 		    this.arrows.push(arrowMesh)
 		}
@@ -461,7 +482,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	}
 	var _this = this, command, nextCommand, wasSingle;
 	do {
-	    this.cube3d.continueCommand(1.0*1000.0/60, function onCommandEnd() {
+	    this.cube3d.continueCommand(this.speed*1000.0/60, function onCommandEnd() {
 		// if(_this.cube3d.cube.isSolved()) {
 		//     alert('solved!');
 		// }
