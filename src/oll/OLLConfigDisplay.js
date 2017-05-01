@@ -7,7 +7,7 @@ define('oll/OLLConfigDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
 	this.noColor = params.noColor || "gray";
 	this.outlineColor = params.outlineColor || "black";
     };
-    OLLConfigDisplay.prototype.createCanvas = function(configId, x, y, rotate) {
+    OLLConfigDisplay.prototype.createCanvas = function(configId, x, y, rotate, relative) {
 	function drawArrow(fromx, fromy, tox, toy, doubleArrow){
                 //variables to be used when creating the arrow
                 var ctx = context;
@@ -75,7 +75,7 @@ define('oll/OLLConfigDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
 
             }
 	var canvas = document.createElement('canvas');
-        canvas.style.position = "absolute";
+        canvas.style.position = relative ? "relative" : "absolute";
         canvas.style.top = y + "px";
         canvas.style.left = x + "px";
 	canvas.width = this.size;

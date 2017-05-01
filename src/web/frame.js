@@ -151,7 +151,7 @@
 	
     }
     window.addEventListener('resize', onResize, false);
-    document.body.onload = function () {
+    document.onload = function () {
 	onResize();
 	if(window.onStart) {
 	    window.onStart();

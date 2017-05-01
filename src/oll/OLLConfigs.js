@@ -617,6 +617,93 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
     addSolution("PLL", 14, "R'UR'U'x2y'R'UR'U'lRU'R'URUx'");
     addSolution("PLL", 15, "FRU'R'U'RUR'F'RUR'U'l'URU'x'");
 
+
+    var shataroSolutions = [];
+    function addShataroSolution(type, index, solution) {
+	var offset = (type === "PLL" ? 1000 : 0);
+	shataroSolutions[offset + index] = solution.replace(/2'/g,"2");
+    }
+
+    addShataroSolution("OLL", 49, "RA TIRITORI TORITIRA");
+    addShataroSolution("OLL", 50, "SHATARA TOSHO TIRO");
+    addShataroSolution("OLL", 51, "SHATARA TIRO");
+    addShataroSolution("OLL", 52, "RATIRO TOSHU");
+    addShataroSolution("OLL", 55, "RIDARO TIRADO ROTIRO");
+    addShataroSolution("OLL", 56, "LEOTOLA TARATO REOFA");
+    addShataroSolution("OLL", 57, "LEOTOLO TARATO LATAMO");
+    addShataroSolution("OLL", 1, "RATAMOTO RATALEO ROTOLEO TALEA FO");
+    addShataroSolution("OLL", 2, "FASHATOFO FEASHATOFEO");
+    addShataroSolution("OLL", 3, "REORI TARO TAREA TIREO TARO REA");
+    addShataroSolution("OLL", 4, "REORA TOREA TIREO TORA TORI REA");
+    addShataroSolution("OLL", 5, "REORA TASHATO REARI FARAFO");
+    addShataroSolution("OLL", 6, "FASHATA NO ROTIRO FARAFO");
+    addShataroSolution("OLL", 7, "SHATARO FARA FOTIRO FARAFO");
+    addShataroSolution("OLL", 30, "REORA TASHATO REIRI TARATO REO");
+    addShataroSolution("OLL", 47, "FA SHATO FO");
+    addShataroSolution("OLL", 48, "SHATORO FARAFO");
+    addShataroSolution("OLL", 45, "RO TOLEO TALEA FOTARA");
+    addShataroSolution("OLL", 46, "SHATO MADO SHOTO DAMO");
+    addShataroSolution("OLL", 20, "REATI ROTORA TOREO");
+    addShataroSolution("OLL", 21, "LEOTI LATALO TALEA");
+    addShataroSolution("OLL", 22, "REATA SHOTIREO");
+    addShataroSolution("OLL", 23, "LEO TOLA TOLO TILEA");
+    addShataroSolution("OLL", 24, "REARI TOSHUTI RATORA REO");
+    addShataroSolution("OLL", 25, "REARI TASHOTI ROTARO REA");
+    addShataroSolution("OLL", 43, "ROFASHA TO FOTARA");
+    addShataroSolution("OLL", 44, "LAFOLOTO LATAFA TOLO");
+    addShataroSolution("OLL", 8, "ROTI RITA SHOTI MOTO ROTAMA");
+    addShataroSolution("OLL", 9, "ROTOSHU DEASHOBA");
+    addShataroSolution("OLL", 10, "FEA SHATO SHATO FEO");
+    addShataroSolution("OLL", 11, "REOTOREA TOSHO TOSHO REOTAREA");
+    addShataroSolution("OLL", 35, "RATA BOTORO TALEA TALEO");
+    addShataroSolution("OLL", 36, "ROTO FATA SHUFORA");
+    addShataroSolution("OLL", 37, "FATA SHUFO");
+    addShataroSolution("OLL", 38, "FOTOLO TALAFA");
+    addShataroSolution("OLL", 12, "FA SHATO SHATO FO");
+    addShataroSolution("OLL", 13, "FO LOTO LATA LOTO LATA FA");
+    addShataroSolution("OLL", 14, "LEO SHIRALEA TIMOTO RATALEO");
+    addShataroSolution("OLL", 15, "RO FARI BORI FORI BARO");
+    addShataroSolution("OLL", 16, "REOTO RATOSHO TORO TIREA");
+    addShataroSolution("OLL", 17, "REATA SHOTOSHO TIREO");
+    addShataroSolution("OLL", 33, "SHATASHU TORO FARAFO");
+    addShataroSolution("OLL", 34, "ROTO RATOSHO TALEA TORO TAMA");
+    addShataroSolution("OLL", 18, "ROTORA NOMO SHUFARA TALEO");
+    addShataroSolution("OLL", 19, "SHAMAPO SHOBORO TOLEA");
+    addShataroSolution("OLL", 31, "ROTI LEA SHUTA LEO TIRA");
+    addShataroSolution("OLL", 32, "FA SHUTO SHAFO");
+    addShataroSolution("OLL", 26, "ROFARA TALEO TOLEA NOSHU");
+    addShataroSolution("OLL", 27, "MO SHUFO SHAMANA SHO");
+    addShataroSolution("OLL", 28, "LAFALO SHATO LAFOLO");
+    addShataroSolution("OLL", 29, "LOBOLA ROTO RATA LOBALA");
+    addShataroSolution("OLL", 39, "BORA BORI TASHATO RABI");
+    addShataroSolution("OLL", 40, "RITARO BORA TORI TALEA TALEO");
+    addShataroSolution("OLL", 41, "SHATARA TIRO FA SHATO FO");
+    addShataroSolution("OLL", 42, "ROTOSHU TIRA FA SHATO FO");
+    addShataroSolution("OLL", 53, "SHATO REA SHOTO REO");
+    addShataroSolution("OLL", 54, "REASHOREO TI REASHOREO");
+    addShataroSolution("PLL", 1, "RI TARA TARO TORO TORO TARO");
+    addShataroSolution("PLL", 2, "RI TORO TORA TARA TARA TORA");
+    addShataroSolution("PLL", 5, "ROTORA TORATA RATOSHO TARITO ROTI");
+    addShataroSolution("PLL", 17, "REIRITA REIRITI REIRITA REIRI");
+    addShataroSolution("PLL", 3, " MAROTARO DISHUDI LEIMA");
+    addShataroSolution("PLL", 4, " MARIDISHA DIRATO LEA");
+    addShataroSolution("PLL", 16, "LEOTOLO TARATOLA SHILA TARATOLO TAMO");
+    addShataroSolution("PLL", 8, "RATI ROTI RABORO TORATA LEATARI FAMA");
+    addShataroSolution("PLL", 9, "ROTI RATI ROFASHA TORO FORITO");
+    addShataroSolution("PLL", 10, "SHAFOSHA TOROFA RITO ROTO");
+    addShataroSolution("PLL", 11, "FILOTO REATILEO SHIRIMI");
+    addShataroSolution("PLL", 12, "RATOLA TI ROTALO RATOLA TI ROTALO");
+    addShataroSolution("PLL", 13, "LOTARO TI LATOLO LOTARO TI LATOLO");
+    addShataroSolution("PLL", 18, "RITEARO SHIRA TEORI NOSHO");
+    addShataroSolution("PLL", 19, "RITEORA TOSHA TEARI NASHU");
+    addShataroSolution("PLL", 20, "SHANORI TEOSHU TARO TEARI");
+    addShataroSolution("PLL", 21, "LOTOLANORI TEASHO TORA TEORI");
+    addShataroSolution("PLL", 6, "SHOTORI FOTO FATAMA SHATORI BOMO");
+    addShataroSolution("PLL", 7, "SHATORO FARITO ROTO SHAFO");
+    addShataroSolution("PLL", 14, "ROSHI MINO ROSHI LEARATOSHO TAMO");
+    addShataroSolution("PLL", 15, "FASHUTO SHAFOSHA TOLEO TARATOMO");
+    
+
     var OLLConfig = function(index, rotate) {
 	this.index = index;
 	this.rotate = rotate || 0;
@@ -644,6 +731,9 @@ define('oll/OLLConfigs', ['cube/Cube', 'cube/Interpreter'], function(Cube, Inter
     };
     OLLConfig.prototype.getSolution = function () {
 	return solutions[this.index];
+    };
+    OLLConfig.prototype.getShataroSolution = function () {
+	return shataroSolutions[this.index];
     };
     OLLConfig.prototype.getNiceName = function () {
 	return this.type + "#" + this.indexInType;
