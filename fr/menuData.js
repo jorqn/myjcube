@@ -88,7 +88,7 @@ window.menuData = {
 		    {
 			id: 'pll',
 			shortTitle: "PLL",
-			title: "Formules SHATARO pour la résolution de la phuse «PLL»"
+			title: "Formules SHATARO pour la résolution de la phase «PLL»"
 		    }
 		]
 	    },
