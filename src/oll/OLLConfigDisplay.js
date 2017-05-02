@@ -3,8 +3,8 @@ define('oll/OLLConfigDisplay', ['oll/OLLConfigs'], function(OLLConfigs) {
     var OLLConfigDisplay = function(params) {
 	params = params || {};
 	this.size = params.size || 120;
-	this.color = params.color || "yellow";
-	this.noColor = params.noColor || "gray";
+	this.color = params.color || "#fe84cd";//|| "yellow";
+	this.noColor = params.noColor || "white";//|| "gray";
 	this.outlineColor = params.outlineColor || "black";
     };
     OLLConfigDisplay.prototype.createCanvas = function(configId, x, y, rotate, relative) {

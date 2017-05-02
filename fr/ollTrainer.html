@@ -1,0 +1,68 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = 'ollTrainer';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+	<!--fr-->Liens vers l'OLL Trainer
+      </h2>
+      <ul>
+	<li>
+	  <!--fr--><a href='../OLLTrainerSetup.html'>Page de setup OLL Trainer</a>
+	</li>
+	<li>
+	  <!--fr--><a href='../OLLTrainer.html'>OLLTrainer</a>
+	</li>
+      </ul>
+      <h2>
+	<!--fr-->Setup: aide
+      </h2>
+      <p>
+	<!--fr-->Voici à quoi ressemble l'écran de setup: <br/>
+	<img src='../img/ollTrainerScreenshot.png'/>
+      <p>
+	<!--fr-->Pour chaque cas on peut choisir une fréquence d'utilisation à l'aide de la combo box se trouvant en dessous.
+	<ul>
+	  <li>
+	    <!--fr--><b>Exclude</b>: le cas est ignoré et n'apparaîtra donc jamais.
+	  </li>
+	  <li>
+	    <!--fr--><b>Normal</b>: le cas n'aura pas de priorité particulière. (à utiliser pour les cas que l'on connait déjà)
+	  </li>
+	  <li>
+	    <!--fr--><b>New</b>: le cas sortira presque forcément à chaque session d'entraînement. (à utiliser pour les cas que l'on est en train d'apprendre)
+	  </li>
+	</ul>
+      </p>
+      <p>
+	<!--fr--><b>Sequence length</b>: permet de régler le nombre de cas qui seront soumis lors d'un entraînement. Comme une configuration n'est soumise qu'une seule fois par session au maximum, il se peut que le nombre de cas effectif soit inférieur au nombre entré ici.
+      </p>
+      <p>
+	<!--fr-->Si le cas n'est pas tourné comme vous avez l'habitude pour certains cas, vous pouvez lui appliquer une  <b>rotation</b>… Pour faire cela:
+	<ol>
+	  <li>
+	    <!--fr-->Double cliquer sur un cas
+	  </li>
+	  <li>
+	    <!--fr-->Utiliser les boutons «rotate»
+	  </li>
+	  <li>
+	    <!--fr-->Appuyer sur «close»
+	  </li>
+	</ol>
+      </p>
+      <p>
+	<!--fr-->À propos de la <b>sauvegarde</b>… Les paramètres sont enregistrés automatiquement au «start training». La sauvegarde utilise les <b>cookies</b>.
+      </p>
+    </div>
+  </body>
+<html/>
