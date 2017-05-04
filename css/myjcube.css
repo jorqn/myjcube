@@ -7,11 +7,11 @@ body {
     background-color: #dddddd;
 }
 
-div, p, h1, h2, h3, ul {
+div, p, h1, h2, h3, ul, ol {
     font-family: "Segoe UI",Arial,sans-serif;
 }
 
-p, ul {
+p, ul, ol {
     font-size: 15px;
 }
 
