@@ -109,11 +109,6 @@ window.menuData = {
 		    }
 		]
 	    }
-	    // {
-	    //     shortTitle: "WebGL cube",
-	    //     title: "Un cube en WebGL",
-	    //     id: 'cube'
-	    // }
 	]
     }
 };

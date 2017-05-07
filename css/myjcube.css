@@ -27,6 +27,20 @@ li {
     margin-top: 5px;
 }
 
+option.leftPone {
+    color: black;
+    background-color: white;
+}
+
+select.leftPone{
+    color: white;
+    background-color: transparent;
+    border: none;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-style: italic;
+}
+
 table {
     margin: 18px;
     margin-top: 0px;

@@ -96,6 +96,8 @@
     space.className = "leftPaneMenu0";
     leftDiv.appendChild(space);
     displayLevel(0);
+
+
     var myJCube = document.createElement('img');
     window.addOnLoadedRef();
     myJCube.src = '../img/myJCube.png';
@@ -117,6 +119,39 @@
             "utils": "../src/utils"
 	}
     });
+
+    var languageSelect = document.createElement('select');
+    languageSelect.name = 'language';
+    languageSelect.className = 'leftPone';
+    var french = document.createElement('option');
+    french.value = 'fr';
+    french.textContent = 'Français';
+    french.className = 'leftPone';
+    var english = document.createElement('option');
+    english.value = 'en';
+    english.textContent = 'English';
+    english.className = 'leftPone';
+    var languageMap = {
+	fr: french,
+	en: english
+    };
+
+    languageSelect.appendChild(french);
+    languageSelect.appendChild(english);
+    leftDiv.appendChild(languageSelect);
+
+    // languageSelect.style.position = "absolute";
+    // languageSelect.style.top = '10px';
+    // languageSelect.style.left = '795px';
+
+    languageSelect.value =  window.menuData.lang;
+
+    languageSelect.addEventListener('change', function () {
+	window.location = '../'+languageSelect.value+'/'+ pageId + '.html';
+    });
+
+    
+    
     window.rootDir = '../';
     window.addOnLoadedRef();
     var bgDiv = document.createElement('div');
