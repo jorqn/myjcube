@@ -7,6 +7,30 @@
     var topDiv = document.createElement("div");
     topDiv.className = "topPane";
     document.body.appendChild(topDiv);
+
+    // var dotCom = document.createElement("div");
+    // dotCom.style.position = 'absolute';
+    // dotCom.innerHTML = ".com";
+    // dotCom.style.fontSize = "40px";
+    // dotCom.style.fontWeight = "bold";
+    // dotCom.style.color = "white";
+    // dotCom.style.top = "145px";
+    // dotCom.style.left = "575px";
+    // dotCom.style.cursor = "pointer";
+    // topDiv.appendChild(dotCom);
+
+    var topRightDiv = document.createElement("div");
+    topRightDiv.className = "topRightPane";
+    topDiv.appendChild(topRightDiv);
+    
+    var topRightDiv2 = document.createElement("div");
+    topRightDiv2.className = "topRightPane2";
+    topDiv.appendChild(topRightDiv2);
+    
+    var topRightDiv3 = document.createElement("div");
+    topRightDiv3.className = "topRightPane3";
+    topDiv.appendChild(topRightDiv3);
+    
     var leftDiv = document.createElement("div");
     leftDiv.className = "leftPane";
     document.body.appendChild(leftDiv);
@@ -186,12 +210,12 @@
 	
     }
     window.addEventListener('resize', onResize, false);
-    document.onload = function () {
+    window.addEventListener('load', function () {
 	onResize();
 	if(window.onStart) {
 	    window.onStart();
 	}
-    }
+    });
     window.doResize = onResize;
     window.insertTitle = function () {
 	var title = path[path.length-1].title;
@@ -301,6 +325,7 @@
 	scene.domElement.style.position = "relative";
 	scene.domElement.style.left = "0px";
 	scene.domElement.style.top = "0px";
+	scene.domElement.style.cursor = "pointer";
 	cubeDiv.appendChild(scene.domElement);
 	scene.startAnimationLoop();
 	scene.domElement.addEventListener("mousemove", function(event) {
@@ -327,6 +352,7 @@
 	    player = new FormulaPlayer(formulaPlayers[i].parameters);
 	    formulaPlayers[i].div = div;
 	    formulaPlayers[i].player = player;
+	    player.domElement.style.cursor = "pointer";
 	    div.appendChild(player.domElement);
 	    player.startAnimationLoop();
 	}

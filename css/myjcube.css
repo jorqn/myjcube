@@ -24,7 +24,7 @@ ul.inside {
 }
 
 li {
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 option.leftPone {
@@ -106,9 +106,38 @@ div.topPane {
     height: 200px;
     max-width: 880px;
     overflow: hidden;
-    background-color: #ffab01;
+    background-color: #55bbf4;
+//    background-color: #fe452c;
     margin: 0;
 }
+div.topRightPane {
+    position: absolute;
+    top: 0px;
+    left: 680px;
+    width: 200px;
+    height: 200px;
+    background-color: #ffab01;
+//    background-color: white;
+}
+div.topRightPane2 {
+    position: absolute;
+    top: 0px;
+    left: 680px;
+    width: 200px;
+    height: 100px;
+    background-color: #b1eb00;
+//    background-color: #55bbf4;
+}
+div.topRightPane3 {
+    position: absolute;
+    top: 0px;
+    left: 780px;
+    width: 100px;
+    height: 100px;
+    background-color: #fe84cd;
+//    background-color: #55bbf4;
+}
+
 div.leftPane {
     position: absolute;
     top: 200px;
@@ -188,7 +217,8 @@ p.leftPaneMenuHighlight0 {
 //    text-decoration: underline;
 }
 p.leftPaneMenuHighlight1, p.leftPaneMenuHighlight2 {
-    background-color: #fe452c;
+    background-color: #fe84cd;
+//    background-color: #fe452c;
 //    font-weight: bold;
 //    text-decoration: underline;
 }

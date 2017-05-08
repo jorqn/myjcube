@@ -94,7 +94,7 @@ window.menuData = {
 	    },
 	    {
 		shortTitle: "Outils OLL/PLL",
-		title: "Outils d'apprentissage PLL et PLL (langage SHATARO et notation standard)",
+		title: "Outils d'apprentissage OLL et PLL (langage SHATARO et notation standard)",
 		id: 'tools',
 		children: [
 		    {
