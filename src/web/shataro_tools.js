@@ -6,6 +6,7 @@
 	textArea = document.getElementById('myTextArea');
 	textArea.value = window.defaultText;
 	resultTextArea = document.getElementById('resultTextArea');
+        resultTextArea.value = window.defaultResultText;
 	shashusho = document.getElementById('shashu');
     }
     var focusedOnce = false;
@@ -27,7 +28,6 @@
 	shashusho.style.textDecoration = shashushoOn ? 'none' : 'line-through';
 	window.onTextAreaChange();
     }
-
 
     window.onTextAreaChange = function() {
 	if(!focusedOnce) return;

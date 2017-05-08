@@ -14,15 +14,21 @@
     <div class= "mainPane">
       <script>window.insertTitle()</script>
       <script>
-	window.defaultText = "Vos formules ici (une par ligne)\n(SHATARO ou standard)\n";
-	window.incomplete = "(incomplet…)"
+	window.defaultText = "Vos formules ici (une par ligne)\n(SHATARO ou standard)\n"; //<!--fr-->
+	window.incomplete = "(incomplet…)"; //<!--fr-->
+        window.defaultResultText = "Votre traduction ici"; //<!--fr-->
       </script>
       <p>
 	<textarea oninput="window.onTextAreaChange();" onfocus="window.onTextAreaFocus()" onfocusout="window.onTextAreaFocusOut()" cols=50 rows=10 id="myTextArea"></textarea>
       </p>
-      <p>Options: <a class='discrete' id='shashu' href='javascript:window.toggleOption();'>SHA, SHO, SHU et SHI activés</a></p>
       <p>
-	<textarea id='resultTextArea' cols=50 rows=10 readOnly='true'>Votre traduction ici</textarea>
+        <!--fr-->Options:
+        <a class='discrete' id='shashu' href='javascript:window.toggleOption();'>
+          <!--fr-->SHA, SHO, SHU et SHI activés
+        </a>
+      </p>
+      <p>
+	<textarea id='resultTextArea' cols=50 rows=10 readOnly='true'></textarea>
       </p>
 
     </div>
