@@ -1,0 +1,152 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script src='../src/web/shataro_specs.js'></script>
+  <script>
+    window.pageId = 'shataro_specs';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+        <!--en-->Definitions
+      </h2>
+      <p>
+        <!--en-->In order to simplify the explanation, you will find here the definition of two words used below…
+      </p>
+      <ul>
+	<li>
+          <!--en-->The <b>root</b> is a letter identifying a face. The chosen letter is almost always the same as in standard notation.
+	  <ul class='inside'>
+	    <li>
+              <!--en-->Right : <b>R</b>
+            </li>
+	    <li>
+              <!--en-->Left : <b>L</b>
+            </li>
+	    <li>
+              <!--en-->Up : <b>T</b>
+            </li>
+	    <li>
+              <!--en-->Down : <b>D</b>
+            </li>
+	    <li>
+              <!--en-->Front : <b>F</b>
+            </li>
+	    <li>
+              <!--en-->Back : <b>B</b>
+            </li>
+	  </ul>
+	  <!--en-->A root also exists for full cube rotations. (for more details, please check the tables below)
+	  <ul class='inside'>
+	    <li>
+              <!--en-->Rotation around the «x» axis : <b>M</b>
+            </li>
+	    <li>
+              <!--en-->Rotation around the «y» axis : <b>N</b>
+            </li>
+	    <li>
+              <!--en-->Rotation around the «z» axis : <b>P</b>
+            </li>
+	  </ul>
+	</li><br/><br/>
+	<li>
+          <!--en-->We call <b>modifier</b> the letter which precises the orientation of the rotation, or if the rotation is a double one.
+	  <ul class='inside'>
+	    <li>
+              <!--en--><b>A</b> : clockwise rotation
+            </li>
+	    <li>
+              <!--en--><b>O</b> : counter clockwise rotation
+            </li>
+	    <li>
+              <!--en--><b>I</b> : double rotation
+            </li>
+	  </ul>
+	</li>
+      </ul>
+      <h2>
+        <!--en-->Simple moves
+      </h2>
+      <p>
+        <!--en-->A simple move involves a single row (or column) of the cube. They are written this way…
+      </p>
+      <p>
+	<!--en--><b>Simple move = root + modifier</b>
+      </p>
+      <p>
+        <!--en-->This will give for instance:
+	<ul>
+	  <li>
+            <!--en-->RA : clockwise rotation of the right face
+          </li>
+	  <li>
+            <!--en-->FO : counter clockwise rotation of the front face
+          </li>
+	  <li>
+            <!--en-->TI : double rotation of the top face
+          </li>
+	</ul>
+      </p>
+      <h2>
+        <!--en-->Double moves
+      </h2>
+      <p>
+        <!--en-->Double moves are here defined as the rotation of a row (or a column) plus the corresponding center row (or column).
+      </p>
+      <p>
+	<!--en--><b>Double move = root + «E» + modifier</b>
+      </p>
+      <p>
+        <!--en-->Examples:
+	<ul>
+	  <li>
+            <!--en-->LEA : clockwise rotation of the left face and of the center column
+          </li>
+	  <li>
+            <!--en-->FEO : counter clockwise rotation of the front face and of the middle layer
+          </li>
+	  <li>
+            <!--en-->REI : double rotation of the right face and of the center column
+          </li>
+	</ul>
+      </p>
+      <h2>
+        <!--en-->Optional phonemes
+      </h2>
+      <p>
+        <!--en-->In order to introduce a bit of variety in formulas, and to also to make them shorter, few optional aliases have been introduce. They have been chosen because they were appear quite often. The reference is here given in standard notation.
+	<ul>
+	  <li>
+            <!--en-->RUR' is written <b>SHA</b>
+          </li>
+	  <li>
+            <!--en-->RU'R' is written <b>SHU</b>
+          </li>
+	  <li>
+            <!--en-->R'UR is written <b>SHO</b>
+          </li>
+	  <li>
+            <!--en-->UR'U' is written  <b>SHI</b>
+          </li>
+	</ul>
+      </p>
+      <h2>
+        <!--en-->Full animated table
+      </h2>
+	<script>
+	  window.insertTable(0, "left");
+	  window.insertFormulaPlayer({ name: "formulaTest", noButtons: true,
+	  fillString: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+	  width: 200, height: 200, style: "float: left; margin-top: 130px"});
+	  window.insertTable(1, "left");
+	  window.insertTable(2, "left");
+	</script>
+    </div>
+  </body>
+<html/>

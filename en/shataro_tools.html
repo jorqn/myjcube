@@ -1,0 +1,37 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script src='../src/web/shataro_tools.js'></script>
+  <script>
+    window.pageId = 'shataro_tools';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <script>
+	window.defaultText = "Your formulas here (one per line)\n(SHATARO or standard)\n"; //<!--en-->
+	window.incomplete = "(incomplete…)"; //<!--en-->
+        window.defaultResultText = "Your translation here"; //<!--en-->
+      </script>
+      <p>
+	<textarea oninput="window.onTextAreaChange();" onfocus="window.onTextAreaFocus()" onfocusout="window.onTextAreaFocusOut()" cols=50 rows=10 id="myTextArea"></textarea>
+      </p>
+      <p>
+        <!--en-->Options:
+        <a class='discrete' id='shashu' href='javascript:window.toggleOption();'>
+          <!--en-->SHA, SHO, SHU et SHI enabled
+        </a>
+      </p>
+      <p>
+	<textarea id='resultTextArea' cols=50 rows=10 readOnly='true'></textarea>
+      </p>
+
+    </div>
+
+  </body>
+<html/>
