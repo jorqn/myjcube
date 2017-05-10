@@ -5,7 +5,7 @@ window.menuData = {
 	id: 'index',
 	children: [
 	    {
-		shortTitle: "SHATARO convention",
+		shortTitle: "The SHATARO convention",
 		title: "The SHATARO convention",
 		id: 'shataro_index',
 		children: [
@@ -21,8 +21,8 @@ window.menuData = {
 		    },
 		    {
 			id: 'shataro_tools',
-			shortTitle: "Translation tools",
-			title: "Translation tools between SHATARO and standard notation"
+			shortTitle: "Translation tool",
+			title: "SHATARO / standard notation translation tool"
 		    }
 		]
 	    },
