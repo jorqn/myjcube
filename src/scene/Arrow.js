@@ -10,7 +10,7 @@ define('scene/Arrow', [], function() {
 	// this.geometry = new THREE.BoxGeometry(size*(this.normal.x === 0 ? 1 : 0.001),
 	// 				     size*(this.normal.y === 0 ? 1 : 0.001),
 	// 				     size*(this.normal.z === 0 ? 1 : 0.001));
-	this.geometry = new THREE.PlaneBufferGeometry(size*0.25,size*0.25,1,1);
+	this.geometry = new THREE.PlaneBufferGeometry(size*0.35,size*0.35,1,1);
 	this.mesh = new THREE.Mesh( this.geometry, null );
 	this.mesh.material = this.material.material;
 	this.mesh.myarrow = this;

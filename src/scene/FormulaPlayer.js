@@ -7,6 +7,7 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	this.materials = parameters.materials;
 	this.buttonsSize = parameters.buttonsSize || 25;
 	this.formula = parameters.formula;
+	this.startFormula = parameters.startFormula;
 	this.noButtons = parameters.noButtons;
 	this.commandQueue = [];
 	this.name = parameters.name;
@@ -22,6 +23,13 @@ function(Cube, Cube3D, Interpreter, ArrowMesh, PlayBackButtonFactory/*, FillStri
 	    this.startCube.fillFromString(parameters.fillString);
 	} else {
 	    this.startCube.fill();
+	}
+	if(this.startFormula) {
+	    var startTab = Interpreter.parse(this.startFormula);
+	    var i;
+	    for(i = 0; i < startTab.length; i++) {
+		this.startCube = this.startCube.executeCommand(startTab[i].command);
+	    }
 	}
 //	this.startCube.fill();
 	// var stringBuilder = new FillStringBuilder();

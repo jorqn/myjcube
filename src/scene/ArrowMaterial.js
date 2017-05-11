@@ -24,8 +24,8 @@ define("scene/ArrowMaterial", [], function() {
 	var i=0;
 	this.delay = 10;
 	for(i = 0; i < this.delay; i++) {
-	    this.materials.normal.push(buildMaterial(0.5*((i+1)/this.delay)));
-	    this.materials.highlight.push(buildMaterial(0.5+0.5*((i+1)/this.delay)));
+	    this.materials.normal.push(buildMaterial(0.2*((i+1)/this.delay)));
+	    this.materials.highlight.push(buildMaterial(0.2+0.8*((i+1)/this.delay)));
 	}
     };
     ArrowMaterial.prototype.isVisible = function (arrow, frameIndex) {

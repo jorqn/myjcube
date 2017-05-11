@@ -1,0 +1,73 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = '2ndCrown';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+        <!--en-->Objective
+      </h2>
+      <p>
+        <!--en-->Here is how your cube must look like at the end of this step:
+      </p>
+      <script>
+	window.insertFormulaPlayer({ name: "firstCrown", noButtons: true,
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"ooooooooorrrrrrrrrwwwwwwwwwyyyyyyyyygggggggggbbbbbbbbb",
+	fillString:"___rrrrrroooooo___wwwwwwwww____y_______bbbbbb___gggggg",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>
+        <!--en-->Formulas
+      </h2>
+      <p>
+        <!--en-->There are two formulas for this step. Just like in the previous one, you will have to turn the upper face until you make one of those two configurations appear. If you are blocked, just use one of the two formulas to send a badly located piece into the top layer.
+      </p>
+      <h3>
+        <!--en-->Case 1
+      </h3>
+      <script>
+	window.insertFormulaPlayer({ formula: "URU'R'FR'F'R",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrr_r__r_____o_ooo_g__y____wwwwwwwwwggg_g____bbb_b____",
+	width: 300, height: 300,
+	arrows: [{
+		start: { x: 0, y: 1},
+		end: {x: 1, y: 0},
+		normal: { x: 0, y:0, z: 1}
+	    }]
+	});
+      </script>
+      <h3>
+        <!--en-->Case 2
+      </h3>
+      <script>
+	window.insertFormulaPlayer({ formula: "U'L'ULF'LFL'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrr_r__r_____o_ooo_b__y____wwwwwwwwwggg_g____bbb_b____",
+	width: 300, height: 300,
+	arrows: [{
+		start: { x: 0, y: 1},
+		end: {x: -1, y: 0},
+		normal: { x: 0, y:0, z: 1}
+	    }]
+	});
+      </script>
+      <h2>
+        <!--en-->Once ended…
+      </h2>
+      <p>
+        <!--en-->Meet you <a href='./2ndCross_1.html'>here</a>
+      </p>
+    </div>
+  </body>
+<html/>

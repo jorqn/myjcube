@@ -1,0 +1,75 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = '1stCrown';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+        <!--en-->Objective
+      </h2>
+      <p>
+        <!--en-->The objective is to complete the first face + the rows touching it:
+      </p>
+      <script>
+	window.insertFormulaPlayer({ name: "firstCrown", noButtons: true,
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"ooooooooorrrrrrrrrwwwwwwwwwyyyyyyyyygggggggggbbbbbbbbb",
+	fillString:"____r_rrrooo_o____wwwwwwwww____y________b_bbb____g_ggg",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>
+        <!--en-->Formulas that can be used
+      </h2>
+      <p>
+	<!--en-->Here is how you can solve the different cases you can meet. Turn the upper face until they appear to you. You can also use them to remove the corners which could be at the right place, but with an incorrect orientation. 
+      </p>
+      <h3>
+        <!--en-->Case 1 : the front color is the color of the lower face
+      </h3>
+      <script>
+	window.insertFormulaPlayer({ name: "bottomFaceFront", formula: "F'U'F",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"rrr_r________o_ooo____y____wwwwwwwwwggg_g____bbb_b____",
+	fillString:"_r__r___w____o__o___r_y_____w_www_w__g__g_g___b__b____",
+	width: 300, height: 300
+	});
+      </script>
+      <h3>
+        <!--en-->Case 2 : the color on the right is the color of the bottom face
+      </h3>
+      <script>
+	window.insertFormulaPlayer({ name: "bottomFaceRight", formula: "RUR'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"rrr_r________o_ooo____y____wwwwwwwwwggg_g____bbb_b____",
+	fillString:"_r__r___r____o__o___g_y_____w_www_w__g__g_w___b__b____",
+	width: 300, height: 300
+	});
+      </script>
+      <h3>
+        <!--en-->Case 3 : the top color is the one of the bottom face
+      </h3>
+      <script>
+	window.insertFormulaPlayer({ name: "bottomFaceTop", formula: "RU2R'U'RUR'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"_r__r___g____o__o___w_y_____w_www_w__g__g_r___b__b____",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>
+        <!--en-->You did it?
+      </h2>
+      <p>
+        <!--en-->Hurray! Go to <a href="./2ndCrown.html">the next step</a>
+      </p>
+    </div>
+  </body>
+<html/>
