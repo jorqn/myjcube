@@ -1,0 +1,70 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = 'finalPhase';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+        <!--en-->Objective
+      </h2>
+      <p>
+        <!--en-->No surprise. The cube will be solved at the end of this step.
+      </p>
+      <script>
+	window.insertFormulaPlayer({ name: "firstCrown", noButtons: true,
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+//	fillString:"rrrrrr______oooooo_y_yyy_y_wwwwwwwwwgggggg___bbbbbb___",
+	width: 300, height: 300
+	});
+      </script>
+      <h2>
+        <!--en-->Formula
+      </h2>
+      <p>
+        <!--en-->Only one formula is necessary here. You will often have to use it several time. Study carefully how the pieces will move.
+      </p>
+      <script>
+	window.insertFormulaPlayer({ formula: "xR'UR'D2RU'R'D2R2x'",
+	          //rrrrrrrrroooooooooyyyyyyyyywwwwwwwwwgggggggggbbbbbbbbb
+	fillString:"rrrrrrrrogogooooooyyyyyyyyywwwwwwwwwggggggbgrbbbbbbobb",
+	width: 300, height: 300,
+	arrows: [
+	{
+		start: { x: -1, z: -1},
+		end: {x: 1, z: -1},
+	        normal: { x: 0, y:1, z: 0}
+	},
+	{
+		start: { x: 1, z: -1},
+		end: {x: 1, z: 1},
+		normal: { x: 0, y:1, z: 0}
+	},
+	{
+		start: { x: 1, z: 1},
+		end: {x: -1, z: -1},
+		normal: { x: 0, y:1, z: 0}
+	},
+
+	],
+	arrowWidth: 0.15/2,
+	arrowHeadSize: 0.2,
+        arrowLengthRatio: 0.9
+	});
+      </script>
+      <h2>
+        <!--en-->When you have done
+      </h2>
+      <p>n
+        <!--en-->Congratulations !
+      </p>
+    </div>
+  </body>
+<html/>
