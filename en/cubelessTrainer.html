@@ -1,0 +1,95 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<html>
+  <link rel="stylesheet" type="text/css" href="../css/myjcube.css">
+  <script src='../libs/require.js'></script>
+  <script src='../libs/three.js'></script>
+  <script src='../src/myjcube.js'></script>
+  <script>
+    window.pageId = 'cubelessTrainer';
+  </script>
+  <body>
+    <script src="./menuData.js"></script>
+    <script src="../src/web/frame.js"></script>
+    <div class= "mainPane">
+      <script>window.insertTitle()</script>
+      <h2>
+	<!--en-->Links to the Cubeless Trainer
+      </h2>
+      <ul>
+	<li>
+	  <!--en--><a href='../CubelessTrainerSetup.html'>Cubeless Trainer setup page</a>
+	</li>
+	<li>
+	  <!--en--><a href='../CubelessTrainer.html'>Cubeless Trainer</a>
+	</li>
+      </ul>
+      <h2>
+	<!--en-->Setup
+      </h2>
+      <p>
+	<img src='../img/cubelessTrainerScreenshot.png'/>
+      </p>
+      <p>
+	<!--en-->For each case, one can choose a frequency using the combobox below it.
+	<ul>
+	  <li>
+	    <!--en--><b>Exclude</b>: the case will be simply ignored. It will not ever be submitted.
+	  </li>
+	  <li>
+	    <!--en--><b>Normal</b>: the case will have no special priority. (use this level for cases that you already know well)
+	  </li>
+	  <li>
+	    <!--en--><b>New</b>: the case will have huge chances to be submitted during each training.
+	  </li>
+	</ul>
+      </p>
+      <p>
+ 	<!--en--><b>Sequence length</b>: permits to change the number of cases submitted during a training session. Since a configuration may occur only once during a training, it is possible that the number of cases effectively submitted  is less than this number.
+      </p>
+      <p>
+	<!--en-->If the case has not the orientation you are used to, you can apply a <b>rotation</b> to it… In order to do that you just need to…
+	<ol>
+	  <li>
+	    <!--en-->Double click (or double tap) on the case
+	  </li>
+	  <li>
+	    <!--en-->Use the «rotate» buttons
+	  </li>
+	  <li>
+	    <!--en-->Press the «close» button
+	  </li>
+	</ol>
+      </p>
+      <p>
+	<!--en-->About <b>saving</b>… Parameters are automatically saved after pressing «start training». They use browser <b>cookies</b>.
+      </p>
+      <h2>
+	<!--en-->Cubeless Trainer
+      </h2>
+      <img src='../img/cubelessTrainerScreenshot2.png'/>
+      <p>
+	<!--en-->The cases are submitted one by one. Enter the solution using the button board. When the case is solved, the tool automatically goes to the next case.<br/>If the upper face is not the yellow one, the case is not considered as solved.
+      </p>
+      <p>
+	<!--en-->The history of solved cases is saved permanently (see next section).
+      </p>
+      <h2>
+	<!--en-->How the cases are chosen
+      </h2>
+      <p>
+	<!--en-->Here are the applied rules
+	<ul>
+	  <li>
+	    <!--en-->A case may appear only once during the same training session
+	  </li>
+	  <li>
+	    <!--en-->Cases flagged as <b>"new"</b> are chosen with the highest priority.
+	  </li>
+	  <li>
+	    <!--en-->Cases solved a long time ago will be chosen first.
+	  </li>
+	</ul>
+      </p>
+    </div>
+  </body>
+<html/>

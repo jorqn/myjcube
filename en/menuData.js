@@ -49,7 +49,14 @@ window.menuData = {
 		    {
 			id: '2ndCross_1',
 			shortTitle: "Second cross (step 1)",
-			title: "Perform the second cross: first step"
+			title: "Perform the second cross: first step",
+			children: [
+			    {
+				id: '2ndCrossSample',
+				shortTitle: 'Example',
+				title: 'Sample resolution: 2nd cross - phase 1'
+			    }
+			]
 		    },
 		    {
 			id: '2ndCross_2',
