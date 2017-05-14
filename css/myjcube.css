@@ -198,6 +198,11 @@ p.leftPaneMenu1 {
     cursor: pointer;
 }
 
+a.vanilla {
+    color: inherit;
+    text-decoration: none;
+}
+
 p.leftPaneMenu2 {
     font-family: "Segoe UI",Arial,sans-serif;
     font-weight: normal;

@@ -1,0 +1,14 @@
+<html>
+  <script>
+var userLang = navigator.language || navigator.userLanguage;
+switch(userLang){
+    case 'fr-FR':
+        window.location.href = './fr/index.html';
+        break;
+    default:
+        // if it's something else fall back to the default
+        window.location.href = './en/index.html';
+        break;
+}
+  </script>
+</html>

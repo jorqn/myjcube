@@ -30,6 +30,14 @@
     var topRightDiv3 = document.createElement("div");
     topRightDiv3.className = "topRightPane3";
     topDiv.appendChild(topRightDiv3);
+
+    // var contact = document.createElement("div");
+    // contact.innerHTML = "contact";
+    // contact.style.position = "absolute";
+    // contact.style.left = "0px";
+    // contact.style.top = "100px";
+    // topRightDiv.appendChild(contact);
+    
     
     var leftDiv = document.createElement("div");
     leftDiv.className = "leftPane";
@@ -107,9 +115,10 @@
 	    element = document.createElement("p");
 	    element.className = "leftPaneMenu"+index
 		+ (child.id === pageId ? " leftPaneMenuHighlight"+index : "");
-	    element.innerText = child.shortTitle;
+	    element.innerHTML= "<a class='vanilla' href='./" + child.id + ".html'>"+child.shortTitle+"</a>";
 	    leftDiv.appendChild(element);
-	    element.onclick = createOnMenuClickCb(child.id);
+	    //	    element.onclick = createOnMenuClickCb(child.id);
+//	    element.href = "./"+child.id+".html";
 	    if(child === path[index+1]) {
 		displayLevel(index+1);
 	    }
@@ -162,7 +171,56 @@
 
     languageSelect.appendChild(french);
     languageSelect.appendChild(english);
-    leftDiv.appendChild(languageSelect);
+
+    var contact = document.createElement('p');
+    contact.innerHTML = "Contact";
+    contact.className = "leftPaneMenu0";
+    contact.style.fontStyle = "italic";
+    leftDiv.appendChild(contact);
+    var displayContactDiv = null;
+    var imgNum = 4;
+    var imgs = [], clickCounter = 0;
+    contact.addEventListener('click', function() {
+	if(!displayContactDiv) {
+	    var rect = contact.getBoundingClientRect();
+	    var parentRect = leftDiv.getBoundingClientRect();
+	    var top = rect.top - parentRect.top + 20;
+	    var left = rect.left - parentRect.left + 14;
+	    displayContactDiv = document.createElement('div');
+	    leftDiv.appendChild(displayContactDiv);
+	    displayContactDiv.style.position = "absolute";
+	    displayContactDiv.style.left = left + "px";
+	    displayContactDiv.style.top = top + "px";
+	}
+
+	if(clickCounter < imgNum) {
+	    clickCounter++;
+	    var img = document.createElement('img');
+	    img.src = "../img/contact"+clickCounter+".png";
+	    img.style.position = "absolute";
+	    img.style.left = "0px";
+	    img.style.top = "0px";
+	    displayContactDiv.appendChild(img);
+	    
+	} else {
+	    while(displayContactDiv.firstChild) {
+		displayContactDiv.removeChild(displayContactDiv.firstChild);
+	    }
+	    clickCounter = 0;
+	}
+	// var img1 = document.createElement('img');
+	// img1.src = "../img/contact1.png";
+	// img1.style.position = "absolute";
+	// img1.style.left = "0px";
+	// img1.style.top = "0px";
+	// displayContactDiv.appendChild(img1);
+	// var img2 = document.createElement('img');
+	// img2.src = "../img/contact2.png";
+	// img2.style.position = "absolute";
+	// img2.style.left = "0px";
+	// img2.style.top = "0px";
+	// displayContactDiv.appendChild(img2);
+    });
 
     // languageSelect.style.position = "absolute";
     // languageSelect.style.top = '10px';
@@ -173,6 +231,9 @@
     languageSelect.addEventListener('change', function () {
 	window.location = '../'+languageSelect.value+'/'+ pageId + '.html';
     });
+
+    leftDiv.appendChild(document.createElement('br'));
+    leftDiv.appendChild(languageSelect);
 
     
     
