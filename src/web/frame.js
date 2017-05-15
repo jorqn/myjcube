@@ -282,7 +282,7 @@
 	var title = path[path.length-1].title;
 	document.write("<h1 class='title'>"+title+"</h1>");
     }
-    document.title = 'myJCube - ' + path[path.length-1].title;
+    document.title = window.menuData.title + " - " + path[path.length-1].title;
 
     var formulaPlayers = [];
     // window.insertFormulaPlayer0 = function(parameters) {

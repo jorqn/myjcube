@@ -1,5 +1,6 @@
 window.menuData = {
     lang: 'en',
+    title: "myJCube.com : rubik's cube solving",
     navigationRoot: {
 	title: "Welcome !",
 	id: 'index',

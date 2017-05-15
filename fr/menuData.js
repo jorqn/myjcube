@@ -1,5 +1,6 @@
 window.menuData = {
     lang: 'fr',
+    title: "myJCube.com : résolution du rubik's cube",
     navigationRoot: {
 	title: "Bienvenue !",
 	id: 'index',
